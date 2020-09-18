@@ -3,6 +3,7 @@ package fmpcloud
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/spacecodewor/fmpcloud-go/objects"
@@ -79,9 +80,14 @@ func (f *Form13F) GetCompanyByCIK(cik string) (cList []objects.Form, err error) 
 }
 
 // ThirteenList - 13F
-func (f *Form13F) ThirteenList(cik string) (fList []objects.Thirteen, err error) {
+func (f *Form13F) ThirteenList(cik string, date *time.Time) (fList []objects.Thirteen, err error) {
+	reqParam := map[string]string{"apikey": c.apiKey}
+	if date != nil {
+		reqParam["date"] = date.Format("2006-01-02")
+	}
+
 	data, err := f.Client.R().
-		SetQueryParams(map[string]string{"apikey": f.apiKey}).
+		SetQueryParams(reqParam).
 		Get(f.url + fmt.Sprintf(urlAPIForm13FGetThirteen, cik))
 
 	if err != nil {
