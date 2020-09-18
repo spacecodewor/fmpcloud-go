@@ -28,7 +28,7 @@
 go get -u github.com/spacecodewor/fmpcloud-go
 ```
 
-Example (check out other methods documentation here):
+Example:
 
 ```go
 APIClient, err := NewAPIClient(Config{
@@ -53,10 +53,10 @@ if err != nil {
     log.Println("Error get company profile: " + err.Error())
 }
 
-// Get Company profile by symbol
-profile, err := APIClient.Stock.CompanyProfile("AAPL")
+// Get real-time single quote
+quote, err := APIClient.Stock.Quote("AAPL")
 if err != nil {
-    log.Println("Error get company profile: " + err.Error())
+    log.Println("Error get quote: " + err.Error())
 }
 ```
 
