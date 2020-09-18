@@ -8,7 +8,7 @@ import (
 )
 
 func TestCryptoAvalibleSymbols(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -20,7 +20,7 @@ func TestCryptoAvalibleSymbols(t *testing.T) {
 }
 
 func TestCryptoQuotes(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -32,7 +32,7 @@ func TestCryptoQuotes(t *testing.T) {
 }
 
 func TestCryptoCandles(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -49,7 +49,7 @@ func TestCryptoCandles(t *testing.T) {
 }
 
 func TestCryptoDailyLine(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -61,7 +61,7 @@ func TestCryptoDailyLine(t *testing.T) {
 }
 
 func TestCryptoDailyChangeAndVolume(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -73,7 +73,7 @@ func TestCryptoDailyChangeAndVolume(t *testing.T) {
 }
 
 func TestCryptoDailySpecificPeriod(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -85,7 +85,7 @@ func TestCryptoDailySpecificPeriod(t *testing.T) {
 }
 
 func TestCryptoDailyLastNDays(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}

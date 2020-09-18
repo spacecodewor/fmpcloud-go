@@ -8,7 +8,7 @@ import (
 )
 
 func TestForexAvalibleSymbols(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -20,7 +20,7 @@ func TestForexAvalibleSymbols(t *testing.T) {
 }
 
 func TestForexQuotes(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -32,7 +32,7 @@ func TestForexQuotes(t *testing.T) {
 }
 
 func TestForexListSymbolsAndQuotes(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -44,7 +44,7 @@ func TestForexListSymbolsAndQuotes(t *testing.T) {
 }
 
 func TestForexCandles(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -61,7 +61,7 @@ func TestForexCandles(t *testing.T) {
 }
 
 func TestForexDailyLine(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -73,7 +73,7 @@ func TestForexDailyLine(t *testing.T) {
 }
 
 func TestForexDailyChangeAndVolume(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -85,7 +85,7 @@ func TestForexDailyChangeAndVolume(t *testing.T) {
 }
 
 func TestForexDailySpecificPeriod(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -97,7 +97,7 @@ func TestForexDailySpecificPeriod(t *testing.T) {
 }
 
 func TestForexDailyLastNDays(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}

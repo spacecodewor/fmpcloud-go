@@ -3,7 +3,7 @@ package fmpcloud
 import "testing"
 
 func TestForm13FList(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -15,7 +15,7 @@ func TestForm13FList(t *testing.T) {
 }
 
 func TestForm13FSearchByName(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -27,7 +27,7 @@ func TestForm13FSearchByName(t *testing.T) {
 }
 
 func TestForm13FGetCompanyByCIK(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -39,7 +39,7 @@ func TestForm13FGetCompanyByCIK(t *testing.T) {
 }
 
 func TestForm13FThirteenList(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -51,7 +51,7 @@ func TestForm13FThirteenList(t *testing.T) {
 }
 
 func TestForm13FCusipMapper(t *testing.T) {
-	APIClient, err := NewAPIClient(Config{Debug: true})
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
