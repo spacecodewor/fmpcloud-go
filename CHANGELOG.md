@@ -4,3 +4,11 @@
 
 ## 1.0.1
 * Add support: New param for form-thirteen endpoint: date
+
+## 1.0.2
+**Add support:**
+* International Filings for income statements (new endpoint)
+* Technical Indicators (new endpoint)
+
+**Fix:**
+* 13F list request

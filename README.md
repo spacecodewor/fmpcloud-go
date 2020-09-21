@@ -5,12 +5,13 @@
 ## Overview
 - API documentation [FmpCloud](https://fmpcloud.io/documentation) or [Financial Modeling Prep](https://financialmodelingprep.com/developer/docs/)
 - API version: 3
-- Package version: 1.0.1
+- Package version: 1.0.2
 
 ## Support Methods 
 * Company Valuation
 * Calendars
 * Institutional Fund
+* International Filings
 * Stock Time Series
 * Market Indexes
 * Commodities
@@ -21,6 +22,7 @@
 * Stock Market
 * Cryptocurrencies
 * Forex (FX)
+* Technical Indicators
 
 
 ## Installation

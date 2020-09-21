@@ -81,7 +81,7 @@ func (f *Form13F) GetCompanyByCIK(cik string) (cList []objects.Form, err error) 
 
 // ThirteenList - 13F
 func (f *Form13F) ThirteenList(cik string, date *time.Time) (fList []objects.Thirteen, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey}
+	reqParam := map[string]string{"apikey": f.apiKey}
 	if date != nil {
 		reqParam["date"] = date.Format("2006-01-02")
 	}

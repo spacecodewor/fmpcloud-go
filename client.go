@@ -25,13 +25,14 @@ type Config struct {
 
 // APIClient ...
 type APIClient struct {
-	Stock            *Stock
-	Forex            *Forex
-	Form13F          *Form13F
-	Crypto           *Crypto
-	CompanyValuation *CompanyValuation
-	Logger           *zap.Logger
-	Debug            bool
+	Stock              *Stock
+	Forex              *Forex
+	Form13F            *Form13F
+	Crypto             *Crypto
+	CompanyValuation   *CompanyValuation
+	TechnicalIndicator *TechnicalIndicator
+	Logger             *zap.Logger
+	Debug              bool
 }
 
 // Core params
@@ -106,6 +107,12 @@ func NewAPIClient(cfg Config) (*APIClient, error) {
 	}
 
 	APIClient.CompanyValuation = &CompanyValuation{
+		Client: restClient,
+		url:    url,
+		apiKey: cfg.APIKey,
+	}
+
+	APIClient.TechnicalIndicator = &TechnicalIndicator{
 		Client: restClient,
 		url:    url,
 		apiKey: cfg.APIKey,

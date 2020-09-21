@@ -233,7 +233,7 @@ type EarningCalendar struct {
 	Symbol           string  `json:"symbol"`
 	Eps              float64 `json:"eps"`
 	EpsEstimated     float64 `json:"epsEstimated"`
-	Time             string  `json:"time"` // timezone
+	Time             string  `json:"time"` // Indicates whether the earnings is announced before market open(bmo), after market close(amc), or during market hour(dmh).
 	Revenue          float64 `json:"revenue"`
 	RevenueEstimated float64 `json:"revenueEstimated"`
 }

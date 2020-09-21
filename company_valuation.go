@@ -75,7 +75,7 @@ func (c *CompanyValuation) RssFeed() (fList []objects.RssFeed, err error) {
 	return fList, nil
 }
 
-// EarningCalendar - earning Calendar
+// EarningCalendar - earning Calendar (between from and to maximum interval can be 3 months)
 func (c *CompanyValuation) EarningCalendar(from, to *time.Time) (eList []objects.EarningCalendar, err error) {
 	reqParam := map[string]string{"apikey": c.apiKey}
 	if from != nil {

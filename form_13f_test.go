@@ -44,7 +44,7 @@ func TestForm13FThirteenList(t *testing.T) {
 		t.Fatal(err.Error())
 	}
 
-	_, err = APIClient.Form13F.ThirteenList("0001067983")
+	_, err = APIClient.Form13F.ThirteenList("0001067983", nil)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
