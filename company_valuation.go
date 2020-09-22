@@ -14,6 +14,7 @@ import (
 const (
 	urlAPICompanyValuationRSSFeed                          = "/rss_feed"
 	urlAPICompanyValuationEarningCalendar                  = "/earning_calendar"
+	urlAPICompanyValuationEarningCallTranscript            = "/earning_call_transcript/%s"
 	urlAPICompanyValuationHistoryEarningCalendar           = "/historical/earning_calendar/%s"
 	urlAPICompanyValuationIPOCalendar                      = "/ipo_calendar"
 	urlAPICompanyValuationSplitCalendar                    = "/ipo_calendar"
@@ -100,6 +101,28 @@ func (c *CompanyValuation) EarningCalendar(from, to *time.Time) (eList []objects
 	}
 
 	return eList, nil
+}
+
+// EarningCallTranscript - transcript of specific earning
+func (c *CompanyValuation) EarningCallTranscript(req objects.RequestEarningCallTranscript) (tList []objects.EarningCallTranscript, err error) {
+	data, err := c.Client.R().
+		SetQueryParams(map[string]string{
+			"apikey":  c.apiKey,
+			"quarter": fmt.Sprint(req.Quarter),
+			"year":    fmt.Sprint(req.Year),
+		}).
+		Get(c.url + fmt.Sprintf(urlAPICompanyValuationEarningCallTranscript, req.Symbol))
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &tList)
+	if err != nil {
+		return nil, err
+	}
+
+	return tList, nil
 }
 
 // HistoryEarningCalendar - historical earning calendar

@@ -38,6 +38,24 @@ func TestEarningCalendar(t *testing.T) {
 	}
 }
 
+func TestEarningCallTranscript(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	for _, symbol := range testCaseSymbolList {
+		_, err = APIClient.CompanyValuation.EarningCallTranscript(objects.RequestEarningCallTranscript{
+			Symbol:  symbol,
+			Year:    2019,
+			Quarter: 2,
+		})
+		if err != nil {
+			t.Fatal(err.Error())
+		}
+	}
+}
+
 func TestHistoryEarningCalendar(t *testing.T) {
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {

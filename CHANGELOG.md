@@ -12,3 +12,7 @@
 
 **Fix:**
 * 13F list request
+
+## 1.0.3
+**Add support:**
+* Earning Call Transcript (new endpoint)

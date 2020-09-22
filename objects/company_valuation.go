@@ -205,6 +205,13 @@ type RequestStockScreener struct {
 	DividendLowerThan  *float64
 }
 
+// RequestEarningCallTranscript ...
+type RequestEarningCallTranscript struct {
+	Symbol  string
+	Quarter int64
+	Year    int64
+}
+
 // RssFeed ...
 type RssFeed struct {
 	Title    string `json:"title"`
@@ -236,6 +243,15 @@ type EarningCalendar struct {
 	Time             string  `json:"time"` // Indicates whether the earnings is announced before market open(bmo), after market close(amc), or during market hour(dmh).
 	Revenue          float64 `json:"revenue"`
 	RevenueEstimated float64 `json:"revenueEstimated"`
+}
+
+// EarningCallTranscript ...
+type EarningCallTranscript struct {
+	Symbol  string `json:"symbol"`
+	Quarter int    `json:"quarter"`
+	Year    int    `json:"year"`
+	Date    string `json:"date"` // 2020-07-31 17:00:00
+	Content string `json:"content"`
 }
 
 // SplitCalendar ...
