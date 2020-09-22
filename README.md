@@ -5,7 +5,7 @@
 ## Overview
 - API documentation [FmpCloud](https://fmpcloud.io/documentation) or [Financial Modeling Prep](https://financialmodelingprep.com/developer/docs/)
 - API version: 3
-- Package version: 1.0.2
+- Package version: 1.0.3
 
 ## Support Methods 
 * Company Valuation
@@ -59,6 +59,28 @@ if err != nil {
 quote, err := APIClient.Stock.Quote("AAPL")
 if err != nil {
     log.Println("Error get quote: " + err.Error())
+}
+
+// Crypto avalible simbol list
+cList, err := APIClient.Crypto.AvalibleSymbols()
+if err != nil {
+    log.Println("Error get crypto symbols list: " + err.Error())
+}
+
+// Crypto quotes list
+cQuotes, err := APIClient.Crypto.Quotes()
+if err != nil {
+    log.Println("Error get crypto quotes: " + err.Error())
+}
+
+fList, err := APIClient.Forex.AvalibleSymbols()
+if err != nil {
+    log.Println("Error get forex symbols list: " + err.Error())
+}
+    
+fQuotes, err := APIClient.Forex.Quotes()
+if err != nil {
+    log.Println("Error get forex quotes: " + err.Error())
 }
 ```
 
