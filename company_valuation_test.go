@@ -567,3 +567,19 @@ func TestDailyHistoryMarketCapitalization(t *testing.T) {
 		}
 	}
 }
+
+func TestAnalystEstimates(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	for _, symbol := range testCaseSymbolList {
+		_, err = APIClient.CompanyValuation.AnalystEstimates(objects.RequestAnalystEstimates{
+			Symbol: symbol,
+		})
+		if err != nil {
+			t.Fatal(err.Error())
+		}
+	}
+}

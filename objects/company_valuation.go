@@ -212,6 +212,12 @@ type RequestEarningCallTranscript struct {
 	Year    int64
 }
 
+// RequestAnalystEstimates ...
+type RequestAnalystEstimates struct {
+	Symbol string
+	Period CompanyValuationPeriod
+}
+
 // RssFeed ...
 type RssFeed struct {
 	Title    string `json:"title"`
@@ -1330,4 +1336,30 @@ type StockScreener struct {
 	Volume             int64   `json:"volume"`
 	Exchange           string  `json:"exchange"`
 	ExchangeShortName  string  `json:"exchangeShortName"`
+}
+
+// AnalystEstimates ...
+type AnalystEstimates struct {
+	Symbol                        string  `json:"symbol"`
+	Date                          string  `json:"date"` // 2020-09-15
+	EstimatedRevenueLow           int64   `json:"estimatedRevenueLow"`
+	EstimatedRevenueHigh          int64   `json:"estimatedRevenueHigh"`
+	EstimatedRevenueAvg           int64   `json:"estimatedRevenueAvg"`
+	EstimatedEbitdaLow            int64   `json:"estimatedEbitdaLow"`
+	EstimatedEbitdaHigh           int64   `json:"estimatedEbitdaHigh"`
+	EstimatedEbitdaAvg            int64   `json:"estimatedEbitdaAvg"`
+	EstimatedEbitLow              int64   `json:"estimatedEbitLow"`
+	EstimatedEbitHigh             int64   `json:"estimatedEbitHigh"`
+	EstimatedEbitAvg              int64   `json:"estimatedEbitAvg"`
+	EstimatedNetIncomeLow         int64   `json:"estimatedNetIncomeLow"`
+	EstimatedNetIncomeHigh        int64   `json:"estimatedNetIncomeHigh"`
+	EstimatedNetIncomeAvg         int64   `json:"estimatedNetIncomeAvg"`
+	EstimatedSgaExpenseLow        int64   `json:"estimatedSgaExpenseLow"`
+	EstimatedSgaExpenseHigh       int64   `json:"estimatedSgaExpenseHigh"`
+	EstimatedSgaExpenseAvg        int64   `json:"estimatedSgaExpenseAvg"`
+	EstimatedEpsAvg               float64 `json:"estimatedEpsAvg"`
+	EstimatedEpsHigh              float64 `json:"estimatedEpsHigh"`
+	EstimatedEpsLow               float64 `json:"estimatedEpsLow"`
+	NumberAnalystEstimatedRevenue int64   `json:"numberAnalystEstimatedRevenue"`
+	NumberAnalystsEstimatedEps    int64   `json:"numberAnalystsEstimatedEps"`
 }

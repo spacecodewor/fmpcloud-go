@@ -16,3 +16,7 @@
 ## 1.0.3
 **Add support:**
 * Earning Call Transcript (new endpoint)
+
+## 1.0.4
+**Add support:**
+* Analyst Estimates (new endpoint)

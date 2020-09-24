@@ -49,6 +49,7 @@ const (
 	urlAPICompanyValuationDelistedCompanyList              = "/delisted-companies"
 	urlAPICompanyValuationStockNews                        = "/stock_news"
 	urlAPICompanyValuationStockScreener                    = "/stock-screener"
+	urlAPICompanyValuationAnalystEstimates                 = "/analyst-estimates/%s"
 )
 
 // CompanyValuation client
@@ -879,6 +880,29 @@ func (c *CompanyValuation) StockNews(req objects.RequestStockNews) (vList []obje
 	data, err := c.Client.R().
 		SetQueryParams(reqParam).
 		Get(c.url + urlAPICompanyValuationStockNews)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &vList)
+	if err != nil {
+		return nil, err
+	}
+
+	return vList, nil
+}
+
+// AnalystEstimates - analyst estimates of a stock (Annual || Quarter)
+func (c *CompanyValuation) AnalystEstimates(req objects.RequestAnalystEstimates) (vList []objects.AnalystEstimates, err error) {
+	reqParam := map[string]string{"apikey": c.apiKey}
+	if req.Period != objects.CompanyValuationPeriodAnnual {
+		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
+	}
+
+	data, err := c.Client.R().
+		SetQueryParams(reqParam).
+		Get(c.url + fmt.Sprintf(urlAPICompanyValuationAnalystEstimates, req.Symbol))
 
 	if err != nil {
 		return nil, err
