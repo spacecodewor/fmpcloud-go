@@ -96,12 +96,12 @@ return logger, nil
 
 // Init your custome API client
 APIClient, err := NewAPIClient(Config{
-    APIKey:  "YOU_KEY", // Set Your API Key from site,  default: demo
-    Debug:   true, // Set flag for debug request and response, default: false
-    Timeout: 60, // Set timeout for http client, default: 25
+    APIKey:  "YOU_KEY",      // Set Your API Key from site, default: demo
+    Debug:   true,           // Set flag for debug request and response, default: false
+    Timeout: 60,             // Set timeout for http client, default: 25
     APIUrl:  APIFmpcloudURL, // Set custom url (APIFmpcloudURL || APIFinancialModelingPrepURL), default: APIFinancialModelingPrepURL
-    Logger   logger, // Set your (zap) logger, default: init new
-    Version: "4", // Set custom API version
+    Logger   logger,         // Set your (zap) logger, default: init new
+    Version: "4",            // Set custom API version, default: 3
 })
 
 if err != nil {
