@@ -101,7 +101,7 @@ APIClient, err := NewAPIClient(Config{
     Timeout: 60,             // Set timeout for http client, default: 25
     APIUrl:  APIFmpcloudURL, // Set custom url (APIFmpcloudURL || APIFinancialModelingPrepURL), default: APIFinancialModelingPrepURL
     Logger   logger,         // Set your (zap) logger, default: init new
-    Version: "4",            // Set custom API version, default: 3
+    Version: "v4",            // Set custom API version, default: v3
 })
 
 if err != nil {
