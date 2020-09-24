@@ -32,14 +32,8 @@ go get -u github.com/spacecodewor/fmpcloud-go
 ```
 
 Example:
-
 ```go
-APIClient, err := NewAPIClient(Config{
-    APIKey: "YOU_KEY",
-    Debug:  true,
-    Timeout: 5,
-})
-
+APIClient, err := NewAPIClient(Config{APIKey: "YOU_KEY"})
 if err != nil {
     log.Println("Error init api client: " + err.Error())
 }
@@ -62,7 +56,7 @@ if err != nil {
     log.Println("Error get quote: " + err.Error())
 }
 
-// Crypto avalible simbol list
+// Crypto avalible symbol list
 cList, err := APIClient.Crypto.AvalibleSymbols()
 if err != nil {
     log.Println("Error get crypto symbols list: " + err.Error())
@@ -74,14 +68,44 @@ if err != nil {
     log.Println("Error get crypto quotes: " + err.Error())
 }
 
+// Forex avalible symbol list
 fList, err := APIClient.Forex.AvalibleSymbols()
 if err != nil {
     log.Println("Error get forex symbols list: " + err.Error())
 }
-    
+
+// Forex quotes list
 fQuotes, err := APIClient.Forex.Quotes()
 if err != nil {
     log.Println("Error get forex quotes: " + err.Error())
+}
+```
+
+Example custom client:
+```go
+// Init new instance for zap logger and config custom
+cfg := zap.NewProductionConfig()
+cfg.EncoderConfig.EncodeTime = zapcore.RFC3339TimeEncoder
+
+logger, err := cfg.Build()
+if err != nil {
+    return nil, errors.Wrap(err, "Logger Error: init")
+}
+
+return logger, nil
+
+// Init your custome API client
+APIClient, err := NewAPIClient(Config{
+    APIKey:  "YOU_KEY", // Set Your API Key from site,  default: demo
+    Debug:   true, // Set flag for debug request and response, default: false
+    Timeout: 60, // Set timeout for http client, default: 25
+    APIUrl:  APIFmpcloudURL, // Set custom url (APIFmpcloudURL || APIFinancialModelingPrepURL), default: APIFinancialModelingPrepURL
+    Logger   logger, // Set your (zap) logger, default: init new
+    Version: "4", // Set custom API version
+})
+
+if err != nil {
+    log.Println("Error init api client: " + err.Error())
 }
 ```
 
