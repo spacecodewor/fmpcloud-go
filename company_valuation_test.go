@@ -583,3 +583,54 @@ func TestAnalystEstimates(t *testing.T) {
 		}
 	}
 }
+
+func TestGrade(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	for _, symbol := range testCaseSymbolList {
+		_, err = APIClient.CompanyValuation.Grade(objects.RequestGrade{
+			Symbol: symbol,
+			Limit:  testCaseLimit,
+		})
+		if err != nil {
+			t.Fatal(err.Error())
+		}
+	}
+}
+
+func TestAnalystStockRecommendations(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	for _, symbol := range testCaseSymbolList {
+		_, err = APIClient.CompanyValuation.AnalystStockRecommendations(objects.RequestAnalystStockRecommendations{
+			Symbol: symbol,
+			Limit:  testCaseLimit,
+		})
+		if err != nil {
+			t.Fatal(err.Error())
+		}
+	}
+}
+
+func TestPressReleases(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	for _, symbol := range testCaseSymbolList {
+		_, err = APIClient.CompanyValuation.PressReleases(objects.RequestPressReleases{
+			Symbol: symbol,
+			Limit:  testCaseLimit,
+		})
+		if err != nil {
+			t.Fatal(err.Error())
+		}
+	}
+}

@@ -42,6 +42,13 @@ const (
 
 	CompanyValuationHistoryDaily CompanyValuationHistory = "daily"
 	CompanyValuationHistoryToday CompanyValuationHistory = "today"
+
+	GradeTypeBuy        GradeType = "Buy"
+	GradeTypeOutperform GradeType = "Outperform"
+	GradeTypeNeutral    GradeType = "Neutral"
+	GradeTypeOverweight GradeType = "Overweight"
+	GradeTypeReduce     GradeType = "Reduce"
+	GradeTypeHold       GradeType = "Hold"
 )
 
 // ETFSector ...
@@ -52,6 +59,9 @@ type CompanyValuationPeriod string
 
 // CompanyValuationHistory ...
 type CompanyValuationHistory string
+
+// GradeType ...
+type GradeType string
 
 // RequestIncomeStatement ...
 type RequestIncomeStatement struct {
@@ -180,6 +190,24 @@ type RequestMarketCapitalization struct {
 type RequestHistoryDiscountedCashFlow struct {
 	Symbol string
 	Period CompanyValuationPeriod
+	Limit  int64
+}
+
+// RequestGrade ...
+type RequestGrade struct {
+	Symbol string
+	Limit  int64
+}
+
+// RequestAnalystStockRecommendations ...
+type RequestAnalystStockRecommendations struct {
+	Symbol string
+	Limit  int64
+}
+
+// RequestPressReleases ...
+type RequestPressReleases struct {
+	Symbol string
 	Limit  int64
 }
 
@@ -1362,4 +1390,32 @@ type AnalystEstimates struct {
 	EstimatedEpsLow               float64 `json:"estimatedEpsLow"`
 	NumberAnalystEstimatedRevenue int64   `json:"numberAnalystEstimatedRevenue"`
 	NumberAnalystsEstimatedEps    int64   `json:"numberAnalystsEstimatedEps"`
+}
+
+// Grade ...
+type Grade struct {
+	Symbol         string    `json:"symbol"`
+	Date           string    `json:"date"` // 2020-09-22
+	GradingCompany string    `json:"gradingCompany"`
+	PreviousGrade  GradeType `json:"previousGrade"`
+	NewGrade       GradeType `json:"newGrade"`
+}
+
+// AnalystStockRecommendations ...
+type AnalystStockRecommendations struct {
+	Symbol                   string `json:"symbol"`
+	Date                     string `json:"date"` // 2020-08-01
+	AnalystRatingsbuy        int64  `json:"analystRatingsbuy"`
+	AnalystRatingsHold       int64  `json:"analystRatingsHold"`
+	AnalystRatingsSell       int64  `json:"analystRatingsSell"`
+	AnalystRatingsStrongSell int64  `json:"analystRatingsStrongSell"`
+	AnalystRatingsStrongBuy  int64  `json:"analystRatingsStrongBuy"`
+}
+
+// PressReleases ...
+type PressReleases struct {
+	Symbol string `json:"symbol"`
+	Date   string `json:"date"` // 2020-09-15 16:30:00
+	Title  string `json:"title"`
+	Text   string `json:"text"`
 }

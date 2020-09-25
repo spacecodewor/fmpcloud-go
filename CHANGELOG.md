@@ -20,3 +20,9 @@
 ## 1.0.4
 **Add support:**
 * Analyst Estimates (new endpoint)
+
+## 1.0.5
+**Add support:**
+* New endpoint: Press Releases
+* New endpoint: Analyst Stock Recommendations
+* New endpoint: Stock Grade

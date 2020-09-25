@@ -50,6 +50,9 @@ const (
 	urlAPICompanyValuationStockNews                        = "/stock_news"
 	urlAPICompanyValuationStockScreener                    = "/stock-screener"
 	urlAPICompanyValuationAnalystEstimates                 = "/analyst-estimates/%s"
+	urlAPICompanyValuationAnalystStockRecommendations      = "/analyst-stock-recommendations/%s"
+	urlAPICompanyValuationGrade                            = "/grade/%s"
+	urlAPICompanyValuationPressReleases                    = "/press-releases/%s"
 )
 
 // CompanyValuation client
@@ -914,4 +917,58 @@ func (c *CompanyValuation) AnalystEstimates(req objects.RequestAnalystEstimates)
 	}
 
 	return vList, nil
+}
+
+// Grade - stock grade from analysts
+func (c *CompanyValuation) Grade(req objects.RequestGrade) (gList []objects.Grade, err error) {
+	data, err := c.Client.R().
+		SetQueryParams(map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}).
+		Get(c.url + fmt.Sprintf(urlAPICompanyValuationGrade, req.Symbol))
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &gList)
+	if err != nil {
+		return nil, err
+	}
+
+	return gList, nil
+}
+
+// AnalystStockRecommendations - monthly stock analyst ratings
+func (c *CompanyValuation) AnalystStockRecommendations(req objects.RequestAnalystStockRecommendations) (rList []objects.AnalystStockRecommendations, err error) {
+	data, err := c.Client.R().
+		SetQueryParams(map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}).
+		Get(c.url + fmt.Sprintf(urlAPICompanyValuationAnalystStockRecommendations, req.Symbol))
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &rList)
+	if err != nil {
+		return nil, err
+	}
+
+	return rList, nil
+}
+
+// PressReleases - stock press releases
+func (c *CompanyValuation) PressReleases(req objects.RequestPressReleases) (prList []objects.PressReleases, err error) {
+	data, err := c.Client.R().
+		SetQueryParams(map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}).
+		Get(c.url + fmt.Sprintf(urlAPICompanyValuationPressReleases, req.Symbol))
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &prList)
+	if err != nil {
+		return nil, err
+	}
+
+	return prList, nil
 }

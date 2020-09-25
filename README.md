@@ -5,7 +5,7 @@
 ## Overview
 - API documentation [FmpCloud](https://fmpcloud.io/documentation) or [Financial Modeling Prep](https://financialmodelingprep.com/developer/docs/)
 - API version: 3
-- Package version: 1.0.4
+- Package version: 1.0.5
 
 ## Support Methods 
 * Company Valuation
@@ -23,7 +23,7 @@
 * Cryptocurrencies
 * Forex (FX)
 * Technical Indicators
-* Analyst Estimates
+* Stock Analysis
 
 
 ## Installation
@@ -101,7 +101,7 @@ APIClient, err := NewAPIClient(Config{
     Timeout: 60,             // Set timeout for http client, default: 25
     APIUrl:  APIFmpcloudURL, // Set custom url (APIFmpcloudURL || APIFinancialModelingPrepURL), default: APIFinancialModelingPrepURL
     Logger   logger,         // Set your (zap) logger, default: init new
-    Version: "v4",            // Set custom API version, default: v3
+    Version: "v4",           // Set custom API version, default: v3
 })
 
 if err != nil {
