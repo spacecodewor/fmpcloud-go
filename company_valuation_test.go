@@ -634,3 +634,20 @@ func TestPressReleases(t *testing.T) {
 		}
 	}
 }
+
+func TestStockScreener(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	sec := objects.StockScreenerSectorServices
+	_, err = APIClient.CompanyValuation.StockScreener(objects.RequestStockScreener{
+		Exchange: []string{string(objects.StockScreenerExchangeNasdaq)},
+		Sector:   &sec,
+		Limit:    testCaseLimit,
+	})
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+}

@@ -53,6 +53,10 @@ const (
 	urlAPICompanyValuationAnalystStockRecommendations      = "/analyst-stock-recommendations/%s"
 	urlAPICompanyValuationGrade                            = "/grade/%s"
 	urlAPICompanyValuationPressReleases                    = "/press-releases/%s"
+	urlAPICompanyValuationFinancialStatementsList          = "/financial-statement-symbol-lists"
+	urlAPICompanyValuationEconomicCalendarEventList        = "/economic_calendar_event_list"
+	urlAPICompanyValuationEconomicCalendar                 = "/economic_calendar"
+	urlAPICompanyValuationHistoryEconomicCalendar          = "/historical/economic_calendar/%s"
 )
 
 // CompanyValuation client
@@ -797,11 +801,11 @@ func (c *CompanyValuation) StockScreener(req objects.RequestStockScreener) (sLis
 	}
 
 	if req.Industry != nil {
-		reqParam["industry"] = *req.Industry
+		reqParam["industry"] = string(*req.Industry)
 	}
 
 	if req.Sector != nil {
-		reqParam["sector"] = *req.Sector
+		reqParam["sector"] = string(*req.Sector)
 	}
 
 	if req.MarketCapMoreThan != nil {
@@ -971,4 +975,85 @@ func (c *CompanyValuation) PressReleases(req objects.RequestPressReleases) (prLi
 	}
 
 	return prList, nil
+}
+
+// FinancialStatementList - List of symbols that have financial statements
+func (c *CompanyValuation) FinancialStatementList() (fsList []string, err error) {
+	data, err := c.Client.R().
+		SetQueryParams(map[string]string{"apikey": c.apiKey}).
+		Get(c.url + urlAPICompanyValuationFinancialStatementsList)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &fsList)
+	if err != nil {
+		return nil, err
+	}
+
+	return fsList, nil
+}
+
+// Economic Calendar - Economic Calendar for time period
+func (c *CompanyValuation) EconomicCalendar(req objects.RequestEconomicCalendar) (eList []objects.EconomicCalendar, err error) {
+	reqParam := map[string]string{"apikey": c.apiKey}
+	if req.From != nil {
+		reqParam["from"] = req.From.Format("2006-01-02")
+	}
+
+	if req.To != nil {
+		reqParam["to"] = req.To.Format("2006-01-02")
+	}
+
+	data, err := c.Client.R().
+		SetQueryParams(reqParam).
+		Get(c.url + urlAPICompanyValuationEconomicCalendar)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &eList)
+	if err != nil {
+		return nil, err
+	}
+
+	return eList, nil
+}
+
+// HistoryEconomicCalendar - Economic calendar event list
+func (c *CompanyValuation) HistoryEconomicCalendar(req objects.RequestHistoryEconomicCalendar) (hList []objects.HistoryEconomicCalendar, err error) {
+	data, err := c.Client.R().
+		SetQueryParams(map[string]string{"apikey": c.apiKey, "country": req.Country}).
+		Get(c.url + fmt.Sprintf(urlAPICompanyValuationHistoryEconomicCalendar, req.Event))
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &hList)
+	if err != nil {
+		return nil, err
+	}
+
+	return hList, nil
+}
+
+// EconomicCalendarEventList - Example of historical consumer sentiment in U.S. (take event name and country from event list endpoint)
+func (c *CompanyValuation) EconomicCalendarEventList() (eList []objects.EconomicCalendarEventList, err error) {
+	data, err := c.Client.R().
+		SetQueryParams(map[string]string{"apikey": c.apiKey}).
+		Get(c.url + urlAPICompanyValuationEconomicCalendarEventList)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &eList)
+	if err != nil {
+		return nil, err
+	}
+
+	return eList, nil
 }

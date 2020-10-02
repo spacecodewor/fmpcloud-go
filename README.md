@@ -24,7 +24,8 @@
 * Forex (FX)
 * Technical Indicators
 * Stock Analysis
-
+* Economic Calendar
+* [Formulas](https://financialmodelingprep.com/developer/docs/formula/)
 
 ## Installation
 ```sh
@@ -100,7 +101,7 @@ APIClient, err := NewAPIClient(Config{
     Debug:   true,           // Set flag for debug request and response, default: false
     Timeout: 60,             // Set timeout for http client, default: 25
     APIUrl:  APIFmpcloudURL, // Set custom url (APIFmpcloudURL || APIFinancialModelingPrepURL), default: APIFinancialModelingPrepURL
-    Logger   logger,         // Set your (zap) logger, default: init new
+    Logger:  logger,         // Set your (zap) logger, default: init new
     Version: "v4",           // Set custom API version, default: v3
 })
 

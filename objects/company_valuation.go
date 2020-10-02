@@ -1,5 +1,7 @@
 package objects
 
+import "time"
+
 // Base const type ETFSector, CompanyValuationPeriod, CompanyValuationHistory ...
 const (
 	ETFSectorHealthcare                        ETFSector = "Healthcare"
@@ -49,10 +51,52 @@ const (
 	GradeTypeOverweight GradeType = "Overweight"
 	GradeTypeReduce     GradeType = "Reduce"
 	GradeTypeHold       GradeType = "Hold"
+
+	StockScreenerSectorConsumerCyclical      StockScreenerSector = "Consumer Cyclical"
+	StockScreenerSectorEnergy                StockScreenerSector = "Energy"
+	StockScreenerSectorTechnology            StockScreenerSector = "Technology"
+	StockScreenerSectorIndustrialsl          StockScreenerSector = "Industrials"
+	StockScreenerSectorFinancialServices     StockScreenerSector = "Financial Services"
+	StockScreenerSectorBasicMaterials        StockScreenerSector = "Basic Materials"
+	StockScreenerSectorCommunicationServices StockScreenerSector = "Communication Services"
+	StockScreenerSectorConsumerDefensive     StockScreenerSector = "Consumer Defensive"
+	StockScreenerSectorHealthcare            StockScreenerSector = "Healthcare"
+	StockScreenerSectorRealEstate            StockScreenerSector = "Real Estate"
+	StockScreenerSectorUtilities             StockScreenerSector = "Utilities"
+	StockScreenerSectorIndustrialGoods       StockScreenerSector = "Industrial Goods"
+	StockScreenerSectorFinancial             StockScreenerSector = "Financial"
+	StockScreenerSectorServices              StockScreenerSector = "Services"
+	StockScreenerSectorConglomerates         StockScreenerSector = "Conglomerates"
+
+	StockScreenerIndustryAutos                 StockScreenerIndustry = "Autos"
+	StockScreenerIndustryBanks                 StockScreenerIndustry = "Banks"
+	StockScreenerIndustryBanksDiversified      StockScreenerIndustry = "Banks Diversified"
+	StockScreenerIndustrySoftware              StockScreenerIndustry = "Software"
+	StockScreenerIndustryBanksRegional         StockScreenerIndustry = "Banks Regional"
+	StockScreenerIndustryBeveragesAlcoholic    StockScreenerIndustry = "Beverages Alcoholic"
+	StockScreenerIndustryBeveragesBrewers      StockScreenerIndustry = "Beverages Brewers"
+	StockScreenerIndustryBeveragesNonAlcoholic StockScreenerIndustry = "Beverages Non-Alcoholic"
+
+	StockScreenerExchangeNYSE       StockScreenerExchange = "nyse"
+	StockScreenerExchangeNasdaq     StockScreenerExchange = "nasdaq"
+	StockScreenerExchangeAmex       StockScreenerExchange = "amex"
+	StockScreenerExchangeEuroNext   StockScreenerExchange = "euronext"
+	StockScreenerExchangeTSX        StockScreenerExchange = "tsx"
+	StockScreenerExchangeETF        StockScreenerExchange = "etf"
+	StockScreenerExchangeMutualFund StockScreenerExchange = "mutual_fund"
 )
 
 // ETFSector ...
 type ETFSector string
+
+// StockScreenerSector ...
+type StockScreenerSector string
+
+// StockScreenerIndustry ...
+type StockScreenerIndustry string
+
+// StockScreenerExchange ...
+type StockScreenerExchange string
 
 // CompanyValuationPeriod ...
 type CompanyValuationPeriod string
@@ -219,9 +263,9 @@ type RequestStockNews struct {
 
 // RequestStockScreener ...
 type RequestStockScreener struct {
-	Exchange           []string
-	Sector             *string
-	Industry           *string
+	Exchange           []string // Example: StockScreenerExchangeNYSE
+	Sector             *StockScreenerSector
+	Industry           *StockScreenerIndustry
 	Limit              int64
 	MarketCapMoreThan  *int64
 	MarketCapLowerThan *int64
@@ -244,6 +288,18 @@ type RequestEarningCallTranscript struct {
 type RequestAnalystEstimates struct {
 	Symbol string
 	Period CompanyValuationPeriod
+}
+
+// RequestEconomicCalendar ...
+type RequestEconomicCalendar struct {
+	From *time.Time
+	To   *time.Time
+}
+
+// RequestHistoryEconomicCalendar ...
+type RequestHistoryEconomicCalendar struct {
+	Event   string
+	Country string
 }
 
 // RssFeed ...
@@ -1418,4 +1474,33 @@ type PressReleases struct {
 	Date   string `json:"date"` // 2020-09-15 16:30:00
 	Title  string `json:"title"`
 	Text   string `json:"text"`
+}
+
+// EconomicCalendarEventList ...
+type EconomicCalendarEventList struct {
+	Event   string `json:"event"`
+	Country string `json:"country"`
+}
+
+// EconomicCalendar ...
+type EconomicCalendar struct {
+	Event            string   `json:"event"`
+	Date             string   `json:"date"` // 2020-09-16 11:00:00
+	Country          string   `json:"country"`
+	Actual           *float64 `json:"actual"`
+	Previous         *float64 `json:"previous"`
+	Change           *float64 `json:"change"`
+	ChangePercentage *float64 `json:"changePercentage"`
+	Estimate         *float64 `json:"estimate"`
+}
+
+// HistoryEconomicCalendar ...
+type HistoryEconomicCalendar struct {
+	Event            string  `json:"event"`
+	Date             string  `json:"date"` // 2020-09-16
+	Country          string  `json:"country"`
+	Actual           float64 `json:"actual"`
+	Previous         float64 `json:"previous"`
+	Change           float64 `json:"change"`
+	ChangePercentage float64 `json:"changePercentage"`
 }

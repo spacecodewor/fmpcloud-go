@@ -26,3 +26,9 @@
 * New endpoint: Press Releases
 * New endpoint: Analyst Stock Recommendations
 * New endpoint: Stock Grade
+
+## 1.0.7
+**Add support:**
+* New endpoint: Financial Statements List
+* New endpoint: Economic Calendar
+* New website: Formulas
