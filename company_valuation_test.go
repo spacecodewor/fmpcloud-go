@@ -38,6 +38,20 @@ func TestEarningCalendar(t *testing.T) {
 	}
 }
 
+func TestEarningSurpriseList(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	for _, symbol := range testCaseSymbolList {
+		_, err = APIClient.CompanyValuation.EarningSurpriseList(symbol)
+		if err != nil {
+			t.Fatal(err.Error())
+		}
+	}
+}
+
 func TestEarningCallTranscript(t *testing.T) {
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {

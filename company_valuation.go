@@ -14,10 +14,11 @@ import (
 const (
 	urlAPICompanyValuationRSSFeed                          = "/rss_feed"
 	urlAPICompanyValuationEarningCalendar                  = "/earning_calendar"
+	urlAPICompanyValuationEarningsSurpises                 = "/earnings-surpises/%s"
 	urlAPICompanyValuationEarningCallTranscript            = "/earning_call_transcript/%s"
 	urlAPICompanyValuationHistoryEarningCalendar           = "/historical/earning_calendar/%s"
 	urlAPICompanyValuationIPOCalendar                      = "/ipo_calendar"
-	urlAPICompanyValuationSplitCalendar                    = "/ipo_calendar"
+	urlAPICompanyValuationSplitCalendar                    = "/stock_split_calendar"
 	urlAPICompanyValuationDividendCalendar                 = "/stock_dividend_calendar"
 	urlAPICompanyValuationInstituionalHolder               = "/institutional-holder/%s"
 	urlAPICompanyValuationMutualFundHolder                 = "/mutual-fund-holder/%s"
@@ -98,6 +99,24 @@ func (c *CompanyValuation) EarningCalendar(from, to *time.Time) (eList []objects
 	data, err := c.Client.R().
 		SetQueryParams(reqParam).
 		Get(c.url + urlAPICompanyValuationEarningCalendar)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &eList)
+	if err != nil {
+		return nil, err
+	}
+
+	return eList, nil
+}
+
+// EarningSurpriseList ...
+func (c *CompanyValuation) EarningSurpriseList(symbol string) (eList []objects.EarningSurprise, err error) {
+	data, err := c.Client.R().
+		SetQueryParams(map[string]string{"apikey": c.apiKey}).
+		Get(c.url + fmt.Sprintf(urlAPICompanyValuationEarningsSurpises, symbol))
 
 	if err != nil {
 		return nil, err
@@ -995,7 +1014,7 @@ func (c *CompanyValuation) FinancialStatementList() (fsList []string, err error)
 	return fsList, nil
 }
 
-// Economic Calendar - Economic Calendar for time period
+// EconomicCalendar - Economic Calendar for time period
 func (c *CompanyValuation) EconomicCalendar(req objects.RequestEconomicCalendar) (eList []objects.EconomicCalendar, err error) {
 	reqParam := map[string]string{"apikey": c.apiKey}
 	if req.From != nil {

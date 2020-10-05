@@ -32,3 +32,13 @@
 * New endpoint: Financial Statements List
 * New endpoint: Economic Calendar
 * New website: Formulas
+
+## 1.0.9
+**Fix:**
+* Error url, for request split calendar (method SplitCalendar)
+* Linters error
+
+**Add support:**
+* New properties: currency, isin and cusip for: Company Profile
+* New properties: dividend, recordDate, paymentDate and declarationDate for: Historical Dividends
+* New endpoint: Earnings Surprises

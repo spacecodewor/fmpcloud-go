@@ -130,6 +130,9 @@ type StockCompanyProfile struct {
 	Range             string  `json:"range"`
 	Changes           float64 `json:"changes"`
 	CompanyName       string  `json:"companyName"`
+	Currency          string  `json:"currency"`
+	Isin              string  `json:"isin"`
+	Cusip             string  `json:"cusip"`
 	Exchange          string  `json:"exchange"`
 	ExchangeShortName string  `json:"exchangeShortName"`
 	Industry          string  `json:"industry"`
@@ -183,9 +186,13 @@ type StockDividends struct {
 
 // StockDividendsInfo ...
 type StockDividendsInfo struct {
-	Date        string  `json:"date"`
-	Label       string  `json:"label"`
-	AdjDividend float64 `json:"adjDividend"`
+	Date            string  `json:"date"`            // "2014-06-09"
+	Label           string  `json:"label"`           // February 28, 05
+	RecordDate      string  `json:"recordDate"`      // "2014-06-09"
+	PaymentDate     string  `json:"paymentDate"`     // "2014-06-09"
+	DeclarationDate string  `json:"declarationDate"` // "2014-06-09"
+	AdjDividend     float64 `json:"adjDividend"`
+	Dividend        float64 `json:"dividend"`
 }
 
 // RequestStockCandleList ...

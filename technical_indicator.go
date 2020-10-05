@@ -20,7 +20,7 @@ type TechnicalIndicator struct {
 	apiKey string
 }
 
-// Daily Indicators. Types: SMA - EMA - WMA - DEMA - TEMA - williams - RSI - ADX - standardDeviation
+// Indicators - Daily Indicators. Types: SMA - EMA - WMA - DEMA - TEMA - williams - RSI - ADX - standardDeviation
 func (t *TechnicalIndicator) Indicators(req objects.RequestIndicators) (iList []objects.ResponseIndicators, err error) {
 	data, err := t.Client.R().
 		SetQueryParams(map[string]string{

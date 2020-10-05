@@ -1494,6 +1494,14 @@ type EconomicCalendar struct {
 	Estimate         *float64 `json:"estimate"`
 }
 
+// EarningSurprise ...
+type EarningSurprise struct {
+	Date                string  `json:"date"` // 2020-09-08
+	Symbol              string  `json:"symbol"`
+	ActualEarningResult float64 `json:"actualEarningResult"`
+	EstimatedEarning    float64 `json:"estimatedEarning"`
+}
+
 // HistoryEconomicCalendar ...
 type HistoryEconomicCalendar struct {
 	Event            string  `json:"event"`
