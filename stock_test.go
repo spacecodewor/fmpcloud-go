@@ -212,7 +212,19 @@ func TestStockSymbolList(t *testing.T) {
 		t.Fatal(err.Error())
 	}
 
-	_, err = APIClient.Stock.SymbolList(objects.StockSymbolAll)
+	_, err = APIClient.Stock.AvalibleSymbols()
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+}
+
+func TestAvalibleSymbolsByExchange(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	_, err = APIClient.Stock.AvalibleSymbolsByExchange(objects.StockSymbolNasdaq)
 	if err != nil {
 		t.Fatal(err.Error())
 	}

@@ -328,16 +328,29 @@ func (s *Stock) Splits(symbol string) (sList *objects.StockSplit, err error) {
 	return sList, nil
 }
 
-// SymbolList - symbol list by exchange or all available symbols
-func (s *Stock) SymbolList(exchange objects.StockSymbolExchange) (sList []objects.StockSymbolList, err error) {
-	url := s.url + urlAPIStockSymbolList
-	if exchange != objects.StockSymbolAll {
-		url = s.url + fmt.Sprintf(urlAPIStockSymbolByExchangeList, string(exchange))
-	}
-
+// AvalibleSymbolsByExchange - symbol list by exchange
+func (s *Stock) AvalibleSymbolsByExchange(exchange objects.StockSymbolExchange) (sList []objects.StockSymbol, err error) {
 	data, err := s.Client.R().
 		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(url)
+		Get(s.url + fmt.Sprintf(urlAPIStockSymbolByExchangeList, string(exchange)))
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// AvalibleSymbols - all avalible symbol list
+func (s *Stock) AvalibleSymbols() (sList []objects.StockSymbolList, err error) {
+	data, err := s.Client.R().
+		SetQueryParams(map[string]string{"apikey": s.apiKey}).
+		Get(s.url + urlAPIStockSymbolList)
 
 	if err != nil {
 		return nil, err
