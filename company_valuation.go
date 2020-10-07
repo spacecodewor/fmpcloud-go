@@ -38,6 +38,7 @@ const (
 	urlAPICompanyValuationFinancialRatios                  = "/ratios/%s"
 	urlAPICompanyValuationFinancialRatiosTTM               = "/ratios-ttm/%s"
 	urlAPICompanyValuationKeyMetrics                       = "/key-metrics/%s"
+	urlAPICompanyValuationKeyMetricsTTM                    = "/key-metrics-ttm/%s"
 	urlAPICompanyValuationEnterpriseValues                 = "/enterprise-values/%s"
 	urlAPICompanyValuationFinancialGrowth                  = "/financial-growth/%s"
 	urlAPICompanyValuationDiscountedCashFlow               = "/discounted-cash-flow/%s"
@@ -622,6 +623,24 @@ func (c *CompanyValuation) KeyMetrics(req objects.RequestKeyMetrics) (mList []ob
 	data, err := c.Client.R().
 		SetQueryParams(reqParam).
 		Get(c.url + fmt.Sprintf(urlAPICompanyValuationKeyMetrics, req.Symbol))
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &mList)
+	if err != nil {
+		return nil, err
+	}
+
+	return mList, nil
+}
+
+// KeyMetricsTTM - key metrics ttm
+func (c *CompanyValuation) KeyMetricsTTM(symbol string) (mList []objects.KeyMetricsTTM, err error) {
+	data, err := c.Client.R().
+		SetQueryParams(map[string]string{"apikey": c.apiKey}).
+		Get(c.url + fmt.Sprintf(urlAPICompanyValuationKeyMetricsTTM, symbol))
 
 	if err != nil {
 		return nil, err

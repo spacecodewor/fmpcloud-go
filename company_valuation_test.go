@@ -435,6 +435,20 @@ func TestKeyMetrics(t *testing.T) {
 	}
 }
 
+func TestKeyMetricsTTM(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	for _, symbol := range testCaseSymbolList {
+		_, err = APIClient.CompanyValuation.KeyMetricsTTM(symbol)
+		if err != nil {
+			t.Fatal(err.Error())
+		}
+	}
+}
+
 func TestEnterpriseValue(t *testing.T) {
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {

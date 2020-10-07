@@ -42,3 +42,11 @@
 * New properties: currency, isin and cusip for: Company Profile
 * New properties: dividend, recordDate, paymentDate and declarationDate for: Historical Dividends
 * New endpoint: Earnings Surprises
+
+## 1.0.10
+**Fix:**
+* License
+
+**Add support:**
+* New endpoint for: Key Metrics TTM
+* New properties: currentRatioTTM, quickRatioTTM, cashRatioTTM, daysOfSalesOutstandingTTM, daysOfInventoryOutstandingTTM and more for: Company TTM ratios
