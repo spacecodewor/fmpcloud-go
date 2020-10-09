@@ -59,6 +59,7 @@ const (
 	urlAPICompanyValuationEconomicCalendarEventList        = "/economic_calendar_event_list"
 	urlAPICompanyValuationEconomicCalendar                 = "/economic_calendar"
 	urlAPICompanyValuationHistoryEconomicCalendar          = "/historical/economic_calendar/%s"
+	urlAPICompanyValuationSECFillings                      = "/sec_filings/%s"
 )
 
 // CompanyValuation client
@@ -1047,6 +1048,29 @@ func (c *CompanyValuation) EconomicCalendar(req objects.RequestEconomicCalendar)
 	data, err := c.Client.R().
 		SetQueryParams(reqParam).
 		Get(c.url + urlAPICompanyValuationEconomicCalendar)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &eList)
+	if err != nil {
+		return nil, err
+	}
+
+	return eList, nil
+}
+
+// SECFilings - SEC Filings with type or no (10-K || 4 || 8-K || 424B2 || FWP || SC 13G/A || SD || 10-Q || PX14A6G || DEFA14A || DEF 14A || 8-A12B || CERT || 25 ...)
+func (c *CompanyValuation) SECFilings(req objects.RequestSECFilings) (eList []objects.SECFiling, err error) {
+	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	if req.Type != nil {
+		reqParam["type"] = *req.Type
+	}
+
+	data, err := c.Client.R().
+		SetQueryParams(reqParam).
+		Get(c.url + fmt.Sprintf(urlAPICompanyValuationSECFillings, req.Symbol))
 
 	if err != nil {
 		return nil, err

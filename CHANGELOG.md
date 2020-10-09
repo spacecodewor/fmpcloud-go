@@ -50,3 +50,7 @@
 **Add support:**
 * New endpoint for: Key Metrics TTM
 * New properties: currentRatioTTM, quickRatioTTM, cashRatioTTM, daysOfSalesOutstandingTTM, daysOfInventoryOutstandingTTM and more for: Company TTM ratios
+
+## 1.0.11
+**Add support:**
+* New endpoint: SEC Filings

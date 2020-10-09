@@ -296,6 +296,13 @@ type RequestEconomicCalendar struct {
 	To   *time.Time
 }
 
+// RequestSECFilings ...
+type RequestSECFilings struct {
+	Symbol string
+	Type   *string
+	Limit  int64
+}
+
 // RequestHistoryEconomicCalendar ...
 type RequestHistoryEconomicCalendar struct {
 	Event   string
@@ -1626,4 +1633,15 @@ type HistoryEconomicCalendar struct {
 	Previous         float64 `json:"previous"`
 	Change           float64 `json:"change"`
 	ChangePercentage float64 `json:"changePercentage"`
+}
+
+// SECFiling ...
+type SECFiling struct {
+	Symbol       string `json:"symbol"`
+	FillingDate  string `json:"fillingDate"`
+	AcceptedDate string `json:"acceptedDate"`
+	Cik          string `json:"cik"`
+	Type         string `json:"type"`
+	Link         string `json:"link"`
+	FinalLink    string `json:"finalLink"`
 }
