@@ -200,8 +200,17 @@ func (s *Stock) CompanyExecutive(symbol string) (companyProfile []objects.Compan
 
 // Candles - historical candles
 func (s *Stock) Candles(req objects.RequestStockCandleList) (cList []objects.StockCandle, err error) {
+	reqParam := map[string]string{"apikey": s.apiKey}
+	if req.From != nil {
+		reqParam["from"] = req.From.Format("2006-01-02")
+	}
+
+	if req.To != nil {
+		reqParam["to"] = req.To.Format("2006-01-02")
+	}
+
 	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
+		SetQueryParams(reqParam).
 		Get(s.url + fmt.Sprintf(urlAPIStockCandles, req.Period, req.Symbol))
 
 	if err != nil {

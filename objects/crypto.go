@@ -1,5 +1,7 @@
 package objects
 
+import "time"
+
 // CryptoCandlePeriod and CryptoSerieTypeLine
 const (
 	CryptoCandlePeriod1Min  CryptoCandlePeriod = "1min"
@@ -67,6 +69,8 @@ type CryptoQuote struct {
 type RequestCryptoCandleList struct {
 	Period CryptoCandlePeriod
 	Symbol string
+	From   *time.Time
+	To     *time.Time
 }
 
 // CryptoDailyLineList ...

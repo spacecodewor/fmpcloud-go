@@ -81,8 +81,17 @@ func (f *Forex) ListSymbolsAndQuotes() (bList []objects.ForexBindAsk, err error)
 
 // Candles - historical candles
 func (f *Forex) Candles(req objects.RequestForexCandleList) (cList []objects.ForexCandle, err error) {
+	reqParam := map[string]string{"apikey": f.apiKey}
+	if req.From != nil {
+		reqParam["from"] = req.From.Format("2006-01-02")
+	}
+
+	if req.To != nil {
+		reqParam["to"] = req.To.Format("2006-01-02")
+	}
+
 	data, err := f.Client.R().
-		SetQueryParams(map[string]string{"apikey": f.apiKey}).
+		SetQueryParams(reqParam).
 		Get(f.url + fmt.Sprintf(urlAPIForexCandles, req.Period, req.Symbol))
 
 	if err != nil {

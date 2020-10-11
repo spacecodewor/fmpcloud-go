@@ -1,5 +1,7 @@
 package objects
 
+import "time"
+
 // Base const type StockSerieType, StockCnadlePeriod, StockSearch, StockSector, StockSymbolExchange
 const (
 	StockSerieTypeLine StockSerieType = "line"
@@ -199,6 +201,8 @@ type StockDividendsInfo struct {
 type RequestStockCandleList struct {
 	Period StockCnadlePeriod
 	Symbol string
+	From   *time.Time
+	To     *time.Time
 }
 
 // StockDailyLineList ...

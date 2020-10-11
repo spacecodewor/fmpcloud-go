@@ -54,3 +54,8 @@
 ## 1.0.11
 **Add support:**
 * New endpoint: SEC Filings
+
+## 1.0.12
+**Add support:**
+* New website: Status
+* New properties: From and To (time) for request Candles - historical candles (Stock, Forex, Crypto)

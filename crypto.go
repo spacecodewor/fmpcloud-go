@@ -62,8 +62,17 @@ func (c *Crypto) Quotes() (qList []objects.CryptoQuote, err error) {
 
 // Candles - Historical candles
 func (c *Crypto) Candles(req objects.RequestCryptoCandleList) (cList []objects.CryptoCandle, err error) {
+	reqParam := map[string]string{"apikey": c.apiKey}
+	if req.From != nil {
+		reqParam["from"] = req.From.Format("2006-01-02")
+	}
+
+	if req.To != nil {
+		reqParam["to"] = req.To.Format("2006-01-02")
+	}
+
 	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
+		SetQueryParams(reqParam).
 		Get(c.url + fmt.Sprintf(urlAPICryptoCandles, req.Period, req.Symbol))
 
 	if err != nil {

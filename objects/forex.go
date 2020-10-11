@@ -1,5 +1,7 @@
 package objects
 
+import "time"
+
 // CryptoCandlePeriod and CryptoSerieTypeLine
 const (
 	ForexCnadlePeriod1Min  ForexCnadlePeriod = "1min"
@@ -79,6 +81,8 @@ type ForexQuote struct {
 type RequestForexCandleList struct {
 	Period ForexCnadlePeriod
 	Symbol string
+	From   *time.Time
+	To     *time.Time
 }
 
 // ForexDailyLineList ...

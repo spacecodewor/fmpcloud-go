@@ -5,7 +5,7 @@
 ## Overview
 - API documentation [FmpCloud](https://fmpcloud.io/documentation) or [Financial Modeling Prep](https://financialmodelingprep.com/developer/docs/)
 - API version: 3
-- Package version: 1.0.11
+- Package version: 1.0.12
 
 ## Support Methods 
 * Company Valuation
@@ -26,6 +26,7 @@
 * Stock Analysis
 * Economic Calendar
 * [Formulas](https://financialmodelingprep.com/developer/docs/formula/)
+* [Status](https://financialmodelingprep.com/developer/docs/status/)
 
 ## Installation
 ```sh
@@ -109,6 +110,15 @@ if err != nil {
     log.Println("Error init api client: " + err.Error())
 }
 ```
+
+## FAQ
+Historical candles support (count) (Daily from 1980):
+* 1 minute 400 periods
+* 5 minutes 400 periods
+* 15 min 200 periods
+* 30 minutes 200 periods
+* 1 hour 200 periods
+* 4 hours 200 periods
 
 ## License
 [Apache](https://github.com/spacecodewor/fmpcloud-go/blob/master/LICENSE)
