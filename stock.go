@@ -383,9 +383,9 @@ func (s *Stock) IndexConstituentList(index objects.Index) (sList []objects.Index
 	switch index {
 	case objects.IndexSP500:
 		url += urlAPIStockSP500List
-	case objects.IndexDJ:
+	case objects.IndexDowJones:
 		url += urlAPIStockDowJonesList
-	case objects.IndexNasdaq:
+	case objects.IndexNasdaq100:
 		url += urlAPIStockNasdaqList
 	}
 
@@ -411,9 +411,9 @@ func (s *Stock) HistoryIndexConstituentList(index objects.Index) (sList []object
 	switch index {
 	case objects.IndexSP500:
 		url += urlAPIStockHistorySP500List
-	case objects.IndexDJ:
+	case objects.IndexDowJones:
 		url += urlAPIStockHistoryDowJonesList
-	case objects.IndexNasdaq:
+	case objects.IndexNasdaq100:
 		url += urlAPIStockHistoryNasdaqList
 	}
 	data, err := s.Client.R().

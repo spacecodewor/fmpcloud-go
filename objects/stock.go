@@ -25,9 +25,9 @@ const (
 	StockSearchForex      StockSearch = "forex"
 	StockSearchCrypto     StockSearch = "crypto"
 
-	IndexSP500  Index = "commodity"
-	IndexDJ     Index = "forex"
-	IndexNasdaq Index = "crypto"
+	IndexSP500     Index = "S&P 500"
+	IndexDowJones  Index = "Dow Jones"
+	IndexNasdaq100 Index = "Nasdaq 100"
 
 	StockSectorBasicMaterials        StockSector = "Basic Materials"
 	StockSectorBuilding              StockSector = "Building"

@@ -71,3 +71,7 @@
 **Other:**
 * Method renamed SP500CompanyList => IndexConstituentList
 * Method renamed HistorySP500CompanyList => HistoryIndexConstituentList
+
+## 1.1.1
+**Fix:**
+* Index const
