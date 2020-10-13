@@ -25,6 +25,10 @@ const (
 	StockSearchForex      StockSearch = "forex"
 	StockSearchCrypto     StockSearch = "crypto"
 
+	IndexSP500  Index = "commodity"
+	IndexDJ     Index = "forex"
+	IndexNasdaq Index = "crypto"
+
 	StockSectorBasicMaterials        StockSector = "Basic Materials"
 	StockSectorBuilding              StockSector = "Building"
 	StockSectorCommunicationServices StockSector = "Communication Services"
@@ -62,6 +66,9 @@ type StockSymbolExchange string
 
 // StockSearch ...
 type StockSearch string
+
+// Index ...
+type Index string
 
 // StockSector ...
 type StockSector string
@@ -133,6 +140,7 @@ type StockCompanyProfile struct {
 	Changes           float64 `json:"changes"`
 	CompanyName       string  `json:"companyName"`
 	Currency          string  `json:"currency"`
+	Cik               string  `json:"cik"`
 	Isin              string  `json:"isin"`
 	Cusip             string  `json:"cusip"`
 	Exchange          string  `json:"exchange"`
@@ -258,8 +266,8 @@ type StockSymbolList struct {
 	Exchange string  `json:"exchange"`
 }
 
-// StockSP500Symbol ...
-type StockSP500Symbol struct {
+// IndexSymbol ...
+type IndexSymbol struct {
 	Symbol         string `json:"symbol"`
 	Name           string `json:"name"`
 	Sector         string `json:"sector"`
@@ -270,8 +278,8 @@ type StockSP500Symbol struct {
 	Founded        string `json:"founded"`
 }
 
-// StockHistorySP500Symbol ...
-type StockHistorySP500Symbol struct {
+// HistoryIndexSymbol ...
+type HistoryIndexSymbol struct {
 	DateAdded       string `json:"dateAdded"` // July 26, 2017
 	AddedSecurity   string `json:"addedSecurity"`
 	RemovedTicker   string `json:"removedTicker"`

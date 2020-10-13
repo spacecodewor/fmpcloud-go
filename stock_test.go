@@ -230,25 +230,25 @@ func TestAvalibleSymbolsByExchange(t *testing.T) {
 	}
 }
 
-func TestStockSP500CompanyList(t *testing.T) {
+func TestIndexConstituentList(t *testing.T) {
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
 
-	_, err = APIClient.Stock.SP500CompanyList()
+	_, err = APIClient.Stock.IndexConstituentList(objects.IndexSP500)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
 }
 
-func TestStockHistorySP500CompanyList(t *testing.T) {
+func TestHistoryIndexConstituentList(t *testing.T) {
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
 
-	_, err = APIClient.Stock.HistorySP500CompanyList()
+	_, err = APIClient.Stock.HistoryIndexConstituentList(objects.IndexSP500)
 	if err != nil {
 		t.Fatal(err.Error())
 	}

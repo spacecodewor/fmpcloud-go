@@ -27,6 +27,10 @@ const (
 	urlAPIStockDaily                     = "/historical-price-full/%s"
 	urlAPIStockSP500List                 = "/sp500_constituent"
 	urlAPIStockHistorySP500List          = "/historical/sp500_constituent"
+	urlAPIStockDowJonesList              = "/dowjones_constituent"
+	urlAPIStockHistoryDowJonesList       = "/historical/dowjones_constituent"
+	urlAPIStockNasdaqList                = "/nasdaq_constituent"
+	urlAPIStockHistoryNasdaqList         = "/historical/nasdaq_constituent"
 	urlAPIStockEODCandles                = "/batch-request-end-of-day-prices"
 	urlAPIStockEODBatchCandles           = "/batch-request-end-of-day-prices/%s"
 	urlAPIStockMarketHours               = "/market-hours"
@@ -373,11 +377,21 @@ func (s *Stock) AvalibleSymbols() (sList []objects.StockSymbolList, err error) {
 	return sList, nil
 }
 
-// SP500CompanyList - list of S&P 500 companies
-func (s *Stock) SP500CompanyList() (sList []objects.StockSP500Symbol, err error) {
+// IndexConstituentList - list of index companies (SP500, Nasdaq, DJ)
+func (s *Stock) IndexConstituentList(index objects.Index) (sList []objects.IndexSymbol, err error) {
+	url := s.url
+	switch index {
+	case objects.IndexSP500:
+		url += urlAPIStockSP500List
+	case objects.IndexDJ:
+		url += urlAPIStockDowJonesList
+	case objects.IndexNasdaq:
+		url += urlAPIStockNasdaqList
+	}
+
 	data, err := s.Client.R().
 		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + urlAPIStockSP500List)
+		Get(url)
 
 	if err != nil {
 		return nil, err
@@ -391,11 +405,20 @@ func (s *Stock) SP500CompanyList() (sList []objects.StockSP500Symbol, err error)
 	return sList, nil
 }
 
-// HistorySP500CompanyList - historical S&P 500 constituents list
-func (s *Stock) HistorySP500CompanyList() (sList []objects.StockHistorySP500Symbol, err error) {
+// HistoryIndexConstituentList - historical index companies list (SP500, Nasdaq, DJ)
+func (s *Stock) HistoryIndexConstituentList(index objects.Index) (sList []objects.HistoryIndexSymbol, err error) {
+	url := s.url
+	switch index {
+	case objects.IndexSP500:
+		url += urlAPIStockHistorySP500List
+	case objects.IndexDJ:
+		url += urlAPIStockHistoryDowJonesList
+	case objects.IndexNasdaq:
+		url += urlAPIStockHistoryNasdaqList
+	}
 	data, err := s.Client.R().
 		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + urlAPIStockHistorySP500List)
+		Get(url)
 
 	if err != nil {
 		return nil, err

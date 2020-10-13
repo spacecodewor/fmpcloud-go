@@ -59,3 +59,15 @@
 **Add support:**
 * New website: Status
 * New properties: From and To (time) for request Candles - historical candles (Stock, Forex, Crypto)
+
+## 1.1.0
+**Add support:**
+* New endpoint: List of Dow Jones companies
+* New property: cik for: Company Profile
+* New endpoint: List of Nasdaq 100 companies
+* New endpoint: Historical Nasdaq 100
+* New endpoint: Historical Dow Jones
+
+**Other:**
+* Method renamed SP500CompanyList => IndexConstituentList
+* Method renamed HistorySP500CompanyList => HistoryIndexConstituentList
