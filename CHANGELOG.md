@@ -75,3 +75,7 @@
 ## 1.1.1
 **Fix:**
 * Index const
+
+## 1.1.2
+**Fix:**
+* Period const and types renamed (forex, stock, crypto)
