@@ -114,7 +114,7 @@ func TestStockCandles(t *testing.T) {
 	for _, symbol := range testCaseSymbolList {
 		_, err = APIClient.Stock.Candles(objects.RequestStockCandleList{
 			Symbol: symbol,
-			Period: objects.StockCnadlePeriod1Min,
+			Period: objects.StockCandlePeriod1Min,
 		})
 		if err != nil {
 			t.Fatal(err.Error())

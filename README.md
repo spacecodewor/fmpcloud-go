@@ -113,12 +113,12 @@ if err != nil {
 
 ## FAQ
 Historical candles support (count) (Daily from 1980):
-* 1 minute 400 periods
-* 5 minutes 400 periods
-* 15 min 200 periods
-* 30 minutes 200 periods
-* 1 hour 200 periods
-* 4 hours 200 periods
+* 1 minute 400 periods (1 day)
+* 5 minutes 400 periods (1 week)
+* 15 min 200 periods (2 days)
+* 30 minutes 200 periods (4 days)
+* 1 hour 200 periods (8 days)
+* 4 hours 200 periods (33 days)
 
 ## License
 [Apache](https://github.com/spacecodewor/fmpcloud-go/blob/master/LICENSE)

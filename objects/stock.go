@@ -2,16 +2,16 @@ package objects
 
 import "time"
 
-// Base const type StockSerieType, StockCnadlePeriod, StockSearch, StockSector, StockSymbolExchange
+// Base const type StockSerieType, StockCandlePeriod, StockSearch, StockSector, StockSymbolExchange
 const (
 	StockSerieTypeLine StockSerieType = "line"
 
-	StockCnadlePeriod1Min  StockCnadlePeriod = "1min"
-	StockCnadlePeriod5Min  StockCnadlePeriod = "5min"
-	StockCnadlePeriod15Min StockCnadlePeriod = "15min"
-	StockCnadlePeriod30Min StockCnadlePeriod = "30min"
-	StockCnadlePeriod1Hour StockCnadlePeriod = "1hour"
-	StockCnadlePeriod4Hour StockCnadlePeriod = "4hour"
+	StockCandlePeriod1Min  StockCandlePeriod = "1min"
+	StockCandlePeriod5Min  StockCandlePeriod = "5min"
+	StockCandlePeriod15Min StockCandlePeriod = "15min"
+	StockCandlePeriod30Min StockCandlePeriod = "30min"
+	StockCandlePeriod1Hour StockCandlePeriod = "1hour"
+	StockCandlePeriod4Hour StockCandlePeriod = "4hour"
 
 	StockSearchNasdaq     StockSearch = "nasdaq"
 	StockSearchNYSE       StockSearch = "nyse"
@@ -73,8 +73,8 @@ type Index string
 // StockSector ...
 type StockSector string
 
-// StockCnadlePeriod ...
-type StockCnadlePeriod string
+// StockCandlePeriod ...
+type StockCandlePeriod string
 
 // StockSerieType ...
 type StockSerieType string
@@ -207,7 +207,7 @@ type StockDividendsInfo struct {
 
 // RequestStockCandleList ...
 type RequestStockCandleList struct {
-	Period StockCnadlePeriod
+	Period StockCandlePeriod
 	Symbol string
 	From   *time.Time
 	To     *time.Time

@@ -2,20 +2,20 @@ package objects
 
 import "time"
 
-// CryptoCandlePeriod and CryptoSerieTypeLine
+// ForexCandlePeriod and ForexSerieType
 const (
-	ForexCnadlePeriod1Min  ForexCnadlePeriod = "1min"
-	ForexCnadlePeriod5Min  ForexCnadlePeriod = "5min"
-	ForexCnadlePeriod15Min ForexCnadlePeriod = "15min"
-	ForexCnadlePeriod30Min ForexCnadlePeriod = "30min"
-	ForexCnadlePeriod1Hour ForexCnadlePeriod = "1hour"
-	ForexCnadlePeriod4Hour ForexCnadlePeriod = "4hour"
+	ForexCandlePeriod1Min  ForexCandlePeriod = "1min"
+	ForexCandlePeriod5Min  ForexCandlePeriod = "5min"
+	ForexCandlePeriod15Min ForexCandlePeriod = "15min"
+	ForexCandlePeriod30Min ForexCandlePeriod = "30min"
+	ForexCandlePeriod1Hour ForexCandlePeriod = "1hour"
+	ForexCandlePeriod4Hour ForexCandlePeriod = "4hour"
 
 	ForexSerieTypeLine ForexSerieType = "line"
 )
 
-// ForexCnadlePeriod ...
-type ForexCnadlePeriod string
+// ForexCandlePeriod ...
+type ForexCandlePeriod string
 
 // ForexSerieType ...
 type ForexSerieType string
@@ -79,7 +79,7 @@ type ForexQuote struct {
 
 // RequestForexCandleList ...
 type RequestForexCandleList struct {
-	Period ForexCnadlePeriod
+	Period ForexCandlePeriod
 	Symbol string
 	From   *time.Time
 	To     *time.Time

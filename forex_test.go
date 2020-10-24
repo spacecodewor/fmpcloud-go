@@ -51,7 +51,7 @@ func TestForexCandles(t *testing.T) {
 
 	_, err = APIClient.Forex.Candles(
 		objects.RequestForexCandleList{
-			Period: objects.ForexCnadlePeriod1Min,
+			Period: objects.ForexCandlePeriod1Min,
 			Symbol: "JPYUSD",
 		})
 
