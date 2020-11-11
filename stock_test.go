@@ -136,6 +136,20 @@ func TestStockDailyLine(t *testing.T) {
 	}
 }
 
+func TestDailyBatch(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	from := time.Now().AddDate(0, 0, -10)
+	to := time.Now()
+	_, err = APIClient.Stock.DailyBatch(testCaseETFList, &from, &to)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+}
+
 func TestStockDailyChangeAndVolume(t *testing.T) {
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {

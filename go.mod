@@ -7,5 +7,5 @@ require (
 	github.com/pkg/errors v0.9.1
 	go.uber.org/multierr v1.6.0 // indirect
 	go.uber.org/zap v1.16.0
-	golang.org/x/net v0.0.0-20201009032441-dbdefad45b89 // indirect
+	golang.org/x/net v0.0.0-20201024042810-be3efd7ff127 // indirect
 )

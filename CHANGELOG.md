@@ -79,3 +79,7 @@
 ## 1.1.2
 **Fix:**
 * Period const and types renamed (forex, stock, crypto)
+
+## 1.2.0
+**Add:**
+* New stock method DailyBatch

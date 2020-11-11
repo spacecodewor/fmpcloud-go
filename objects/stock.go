@@ -231,6 +231,16 @@ type StockDailyCandleList struct {
 	Historical []CryptoDailyCandle `json:"historical"`
 }
 
+// StockBatchDaily ...
+type StockBatchDaily struct {
+	Data []StockBatchData `json:"historicalStockList"`
+}
+
+type StockBatchData struct {
+	Symbol     string             `json:"symbol"`
+	Historical []StockDailyCandle `json:"historical"`
+}
+
 // StockDailyCandle ...
 type StockDailyCandle struct {
 	Date             string  `json:"date"` // 2019-03-11

@@ -305,6 +305,34 @@ func (s *Stock) DailyLastNDays(symbol string, days int) (cList *objects.StockDai
 	return cList, nil
 }
 
+// DailyBatch - daily candle list
+func (s *Stock) DailyBatch(symbolList []string, from *time.Time, to *time.Time) (cList []objects.StockBatchData, err error) {
+	reqParam := map[string]string{"apikey": s.apiKey}
+	if from != nil {
+		reqParam["from"] = from.Format("2006-01-02")
+	}
+
+	if to != nil {
+		reqParam["to"] = to.Format("2006-01-02")
+	}
+
+	data, err := s.Client.R().
+		SetQueryParams(reqParam).
+		Get(s.url + fmt.Sprintf(urlAPIStockDaily, strings.Join(symbolList, ",")))
+
+	if err != nil {
+		return nil, err
+	}
+
+	var resp objects.StockBatchDaily
+	err = json.Unmarshal(data.Body(), &resp)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.Data, nil
+}
+
 // Dividends - stock dividends
 func (s *Stock) Dividends(symbol string) (dList *objects.StockDividends, err error) {
 	data, err := s.Client.R().
