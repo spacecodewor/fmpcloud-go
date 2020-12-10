@@ -2,7 +2,9 @@ package fmpcloud
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"net/http"
 	"strings"
 	"time"
 
@@ -174,6 +176,10 @@ func (s *Stock) CompanyProfile(symbol string) (companyProfile []objects.StockCom
 
 	if err != nil {
 		return nil, err
+	}
+
+	if data.StatusCode() != http.StatusOK {
+		return nil, errors.New(string(data.Body()))
 	}
 
 	err = json.Unmarshal(data.Body(), &companyProfile)
