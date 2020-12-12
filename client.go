@@ -15,12 +15,14 @@ type APIUrl string
 
 // Config for create new API client
 type Config struct {
-	Logger  *zap.Logger
-	Version string
-	APIKey  string
-	APIUrl  APIUrl
-	Debug   bool
-	Timeout int
+	Logger        *zap.Logger
+	Version       string
+	APIKey        string
+	APIUrl        APIUrl
+	Debug         bool
+	RetryCount    *int
+	RetryWaitTime *time.Duration
+	Timeout       int
 }
 
 // APIClient ...
@@ -65,6 +67,14 @@ func NewAPIClient(cfg Config) (*APIClient, error) {
 	restClient := resty.New()
 	restClient.SetDebug(APIClient.Debug)
 	restClient.SetTimeout(time.Duration(cfg.Timeout) * time.Second)
+
+	if cfg.RetryCount != nil {
+		restClient.SetRetryCount(*cfg.RetryCount)
+	}
+
+	if cfg.RetryWaitTime != nil {
+		restClient.SetRetryWaitTime(*cfg.RetryWaitTime)
+	}
 
 	// Check set APIUrl param
 	if len(cfg.APIUrl) == 0 {
