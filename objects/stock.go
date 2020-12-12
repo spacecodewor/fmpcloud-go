@@ -114,7 +114,7 @@ type StockQuoteShot struct {
 
 // RequestStockSearch ...
 type RequestStockSearch struct {
-	Exchange StockSearch
+	Exchange *StockSearch
 	Query    string
 	Limit    int64
 }
@@ -361,4 +361,9 @@ type HistorySector struct {
 	RealEstateChangesPercentage            float64 `json:"realEstateChangesPercentage"`
 	ServicesChangesPercentage              float64 `json:"servicesChangesPercentage"`
 	TechnologyChangesPercentage            float64 `json:"technologyChangesPercentage"`
+}
+
+// StockSearch return string
+func (s StockSearch) String() string {
+	return string(s)
 }

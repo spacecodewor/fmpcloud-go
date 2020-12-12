@@ -124,13 +124,17 @@ func (s *Stock) QuoteByExchange(exchange objects.StockSearch) (qList []objects.S
 
 // Search - ticker search exchange (nasdaq | nyse | tsx | euronext | mutual_fund | etf | amex | index | commodity | forex | crypto)
 func (s *Stock) Search(req objects.RequestStockSearch) (sList []objects.StockSymbol, err error) {
+	reqParam := map[string]string{
+		"apikey": s.apiKey,
+		"limit":  fmt.Sprint(req.Limit),
+		"query":  req.Query,
+	}
+	if req.Exchange != nil {
+		reqParam["exchange"] = req.Exchange.String()
+	}
+
 	data, err := s.Client.R().
-		SetQueryParams(map[string]string{
-			"apikey":   s.apiKey,
-			"limit":    fmt.Sprint(req.Limit),
-			"exchange": string(req.Exchange),
-			"query":    req.Query,
-		}).
+		SetQueryParams(reqParam).
 		Get(s.url + urlAPIStockSearch)
 
 	if err != nil {
@@ -147,13 +151,17 @@ func (s *Stock) Search(req objects.RequestStockSearch) (sList []objects.StockSym
 
 // SearchTiker - only ticker search exchange (nasdaq | nyse | tsx | euronext | mutual_fund | etf | amex | index | commodity | forex | crypto)
 func (s *Stock) SearchTiker(req objects.RequestStockSearch) (sList []objects.StockSymbol, err error) {
+	reqParam := map[string]string{
+		"apikey": s.apiKey,
+		"limit":  fmt.Sprint(req.Limit),
+		"query":  req.Query,
+	}
+	if req.Exchange != nil {
+		reqParam["exchange"] = req.Exchange.String()
+	}
+
 	data, err := s.Client.R().
-		SetQueryParams(map[string]string{
-			"apikey":   s.apiKey,
-			"limit":    fmt.Sprint(req.Limit),
-			"exchange": string(req.Exchange),
-			"query":    req.Query,
-		}).
+		SetQueryParams(reqParam).
 		Get(s.url + urlAPIStockSearchTicker)
 
 	if err != nil {
