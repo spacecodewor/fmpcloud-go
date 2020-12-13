@@ -2,15 +2,18 @@ package fmpcloud
 
 import (
 	"testing"
+	"time"
 
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
 
 // Varibles for test check cases
 var (
-	testCaseSymbolList       = []string{"AAPL", "GM", "NVDA", "TSLA", "ADBE", "JPM", "BAC"}
+	retryCount               = 5
+	retryWaitTime            = 1 * time.Second
+	testCaseSymbolList       = []string{"AAPL", "GM", "NVDA", "TSLA", "ADBE", "JPM", "BAC", "MSFT", "GS", "AAL", "AAPL", "GM", "NVDA", "TSLA", "ADBE", "JPM", "BAC", "MSFT", "GS", "AAL", "AAPL", "GM", "NVDA", "TSLA", "ADBE", "JPM", "BAC", "MSFT", "GS", "AAL"}
 	testCaseETFList          = []string{"QQQ", "SPY"}
-	testCaseAPIConfig        = Config{Debug: true, Timeout: 60}
+	testCaseAPIConfig        = Config{Debug: true, Timeout: 60, RetryCount: &retryCount, RetryWaitTime: &retryWaitTime}
 	testCaseLimit      int64 = 5
 )
 

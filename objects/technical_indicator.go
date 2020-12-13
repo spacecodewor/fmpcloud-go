@@ -52,3 +52,13 @@ type ResponseIndicators struct {
 	ADX               *float64 `json:"adx"`
 	StandardDeviation *float64 `json:"standardDeviation"`
 }
+
+// TechnicalIndicatorResolution return string
+func (t TechnicalIndicatorResolution) String() string {
+	return string(t)
+}
+
+// TechnicalIndicatorType return string
+func (t TechnicalIndicatorType) String() string {
+	return string(t)
+}

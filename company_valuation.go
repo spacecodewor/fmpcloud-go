@@ -6,7 +6,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
 
@@ -64,17 +63,12 @@ const (
 
 // CompanyValuation client
 type CompanyValuation struct {
-	Client *resty.Client
-	url    string
-	apiKey string
+	Client *HTTPClient
 }
 
 // RssFeed - SEC RSS feeds is a very helpful resource for staying current on the most recent financial statements posted on the SEC
 func (c *CompanyValuation) RssFeed() (fList []objects.RssFeed, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + urlAPICompanyValuationRSSFeed)
-
+	data, err := c.Client.Get(urlAPICompanyValuationRSSFeed, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +83,7 @@ func (c *CompanyValuation) RssFeed() (fList []objects.RssFeed, err error) {
 
 // EarningCalendar - earning Calendar (between from and to maximum interval can be 3 months)
 func (c *CompanyValuation) EarningCalendar(from, to *time.Time) (eList []objects.EarningCalendar, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey}
+	reqParam := make(map[string]string)
 	if from != nil {
 		reqParam["from"] = from.Format("2006-01-02")
 	}
@@ -98,10 +92,7 @@ func (c *CompanyValuation) EarningCalendar(from, to *time.Time) (eList []objects
 		reqParam["to"] = from.Format("2006-01-02")
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + urlAPICompanyValuationEarningCalendar)
-
+	data, err := c.Client.Get(urlAPICompanyValuationEarningCalendar, reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -116,10 +107,7 @@ func (c *CompanyValuation) EarningCalendar(from, to *time.Time) (eList []objects
 
 // EarningSurpriseList ...
 func (c *CompanyValuation) EarningSurpriseList(symbol string) (eList []objects.EarningSurprise, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationEarningsSurpises, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationEarningsSurpises, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -134,14 +122,12 @@ func (c *CompanyValuation) EarningSurpriseList(symbol string) (eList []objects.E
 
 // EarningCallTranscript - transcript of specific earning
 func (c *CompanyValuation) EarningCallTranscript(req objects.RequestEarningCallTranscript) (tList []objects.EarningCallTranscript, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{
-			"apikey":  c.apiKey,
+	data, err := c.Client.Get(
+		fmt.Sprintf(urlAPICompanyValuationEarningCallTranscript, req.Symbol),
+		map[string]string{
 			"quarter": fmt.Sprint(req.Quarter),
 			"year":    fmt.Sprint(req.Year),
-		}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationEarningCallTranscript, req.Symbol))
-
+		})
 	if err != nil {
 		return nil, err
 	}
@@ -156,10 +142,7 @@ func (c *CompanyValuation) EarningCallTranscript(req objects.RequestEarningCallT
 
 // HistoryEarningCalendar - historical earning calendar
 func (c *CompanyValuation) HistoryEarningCalendar(symbol string) (eList []objects.EarningCalendar, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationHistoryEarningCalendar, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationHistoryEarningCalendar, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -174,7 +157,7 @@ func (c *CompanyValuation) HistoryEarningCalendar(symbol string) (eList []object
 
 // IPOCalendar - IPO calendar
 func (c *CompanyValuation) IPOCalendar(from, to *time.Time) (ipoList []objects.IPOCalendar, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey}
+	reqParam := make(map[string]string)
 	if from != nil {
 		reqParam["from"] = from.Format("2006-01-02")
 	}
@@ -183,10 +166,7 @@ func (c *CompanyValuation) IPOCalendar(from, to *time.Time) (ipoList []objects.I
 		reqParam["to"] = from.Format("2006-01-02")
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + urlAPICompanyValuationIPOCalendar)
-
+	data, err := c.Client.Get(urlAPICompanyValuationIPOCalendar, reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -201,7 +181,7 @@ func (c *CompanyValuation) IPOCalendar(from, to *time.Time) (ipoList []objects.I
 
 // SplitCalendar - stock split calendar
 func (c *CompanyValuation) SplitCalendar(from, to *time.Time) (sList []objects.SplitCalendar, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey}
+	reqParam := make(map[string]string)
 	if from != nil {
 		reqParam["from"] = from.Format("2006-01-02")
 	}
@@ -210,10 +190,7 @@ func (c *CompanyValuation) SplitCalendar(from, to *time.Time) (sList []objects.S
 		reqParam["to"] = from.Format("2006-01-02")
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + urlAPICompanyValuationSplitCalendar)
-
+	data, err := c.Client.Get(urlAPICompanyValuationSplitCalendar, reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -228,7 +205,7 @@ func (c *CompanyValuation) SplitCalendar(from, to *time.Time) (sList []objects.S
 
 // DividendCalendar - dividend calendar
 func (c *CompanyValuation) DividendCalendar(from, to *time.Time) (dList []objects.DividendCalendar, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey}
+	reqParam := make(map[string]string)
 	if from != nil {
 		reqParam["from"] = from.Format("2006-01-02")
 	}
@@ -237,10 +214,7 @@ func (c *CompanyValuation) DividendCalendar(from, to *time.Time) (dList []object
 		reqParam["to"] = from.Format("2006-01-02")
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + urlAPICompanyValuationDividendCalendar)
-
+	data, err := c.Client.Get(urlAPICompanyValuationDividendCalendar, reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -255,10 +229,7 @@ func (c *CompanyValuation) DividendCalendar(from, to *time.Time) (dList []object
 
 // InstitutionalHolders - institutional holders
 func (c *CompanyValuation) InstitutionalHolders(symbol string) (hList []objects.InstitutionalHolder, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationInstituionalHolder, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationInstituionalHolder, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -273,10 +244,7 @@ func (c *CompanyValuation) InstitutionalHolders(symbol string) (hList []objects.
 
 // MutualFundHolders - mutual fund holders
 func (c *CompanyValuation) MutualFundHolders(symbol string) (hList []objects.MutualFundHolder, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationMutualFundHolder, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationMutualFundHolder, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -291,10 +259,7 @@ func (c *CompanyValuation) MutualFundHolders(symbol string) (hList []objects.Mut
 
 // ETFHolders - ETF holders
 func (c *CompanyValuation) ETFHolders(symbol string) (hList []objects.ETFHolder, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationETFHolder, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationETFHolder, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -309,10 +274,7 @@ func (c *CompanyValuation) ETFHolders(symbol string) (hList []objects.ETFHolder,
 
 // ETFSectorWeightings - ETF sector weightings
 func (c *CompanyValuation) ETFSectorWeightings(symbol string) (sList []objects.ETFSectorWeighting, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationETFSectorWeightings, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationETFSectorWeightings, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -327,10 +289,7 @@ func (c *CompanyValuation) ETFSectorWeightings(symbol string) (sList []objects.E
 
 // ETFCountryWeightings - ETF country weightings
 func (c *CompanyValuation) ETFCountryWeightings(symbol string) (cList []objects.ETFCountryWeighting, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationETFCountryWeightings, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationETFCountryWeightings, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -345,15 +304,12 @@ func (c *CompanyValuation) ETFCountryWeightings(symbol string) (cList []objects.
 
 // IncomeStatement - income statement
 func (c *CompanyValuation) IncomeStatement(req objects.RequestIncomeStatement) (sList []objects.IncomeStatement, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationIncomeStatement, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationIncomeStatement, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -368,15 +324,12 @@ func (c *CompanyValuation) IncomeStatement(req objects.RequestIncomeStatement) (
 
 // IncomeStatementGrowth - income statement growth
 func (c *CompanyValuation) IncomeStatementGrowth(req objects.RequestIncomeStatementGrowth) (sList []objects.IncomeStatementGrowth, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationIncomeStatementGrowth, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationIncomeStatementGrowth, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -391,15 +344,12 @@ func (c *CompanyValuation) IncomeStatementGrowth(req objects.RequestIncomeStatem
 
 // BalanceSheetStatement - balance sheet statement
 func (c *CompanyValuation) BalanceSheetStatement(req objects.RequestBalanceSheetStatement) (sList []objects.BalanceSheetStatement, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationBalanceSheetStatement, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationBalanceSheetStatement, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -414,15 +364,12 @@ func (c *CompanyValuation) BalanceSheetStatement(req objects.RequestBalanceSheet
 
 // BalanceSheetStatementGrowth - balance sheet statement growth
 func (c *CompanyValuation) BalanceSheetStatementGrowth(req objects.RequestBalanceSheetStatementGrowth) (sList []objects.BalanceSheetStatementGrowth, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationBalanceSheetStatementGrowth, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationBalanceSheetStatementGrowth, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -437,15 +384,12 @@ func (c *CompanyValuation) BalanceSheetStatementGrowth(req objects.RequestBalanc
 
 // CashFlowStatement - cash flow statement
 func (c *CompanyValuation) CashFlowStatement(req objects.RequestCashFlowStatement) (sList []objects.CashFlowStatement, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationCashFlowStatement, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationCashFlowStatement, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -460,15 +404,12 @@ func (c *CompanyValuation) CashFlowStatement(req objects.RequestCashFlowStatemen
 
 // CashFlowStatementGrowth - cash flow statement growth
 func (c *CompanyValuation) CashFlowStatementGrowth(req objects.RequestCashFlowStatementGrowth) (sList []objects.CashFlowStatementGrowth, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationCashFlowStatementGrowth, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationCashFlowStatementGrowth, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -483,15 +424,12 @@ func (c *CompanyValuation) CashFlowStatementGrowth(req objects.RequestCashFlowSt
 
 // IncomeStatementAsReported - income statement AS REPORTED
 func (c *CompanyValuation) IncomeStatementAsReported(req objects.RequestIncomeStatementAsReported) (sList []objects.IncomeStatementAsReported, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationIncomeStatementAsReported, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationIncomeStatementAsReported, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -506,15 +444,12 @@ func (c *CompanyValuation) IncomeStatementAsReported(req objects.RequestIncomeSt
 
 // BalanceSheetStatementAsReported - balance sheet statement AS REPORTED
 func (c *CompanyValuation) BalanceSheetStatementAsReported(req objects.RequestBalanceSheetStatementAsReported) (sList []objects.BalanceSheetStatementAsReported, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationBalanceSheetStatementAsReported, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationBalanceSheetStatementAsReported, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -529,15 +464,12 @@ func (c *CompanyValuation) BalanceSheetStatementAsReported(req objects.RequestBa
 
 // CashFlowStatementAsReported - cash flow statement AS REPORTED
 func (c *CompanyValuation) CashFlowStatementAsReported(req objects.RequestCashFlowStatementAsReported) (sList []objects.CashFlowStatementAsReported, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationCashFlowStatementAsReported, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationCashFlowStatementAsReported, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -552,15 +484,12 @@ func (c *CompanyValuation) CashFlowStatementAsReported(req objects.RequestCashFl
 
 // FullFinancialStatementAsReported - full financial statement AS REPORTED
 func (c *CompanyValuation) FullFinancialStatementAsReported(req objects.RequestFullFinancialStatementAsReported) (sList []objects.FullFinancialStatementAsReported, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationFinancialStatementFullAsReported, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationFinancialStatementFullAsReported, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -575,15 +504,12 @@ func (c *CompanyValuation) FullFinancialStatementAsReported(req objects.RequestF
 
 // FinancialRatios - financial ratios
 func (c *CompanyValuation) FinancialRatios(req objects.RequestFinancialRatios) (rList []objects.FinancialRatios, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationFinancialRatios, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationFinancialRatios, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -598,10 +524,7 @@ func (c *CompanyValuation) FinancialRatios(req objects.RequestFinancialRatios) (
 
 // FinancialRatiosTTM - financial ratios TTM
 func (c *CompanyValuation) FinancialRatiosTTM(symbol string) (rList []objects.FinancialRatiosTTM, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationFinancialRatiosTTM, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationFinancialRatiosTTM, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -616,15 +539,12 @@ func (c *CompanyValuation) FinancialRatiosTTM(symbol string) (rList []objects.Fi
 
 // KeyMetrics - key metrics
 func (c *CompanyValuation) KeyMetrics(req objects.RequestKeyMetrics) (mList []objects.KeyMetrics, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationKeyMetrics, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationKeyMetrics, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -639,10 +559,7 @@ func (c *CompanyValuation) KeyMetrics(req objects.RequestKeyMetrics) (mList []ob
 
 // KeyMetricsTTM - key metrics ttm
 func (c *CompanyValuation) KeyMetricsTTM(symbol string) (mList []objects.KeyMetricsTTM, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationKeyMetricsTTM, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationKeyMetricsTTM, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -657,15 +574,12 @@ func (c *CompanyValuation) KeyMetricsTTM(symbol string) (mList []objects.KeyMetr
 
 // EnterpriseValue - enterprise value
 func (c *CompanyValuation) EnterpriseValue(req objects.RequestEnterpriseValue) (vList []objects.EnterpriseValue, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationEnterpriseValues, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationEnterpriseValues, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -680,15 +594,12 @@ func (c *CompanyValuation) EnterpriseValue(req objects.RequestEnterpriseValue) (
 
 // FinancialStatementsGrowth - financial statements growth
 func (c *CompanyValuation) FinancialStatementsGrowth(req objects.RequestFinancialStatementsGrowth) (vList []objects.FinancialStatementsGrowth, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationFinancialGrowth, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationFinancialGrowth, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -703,10 +614,7 @@ func (c *CompanyValuation) FinancialStatementsGrowth(req objects.RequestFinancia
 
 // DiscountedCashFlow - discounted cash flow value
 func (c *CompanyValuation) DiscountedCashFlow(symbol string) (vList []objects.DiscountedCashFlow, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationDiscountedCashFlow, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationDiscountedCashFlow, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -721,10 +629,10 @@ func (c *CompanyValuation) DiscountedCashFlow(symbol string) (vList []objects.Di
 
 // DailyDiscountedCashFlow - daily historical DCF
 func (c *CompanyValuation) DailyDiscountedCashFlow(req objects.RequestDailyDiscountedCashFlow) (vList []objects.DailyDiscountedCashFlow, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationHistoryDailyDiscountedCashFlow, req.Symbol))
-
+	data, err := c.Client.Get(
+		fmt.Sprintf(urlAPICompanyValuationHistoryDailyDiscountedCashFlow, req.Symbol),
+		map[string]string{"limit": fmt.Sprint(req.Limit)},
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -739,15 +647,12 @@ func (c *CompanyValuation) DailyDiscountedCashFlow(req objects.RequestDailyDisco
 
 // HistoryDiscountedCashFlow - history DCF
 func (c *CompanyValuation) HistoryDiscountedCashFlow(req objects.RequestHistoryDiscountedCashFlow) (vList []objects.HistoryDiscountedCashFlow, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationHistoryDiscountedCashFlow, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationHistoryDiscountedCashFlow, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -762,10 +667,7 @@ func (c *CompanyValuation) HistoryDiscountedCashFlow(req objects.RequestHistoryD
 
 // Rating - get rating by symbol
 func (c *CompanyValuation) Rating(symbol string) (rList []objects.Rating, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationRating, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationRating, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -780,10 +682,10 @@ func (c *CompanyValuation) Rating(symbol string) (rList []objects.Rating, err er
 
 // DailyHistoryRating - daily historical rating
 func (c *CompanyValuation) DailyHistoryRating(req objects.RequestRating) (rList []objects.Rating, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationHistoryRating, req.Symbol))
-
+	data, err := c.Client.Get(
+		fmt.Sprintf(urlAPICompanyValuationHistoryRating, req.Symbol),
+		map[string]string{"limit": fmt.Sprint(req.Limit)},
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -798,10 +700,7 @@ func (c *CompanyValuation) DailyHistoryRating(req objects.RequestRating) (rList 
 
 // MarketCapitalization - market capitalization
 func (c *CompanyValuation) MarketCapitalization(symbol string) (rList []objects.MarketCapitalization, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationMarketCapitalization, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationMarketCapitalization, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -816,10 +715,10 @@ func (c *CompanyValuation) MarketCapitalization(symbol string) (rList []objects.
 
 // DailyHistoryMarketCapitalization - daily historical market capitalization
 func (c *CompanyValuation) DailyHistoryMarketCapitalization(req objects.RequestMarketCapitalization) (rList []objects.MarketCapitalization, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationHistoryMarketCapitalization, req.Symbol))
-
+	data, err := c.Client.Get(
+		fmt.Sprintf(urlAPICompanyValuationHistoryMarketCapitalization, req.Symbol),
+		map[string]string{"limit": fmt.Sprint(req.Limit)},
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -834,7 +733,7 @@ func (c *CompanyValuation) DailyHistoryMarketCapitalization(req objects.RequestM
 
 // StockScreener - stock screener
 func (c *CompanyValuation) StockScreener(req objects.RequestStockScreener) (sList []objects.StockScreener, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if len(req.Exchange) != 0 {
 		reqParam["exchange"] = strings.Join(req.Exchange, ",")
 	}
@@ -879,10 +778,7 @@ func (c *CompanyValuation) StockScreener(req objects.RequestStockScreener) (sLis
 		reqParam["dividendLowerThan"] = fmt.Sprint(*req.DividendLowerThan)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + urlAPICompanyValuationStockScreener)
-
+	data, err := c.Client.Get(urlAPICompanyValuationStockScreener, reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -897,13 +793,10 @@ func (c *CompanyValuation) StockScreener(req objects.RequestStockScreener) (sLis
 
 // DelstedCompanies - delsted companies
 func (c *CompanyValuation) DelstedCompanies(limit int64) (cList []objects.DelstedCompany, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{
-			"apikey": c.apiKey,
-			"limit":  fmt.Sprint(limit),
-		}).
-		Get(c.url + urlAPICompanyValuationDelistedCompanyList)
-
+	data, err := c.Client.Get(
+		urlAPICompanyValuationDelistedCompanyList,
+		map[string]string{"limit": fmt.Sprint(limit)},
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -918,15 +811,12 @@ func (c *CompanyValuation) DelstedCompanies(limit int64) (cList []objects.Delste
 
 // StockNews - stock news
 func (c *CompanyValuation) StockNews(req objects.RequestStockNews) (vList []objects.StockNews, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if len(req.SymbolList) != 0 {
 		reqParam["tickers"] = strings.Join(req.SymbolList, ",")
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + urlAPICompanyValuationStockNews)
-
+	data, err := c.Client.Get(urlAPICompanyValuationStockNews, reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -941,15 +831,12 @@ func (c *CompanyValuation) StockNews(req objects.RequestStockNews) (vList []obje
 
 // AnalystEstimates - analyst estimates of a stock (Annual || Quarter)
 func (c *CompanyValuation) AnalystEstimates(req objects.RequestAnalystEstimates) (vList []objects.AnalystEstimates, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey}
+	reqParam := make(map[string]string)
 	if req.Period != objects.CompanyValuationPeriodAnnual {
 		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationAnalystEstimates, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationAnalystEstimates, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -964,10 +851,10 @@ func (c *CompanyValuation) AnalystEstimates(req objects.RequestAnalystEstimates)
 
 // Grade - stock grade from analysts
 func (c *CompanyValuation) Grade(req objects.RequestGrade) (gList []objects.Grade, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationGrade, req.Symbol))
-
+	data, err := c.Client.Get(
+		fmt.Sprintf(urlAPICompanyValuationGrade, req.Symbol),
+		map[string]string{"limit": fmt.Sprint(req.Limit)},
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -982,10 +869,10 @@ func (c *CompanyValuation) Grade(req objects.RequestGrade) (gList []objects.Grad
 
 // AnalystStockRecommendations - monthly stock analyst ratings
 func (c *CompanyValuation) AnalystStockRecommendations(req objects.RequestAnalystStockRecommendations) (rList []objects.AnalystStockRecommendations, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationAnalystStockRecommendations, req.Symbol))
-
+	data, err := c.Client.Get(
+		fmt.Sprintf(urlAPICompanyValuationAnalystStockRecommendations, req.Symbol),
+		map[string]string{"limit": fmt.Sprint(req.Limit)},
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -1000,10 +887,10 @@ func (c *CompanyValuation) AnalystStockRecommendations(req objects.RequestAnalys
 
 // PressReleases - stock press releases
 func (c *CompanyValuation) PressReleases(req objects.RequestPressReleases) (prList []objects.PressReleases, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationPressReleases, req.Symbol))
-
+	data, err := c.Client.Get(
+		fmt.Sprintf(urlAPICompanyValuationPressReleases, req.Symbol),
+		map[string]string{"limit": fmt.Sprint(req.Limit)},
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -1018,10 +905,7 @@ func (c *CompanyValuation) PressReleases(req objects.RequestPressReleases) (prLi
 
 // FinancialStatementList - List of symbols that have financial statements
 func (c *CompanyValuation) FinancialStatementList() (fsList []string, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + urlAPICompanyValuationFinancialStatementsList)
-
+	data, err := c.Client.Get(urlAPICompanyValuationFinancialStatementsList, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1036,7 +920,7 @@ func (c *CompanyValuation) FinancialStatementList() (fsList []string, err error)
 
 // EconomicCalendar - Economic Calendar for time period
 func (c *CompanyValuation) EconomicCalendar(req objects.RequestEconomicCalendar) (eList []objects.EconomicCalendar, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey}
+	reqParam := make(map[string]string)
 	if req.From != nil {
 		reqParam["from"] = req.From.Format("2006-01-02")
 	}
@@ -1045,10 +929,7 @@ func (c *CompanyValuation) EconomicCalendar(req objects.RequestEconomicCalendar)
 		reqParam["to"] = req.To.Format("2006-01-02")
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + urlAPICompanyValuationEconomicCalendar)
-
+	data, err := c.Client.Get(urlAPICompanyValuationEconomicCalendar, reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -1063,15 +944,12 @@ func (c *CompanyValuation) EconomicCalendar(req objects.RequestEconomicCalendar)
 
 // SECFilings - SEC Filings with type or no (10-K || 4 || 8-K || 424B2 || FWP || SC 13G/A || SD || 10-Q || PX14A6G || DEFA14A || DEF 14A || 8-A12B || CERT || 25 ...)
 func (c *CompanyValuation) SECFilings(req objects.RequestSECFilings) (eList []objects.SECFiling, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey, "limit": fmt.Sprint(req.Limit)}
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
 	if req.Type != nil {
 		reqParam["type"] = *req.Type
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationSECFillings, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationSECFillings, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -1086,10 +964,7 @@ func (c *CompanyValuation) SECFilings(req objects.RequestSECFilings) (eList []ob
 
 // HistoryEconomicCalendar - Economic calendar event list
 func (c *CompanyValuation) HistoryEconomicCalendar(req objects.RequestHistoryEconomicCalendar) (hList []objects.HistoryEconomicCalendar, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey, "country": req.Country}).
-		Get(c.url + fmt.Sprintf(urlAPICompanyValuationHistoryEconomicCalendar, req.Event))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationHistoryEconomicCalendar, req.Event), map[string]string{"country": req.Country})
 	if err != nil {
 		return nil, err
 	}
@@ -1104,10 +979,7 @@ func (c *CompanyValuation) HistoryEconomicCalendar(req objects.RequestHistoryEco
 
 // EconomicCalendarEventList - Example of historical consumer sentiment in U.S. (take event name and country from event list endpoint)
 func (c *CompanyValuation) EconomicCalendarEventList() (eList []objects.EconomicCalendarEventList, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + urlAPICompanyValuationEconomicCalendarEventList)
-
+	data, err := c.Client.Get(urlAPICompanyValuationEconomicCalendarEventList, nil)
 	if err != nil {
 		return nil, err
 	}

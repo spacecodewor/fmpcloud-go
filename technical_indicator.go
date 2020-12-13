@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
 
@@ -15,21 +14,17 @@ const (
 
 // TechnicalIndicator client
 type TechnicalIndicator struct {
-	Client *resty.Client
-	url    string
-	apiKey string
+	Client *HTTPClient
 }
 
 // Indicators - Daily Indicators. Types: SMA - EMA - WMA - DEMA - TEMA - williams - RSI - ADX - standardDeviation
 func (t *TechnicalIndicator) Indicators(req objects.RequestIndicators) (iList []objects.ResponseIndicators, err error) {
-	data, err := t.Client.R().
-		SetQueryParams(map[string]string{
-			"apikey": t.apiKey,
-			"type":   string(req.Indicator),
+	data, err := t.Client.Get(
+		fmt.Sprintf(urlAPITechnicalIndicatorSymbol, req.Resolution.String(), req.Symbol),
+		map[string]string{
+			"type":   req.Indicator.String(),
 			"period": fmt.Sprint(req.Timeperiod),
-		}).
-		Get(t.url + fmt.Sprintf(urlAPITechnicalIndicatorSymbol, string(req.Resolution), req.Symbol))
-
+		})
 	if err != nil {
 		return nil, err
 	}

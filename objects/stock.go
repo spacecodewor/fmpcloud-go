@@ -363,7 +363,17 @@ type HistorySector struct {
 	TechnologyChangesPercentage            float64 `json:"technologyChangesPercentage"`
 }
 
+// StockSerieType return string
+func (s StockSerieType) String() string {
+	return string(s)
+}
+
 // StockSearch return string
 func (s StockSearch) String() string {
+	return string(s)
+}
+
+// StockSymbolExchange return string
+func (s StockSymbolExchange) String() string {
 	return string(s)
 }

@@ -83,3 +83,8 @@
 ## 1.2.0
 **Add:**
 * New stock method DailyBatch
+
+## 2.0.0
+**Update:**
+* Add new logic for retries request if response not status Ok
+* Change Licinse to MIT

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
 
@@ -19,17 +18,12 @@ const (
 
 // Crypto client
 type Crypto struct {
-	Client *resty.Client
-	url    string
-	apiKey string
+	Client *HTTPClient
 }
 
 // AvalibleSymbols - available symbol list
 func (c *Crypto) AvalibleSymbols() (sList []objects.CryptoSymbol, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + urlAPICryptoSymbols)
-
+	data, err := c.Client.Get(urlAPICryptoSymbols, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -44,10 +38,7 @@ func (c *Crypto) AvalibleSymbols() (sList []objects.CryptoSymbol, err error) {
 
 // Quotes - all real-time prices
 func (c *Crypto) Quotes() (qList []objects.CryptoQuote, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + urlAPICryptoQuotes)
-
+	data, err := c.Client.Get(urlAPICryptoQuotes, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +53,7 @@ func (c *Crypto) Quotes() (qList []objects.CryptoQuote, err error) {
 
 // Candles - Historical candles
 func (c *Crypto) Candles(req objects.RequestCryptoCandleList) (cList []objects.CryptoCandle, err error) {
-	reqParam := map[string]string{"apikey": c.apiKey}
+	reqParam := make(map[string]string)
 	if req.From != nil {
 		reqParam["from"] = req.From.Format("2006-01-02")
 	}
@@ -71,10 +62,7 @@ func (c *Crypto) Candles(req objects.RequestCryptoCandleList) (cList []objects.C
 		reqParam["to"] = req.To.Format("2006-01-02")
 	}
 
-	data, err := c.Client.R().
-		SetQueryParams(reqParam).
-		Get(c.url + fmt.Sprintf(urlAPICryptoCandles, req.Period, req.Symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICryptoCandles, req.Period, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -89,10 +77,11 @@ func (c *Crypto) Candles(req objects.RequestCryptoCandleList) (cList []objects.C
 
 // DailyLine - Daily line
 func (c *Crypto) DailyLine(symbol string, serieType objects.CryptoSerieType) (cList *objects.CryptoDailyLineList, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey, "serietype": string(serieType)}).
-		Get(c.url + fmt.Sprintf(urlAPICryptoDaily, symbol))
-
+	data, err := c.Client.Get(
+		fmt.Sprintf(urlAPICryptoDaily, symbol),
+		map[string]string{
+			"serietype": string(serieType),
+		})
 	if err != nil {
 		return nil, err
 	}
@@ -107,10 +96,7 @@ func (c *Crypto) DailyLine(symbol string, serieType objects.CryptoSerieType) (cL
 
 // DailyChangeAndVolume - Daily candle change and volume
 func (c *Crypto) DailyChangeAndVolume(symbol string) (cList *objects.CryptoDailyCandleList, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey}).
-		Get(c.url + fmt.Sprintf(urlAPICryptoDaily, symbol))
-
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICryptoDaily, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -125,14 +111,12 @@ func (c *Crypto) DailyChangeAndVolume(symbol string) (cList *objects.CryptoDaily
 
 // DailySpecificPeriod - Daily candle list by specific period
 func (c *Crypto) DailySpecificPeriod(symbol string, from time.Time, to time.Time) (cList *objects.CryptoDailyCandleList, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{
-			"apikey": c.apiKey,
-			"from":   from.Format("2006-01-02"),
-			"to":     to.Format("2006-01-02"),
-		}).
-		Get(c.url + fmt.Sprintf(urlAPICryptoDaily, symbol))
-
+	data, err := c.Client.Get(
+		fmt.Sprintf(urlAPICryptoDaily, symbol),
+		map[string]string{
+			"from": from.Format("2006-01-02"),
+			"to":   to.Format("2006-01-02"),
+		})
 	if err != nil {
 		return nil, err
 	}
@@ -147,10 +131,11 @@ func (c *Crypto) DailySpecificPeriod(symbol string, from time.Time, to time.Time
 
 // DailyLastNDays - Daily candle list last N days
 func (c *Crypto) DailyLastNDays(symbol string, days int) (cList *objects.CryptoDailyCandleList, err error) {
-	data, err := c.Client.R().
-		SetQueryParams(map[string]string{"apikey": c.apiKey, "timeseries": fmt.Sprint(days)}).
-		Get(c.url + fmt.Sprintf(urlAPICryptoDaily, symbol))
-
+	data, err := c.Client.Get(
+		fmt.Sprintf(urlAPICryptoDaily, symbol),
+		map[string]string{
+			"timeseries": fmt.Sprint(days),
+		})
 	if err != nil {
 		return nil, err
 	}

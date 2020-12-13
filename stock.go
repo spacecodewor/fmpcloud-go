@@ -2,13 +2,10 @@ package fmpcloud
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
-	"net/http"
 	"strings"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
 
@@ -45,17 +42,12 @@ const (
 
 // Stock client
 type Stock struct {
-	Client *resty.Client
-	url    string
-	apiKey string
+	Client *HTTPClient
 }
 
 // QuoteShort - real-time single quote short
 func (s *Stock) QuoteShort(symbol string) (qList []objects.StockQuoteShot, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + fmt.Sprintf(urlAPIStockQuoteShot, symbol))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockQuoteShot, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -70,10 +62,7 @@ func (s *Stock) QuoteShort(symbol string) (qList []objects.StockQuoteShot, err e
 
 // Quote - real-time single quote
 func (s *Stock) Quote(symbol string) (qList []objects.StockQuote, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + fmt.Sprintf(urlAPIStockQuote, symbol))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockQuote, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -88,10 +77,7 @@ func (s *Stock) Quote(symbol string) (qList []objects.StockQuote, err error) {
 
 // BatchQuote - real-time batch quote
 func (s *Stock) BatchQuote(symbolList []string) (qList []objects.StockQuote, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + fmt.Sprintf(urlAPIStockQuote, strings.Join(symbolList, ",")))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockQuote, strings.Join(symbolList, ",")), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -106,10 +92,7 @@ func (s *Stock) BatchQuote(symbolList []string) (qList []objects.StockQuote, err
 
 // QuoteByExchange - real-time single quote
 func (s *Stock) QuoteByExchange(exchange objects.StockSearch) (qList []objects.StockQuote, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + fmt.Sprintf(urlAPIStockQuotes, string(exchange)))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockQuotes, exchange.String()), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -125,18 +108,14 @@ func (s *Stock) QuoteByExchange(exchange objects.StockSearch) (qList []objects.S
 // Search - ticker search exchange (nasdaq | nyse | tsx | euronext | mutual_fund | etf | amex | index | commodity | forex | crypto)
 func (s *Stock) Search(req objects.RequestStockSearch) (sList []objects.StockSymbol, err error) {
 	reqParam := map[string]string{
-		"apikey": s.apiKey,
-		"limit":  fmt.Sprint(req.Limit),
-		"query":  req.Query,
+		"limit": fmt.Sprint(req.Limit),
+		"query": req.Query,
 	}
 	if req.Exchange != nil {
 		reqParam["exchange"] = req.Exchange.String()
 	}
 
-	data, err := s.Client.R().
-		SetQueryParams(reqParam).
-		Get(s.url + urlAPIStockSearch)
-
+	data, err := s.Client.Get(urlAPIStockSearch, reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -152,18 +131,14 @@ func (s *Stock) Search(req objects.RequestStockSearch) (sList []objects.StockSym
 // SearchTiker - only ticker search exchange (nasdaq | nyse | tsx | euronext | mutual_fund | etf | amex | index | commodity | forex | crypto)
 func (s *Stock) SearchTiker(req objects.RequestStockSearch) (sList []objects.StockSymbol, err error) {
 	reqParam := map[string]string{
-		"apikey": s.apiKey,
-		"limit":  fmt.Sprint(req.Limit),
-		"query":  req.Query,
+		"limit": fmt.Sprint(req.Limit),
+		"query": req.Query,
 	}
 	if req.Exchange != nil {
 		reqParam["exchange"] = req.Exchange.String()
 	}
 
-	data, err := s.Client.R().
-		SetQueryParams(reqParam).
-		Get(s.url + urlAPIStockSearchTicker)
-
+	data, err := s.Client.Get(urlAPIStockSearchTicker, reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -178,16 +153,9 @@ func (s *Stock) SearchTiker(req objects.RequestStockSearch) (sList []objects.Sto
 
 // CompanyProfile - get general information of a company. You can query by symbol.
 func (s *Stock) CompanyProfile(symbol string) (companyProfile []objects.StockCompanyProfile, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + fmt.Sprintf(urlAPIStockCompanyProfile, symbol))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockCompanyProfile, symbol), nil)
 	if err != nil {
 		return nil, err
-	}
-
-	if data.StatusCode() != http.StatusOK {
-		return nil, errors.New(string(data.Body()))
 	}
 
 	err = json.Unmarshal(data.Body(), &companyProfile)
@@ -200,10 +168,7 @@ func (s *Stock) CompanyProfile(symbol string) (companyProfile []objects.StockCom
 
 // CompanyExecutive - get a list of company's executives and members of the Board.
 func (s *Stock) CompanyExecutive(symbol string) (companyProfile []objects.CompanyExecutive, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + fmt.Sprintf(urlAPIStockCompanyExecutives, symbol))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockCompanyExecutives, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -218,7 +183,7 @@ func (s *Stock) CompanyExecutive(symbol string) (companyProfile []objects.Compan
 
 // Candles - historical candles
 func (s *Stock) Candles(req objects.RequestStockCandleList) (cList []objects.StockCandle, err error) {
-	reqParam := map[string]string{"apikey": s.apiKey}
+	reqParam := make(map[string]string)
 	if req.From != nil {
 		reqParam["from"] = req.From.Format("2006-01-02")
 	}
@@ -227,10 +192,7 @@ func (s *Stock) Candles(req objects.RequestStockCandleList) (cList []objects.Sto
 		reqParam["to"] = req.To.Format("2006-01-02")
 	}
 
-	data, err := s.Client.R().
-		SetQueryParams(reqParam).
-		Get(s.url + fmt.Sprintf(urlAPIStockCandles, req.Period, req.Symbol))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockCandles, req.Period, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -245,10 +207,7 @@ func (s *Stock) Candles(req objects.RequestStockCandleList) (cList []objects.Sto
 
 // DailyLine - daily line
 func (s *Stock) DailyLine(symbol string, serieType objects.StockSerieType) (cList *objects.StockDailyLineList, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey, "serietype": string(serieType)}).
-		Get(s.url + fmt.Sprintf(urlAPIStockDaily, symbol))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockDaily, symbol), map[string]string{"serietype": string(serieType)})
 	if err != nil {
 		return nil, err
 	}
@@ -263,10 +222,7 @@ func (s *Stock) DailyLine(symbol string, serieType objects.StockSerieType) (cLis
 
 // DailyChangeAndVolume - daily candle change and volume
 func (s *Stock) DailyChangeAndVolume(symbol string) (cList *objects.StockDailyCandleList, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + fmt.Sprintf(urlAPIStockDaily, symbol))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockDaily, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -281,14 +237,12 @@ func (s *Stock) DailyChangeAndVolume(symbol string) (cList *objects.StockDailyCa
 
 // DailySpecificPeriod - daily candle list by specific period
 func (s *Stock) DailySpecificPeriod(symbol string, from time.Time, to time.Time) (cList *objects.StockDailyCandleList, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{
-			"apikey": s.apiKey,
-			"from":   from.Format("2006-01-02"),
-			"to":     to.Format("2006-01-02"),
-		}).
-		Get(s.url + fmt.Sprintf(urlAPIStockDaily, symbol))
-
+	data, err := s.Client.Get(
+		fmt.Sprintf(urlAPIStockDaily, symbol),
+		map[string]string{
+			"from": from.Format("2006-01-02"),
+			"to":   to.Format("2006-01-02"),
+		})
 	if err != nil {
 		return nil, err
 	}
@@ -303,10 +257,7 @@ func (s *Stock) DailySpecificPeriod(symbol string, from time.Time, to time.Time)
 
 // DailyLastNDays - daily candle list last N days
 func (s *Stock) DailyLastNDays(symbol string, days int) (cList *objects.StockDailyCandleList, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey, "timeseries": fmt.Sprint(days)}).
-		Get(s.url + fmt.Sprintf(urlAPIStockDaily, symbol))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockDaily, symbol), map[string]string{"timeseries": fmt.Sprint(days)})
 	if err != nil {
 		return nil, err
 	}
@@ -321,7 +272,7 @@ func (s *Stock) DailyLastNDays(symbol string, days int) (cList *objects.StockDai
 
 // DailyBatch - daily candle list
 func (s *Stock) DailyBatch(symbolList []string, from *time.Time, to *time.Time) (cList []objects.StockBatchData, err error) {
-	reqParam := map[string]string{"apikey": s.apiKey}
+	reqParam := make(map[string]string)
 	if from != nil {
 		reqParam["from"] = from.Format("2006-01-02")
 	}
@@ -330,10 +281,7 @@ func (s *Stock) DailyBatch(symbolList []string, from *time.Time, to *time.Time) 
 		reqParam["to"] = to.Format("2006-01-02")
 	}
 
-	data, err := s.Client.R().
-		SetQueryParams(reqParam).
-		Get(s.url + fmt.Sprintf(urlAPIStockDaily, strings.Join(symbolList, ",")))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockDaily, strings.Join(symbolList, ",")), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -349,10 +297,7 @@ func (s *Stock) DailyBatch(symbolList []string, from *time.Time, to *time.Time) 
 
 // Dividends - stock dividends
 func (s *Stock) Dividends(symbol string) (dList *objects.StockDividends, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + fmt.Sprintf(urlAPIStockDividends, symbol))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockDividends, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -367,10 +312,7 @@ func (s *Stock) Dividends(symbol string) (dList *objects.StockDividends, err err
 
 // Splits - stock splits
 func (s *Stock) Splits(symbol string) (sList *objects.StockSplit, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + fmt.Sprintf(urlAPIStockSplits, symbol))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockSplits, symbol), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -385,10 +327,7 @@ func (s *Stock) Splits(symbol string) (sList *objects.StockSplit, err error) {
 
 // AvalibleSymbolsByExchange - symbol list by exchange
 func (s *Stock) AvalibleSymbolsByExchange(exchange objects.StockSymbolExchange) (sList []objects.StockSymbol, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + fmt.Sprintf(urlAPIStockSymbolByExchangeList, string(exchange)))
-
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockSymbolByExchangeList, exchange.String()), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -403,10 +342,7 @@ func (s *Stock) AvalibleSymbolsByExchange(exchange objects.StockSymbolExchange) 
 
 // AvalibleSymbols - all avalible symbol list
 func (s *Stock) AvalibleSymbols() (sList []objects.StockSymbolList, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + urlAPIStockSymbolList)
-
+	data, err := s.Client.Get(urlAPIStockSymbolList, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -421,20 +357,17 @@ func (s *Stock) AvalibleSymbols() (sList []objects.StockSymbolList, err error) {
 
 // IndexConstituentList - list of index companies (SP500, Nasdaq, DJ)
 func (s *Stock) IndexConstituentList(index objects.Index) (sList []objects.IndexSymbol, err error) {
-	url := s.url
+	var endpoint string
 	switch index {
 	case objects.IndexSP500:
-		url += urlAPIStockSP500List
+		endpoint = urlAPIStockSP500List
 	case objects.IndexDowJones:
-		url += urlAPIStockDowJonesList
+		endpoint = urlAPIStockDowJonesList
 	case objects.IndexNasdaq100:
-		url += urlAPIStockNasdaqList
+		endpoint = urlAPIStockNasdaqList
 	}
 
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(url)
-
+	data, err := s.Client.Get(endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -449,19 +382,17 @@ func (s *Stock) IndexConstituentList(index objects.Index) (sList []objects.Index
 
 // HistoryIndexConstituentList - historical index companies list (SP500, Nasdaq, DJ)
 func (s *Stock) HistoryIndexConstituentList(index objects.Index) (sList []objects.HistoryIndexSymbol, err error) {
-	url := s.url
+	var endpoint string
 	switch index {
 	case objects.IndexSP500:
-		url += urlAPIStockHistorySP500List
+		endpoint = urlAPIStockHistorySP500List
 	case objects.IndexDowJones:
-		url += urlAPIStockHistoryDowJonesList
+		endpoint = urlAPIStockHistoryDowJonesList
 	case objects.IndexNasdaq100:
-		url += urlAPIStockHistoryNasdaqList
+		endpoint = urlAPIStockHistoryNasdaqList
 	}
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(url)
 
+	data, err := s.Client.Get(endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -476,13 +407,7 @@ func (s *Stock) HistoryIndexConstituentList(index objects.Index) (sList []object
 
 // EODCandleList - all stocks Batch EOD stock price
 func (s *Stock) EODCandleList(date time.Time) (sList []objects.StockEODCandle, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{
-			"apikey": s.apiKey,
-			"date":   date.Format("2006-01-02"),
-		}).
-		Get(s.url + urlAPIStockEODCandles)
-
+	data, err := s.Client.Get(urlAPIStockEODCandles, map[string]string{"date": date.Format("2006-01-02")})
 	if err != nil {
 		return nil, err
 	}
@@ -497,13 +422,11 @@ func (s *Stock) EODCandleList(date time.Time) (sList []objects.StockEODCandle, e
 
 // BatchEODCandleList - specific Stocks Batch EOD stock prices
 func (s *Stock) BatchEODCandleList(symbolList []string, date time.Time) (sList []objects.StockEODCandle, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{
-			"apikey": s.apiKey,
-			"date":   date.Format("2006-01-02"),
-		}).
-		Get(s.url + fmt.Sprintf(urlAPIStockEODBatchCandles, strings.Join(symbolList, ",")))
-
+	data, err := s.Client.Get(
+		fmt.Sprintf(urlAPIStockEODBatchCandles, strings.Join(symbolList, ",")),
+		map[string]string{
+			"date": date.Format("2006-01-02"),
+		})
 	if err != nil {
 		return nil, err
 	}
@@ -518,10 +441,7 @@ func (s *Stock) BatchEODCandleList(symbolList []string, date time.Time) (sList [
 
 // ExchangeTradingHours - stock market trading hours
 func (s *Stock) ExchangeTradingHours() (eList []objects.Exchange, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + urlAPIStockMarketHours)
-
+	data, err := s.Client.Get(urlAPIStockMarketHours, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -536,10 +456,7 @@ func (s *Stock) ExchangeTradingHours() (eList []objects.Exchange, err error) {
 
 // Actives - stock market top active
 func (s *Stock) Actives() (aList []objects.Active, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + urlAPIStockActives)
-
+	data, err := s.Client.Get(urlAPIStockActives, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -554,10 +471,7 @@ func (s *Stock) Actives() (aList []objects.Active, err error) {
 
 // Losers - stock market top losers
 func (s *Stock) Losers() (lList []objects.Loser, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + urlAPIStockLosers)
-
+	data, err := s.Client.Get(urlAPIStockLosers, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -572,10 +486,7 @@ func (s *Stock) Losers() (lList []objects.Loser, err error) {
 
 // Gainers - stock market top gainers
 func (s *Stock) Gainers() (gList []objects.Gainer, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + urlAPIStockGainers)
-
+	data, err := s.Client.Get(urlAPIStockGainers, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -590,10 +501,7 @@ func (s *Stock) Gainers() (gList []objects.Gainer, err error) {
 
 // SectorPerformance - stock market sector performance
 func (s *Stock) SectorPerformance() (eList []objects.Sector, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + urlAPIStockSectorsPerformance)
-
+	data, err := s.Client.Get(urlAPIStockSectorsPerformance, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -608,10 +516,7 @@ func (s *Stock) SectorPerformance() (eList []objects.Sector, err error) {
 
 // HistorySectorPerformance - historical stock market sector performance
 func (s *Stock) HistorySectorPerformance() (eList []objects.HistorySector, err error) {
-	data, err := s.Client.R().
-		SetQueryParams(map[string]string{"apikey": s.apiKey}).
-		Get(s.url + urlAPIStockHistorySectorsPerformance)
-
+	data, err := s.Client.Get(urlAPIStockHistorySectorsPerformance, nil)
 	if err != nil {
 		return nil, err
 	}

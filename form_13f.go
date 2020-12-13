@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
 
@@ -20,17 +19,12 @@ const (
 
 // Form13F client
 type Form13F struct {
-	Client *resty.Client
-	url    string
-	apiKey string
+	Client *HTTPClient
 }
 
 // List - 13F List
 func (f *Form13F) List() (fList []objects.Form, err error) {
-	data, err := f.Client.R().
-		SetQueryParams(map[string]string{"apikey": f.apiKey}).
-		Get(f.url + urlAPIForm13FList)
-
+	data, err := f.Client.Get(urlAPIForm13FList, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -45,10 +39,7 @@ func (f *Form13F) List() (fList []objects.Form, err error) {
 
 // SearchByName - 13F cik search by name
 func (f *Form13F) SearchByName(name string) (fList []objects.Form, err error) {
-	data, err := f.Client.R().
-		SetQueryParams(map[string]string{"apikey": f.apiKey}).
-		Get(f.url + fmt.Sprintf(urlAPIForm13FSearchByName, name))
-
+	data, err := f.Client.Get(fmt.Sprintf(urlAPIForm13FSearchByName, name), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -63,10 +54,7 @@ func (f *Form13F) SearchByName(name string) (fList []objects.Form, err error) {
 
 // GetCompanyByCIK - 13F get company name by cik
 func (f *Form13F) GetCompanyByCIK(cik string) (cList []objects.Form, err error) {
-	data, err := f.Client.R().
-		SetQueryParams(map[string]string{"apikey": f.apiKey}).
-		Get(f.url + fmt.Sprintf(urlAPIForm13FGetByCik, cik))
-
+	data, err := f.Client.Get(fmt.Sprintf(urlAPIForm13FGetByCik, cik), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -81,15 +69,12 @@ func (f *Form13F) GetCompanyByCIK(cik string) (cList []objects.Form, err error) 
 
 // ThirteenList - 13F
 func (f *Form13F) ThirteenList(cik string, date *time.Time) (fList []objects.Thirteen, err error) {
-	reqParam := map[string]string{"apikey": f.apiKey}
+	reqParam := make(map[string]string)
 	if date != nil {
 		reqParam["date"] = date.Format("2006-01-02")
 	}
 
-	data, err := f.Client.R().
-		SetQueryParams(reqParam).
-		Get(f.url + fmt.Sprintf(urlAPIForm13FGetThirteen, cik))
-
+	data, err := f.Client.Get(fmt.Sprintf(urlAPIForm13FGetThirteen, cik), reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -104,10 +89,7 @@ func (f *Form13F) ThirteenList(cik string, date *time.Time) (fList []objects.Thi
 
 // CusipMapper - Cusip mapper
 func (f *Form13F) CusipMapper(cusip string) (cList []objects.Cusip, err error) {
-	data, err := f.Client.R().
-		SetQueryParams(map[string]string{"apikey": f.apiKey}).
-		Get(f.url + fmt.Sprintf(urlAPIForm13FCusipMapper, cusip))
-
+	data, err := f.Client.Get(fmt.Sprintf(urlAPIForm13FCusipMapper, cusip), nil)
 	if err != nil {
 		return nil, err
 	}

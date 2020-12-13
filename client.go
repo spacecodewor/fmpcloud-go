@@ -15,15 +15,14 @@ type APIUrl string
 
 // Config for create new API client
 type Config struct {
-	Logger           *zap.Logger
-	Version          string
-	APIKey           string
-	APIUrl           APIUrl
-	Debug            bool
-	RetryCount       *int
-	RetryWaitTime    *time.Duration
-	RetryMaxWaitTime *time.Duration
-	Timeout          int
+	Logger        *zap.Logger
+	Version       string
+	APIKey        string
+	APIUrl        APIUrl
+	Debug         bool
+	RetryCount    *int
+	RetryWaitTime *time.Duration
+	Timeout       int
 }
 
 // APIClient ...
@@ -69,18 +68,6 @@ func NewAPIClient(cfg Config) (*APIClient, error) {
 	restClient.SetDebug(APIClient.Debug)
 	restClient.SetTimeout(time.Duration(cfg.Timeout) * time.Second)
 
-	if cfg.RetryCount != nil {
-		restClient.SetRetryCount(*cfg.RetryCount)
-	}
-
-	if cfg.RetryWaitTime != nil {
-		restClient.SetRetryWaitTime(*cfg.RetryWaitTime)
-	}
-
-	if cfg.RetryMaxWaitTime != nil {
-		restClient.SetRetryMaxWaitTime(*cfg.RetryMaxWaitTime)
-	}
-
 	// Check set APIUrl param
 	if len(cfg.APIUrl) == 0 {
 		cfg.APIUrl = APIFinancialModelingPrepURL
@@ -96,42 +83,37 @@ func NewAPIClient(cfg Config) (*APIClient, error) {
 		cfg.APIKey = apiDefaultKey
 	}
 
-	url := fmt.Sprintf(string(cfg.APIUrl), cfg.Version)
-	APIClient.Stock = &Stock{
-		Client: restClient,
-		url:    url,
+	restClient.SetHostURL(fmt.Sprintf(string(cfg.APIUrl), cfg.Version))
+
+	HTTPClient := &HTTPClient{
+		client: restClient,
 		apiKey: cfg.APIKey,
 	}
 
-	APIClient.Form13F = &Form13F{
-		Client: restClient,
-		url:    url,
-		apiKey: cfg.APIKey,
+	if cfg.RetryCount != nil {
+		HTTPClient.retryCount = cfg.RetryCount
 	}
 
-	APIClient.Forex = &Forex{
-		Client: restClient,
-		url:    url,
-		apiKey: cfg.APIKey,
+	if cfg.RetryWaitTime != nil {
+		HTTPClient.retryWaitTime = cfg.RetryWaitTime
 	}
 
-	APIClient.Crypto = &Crypto{
-		Client: restClient,
-		url:    url,
-		apiKey: cfg.APIKey,
+	if HTTPClient.retryCount == nil || *HTTPClient.retryCount == 0 {
+		retryCount := 1
+		HTTPClient.retryCount = &retryCount
 	}
 
-	APIClient.CompanyValuation = &CompanyValuation{
-		Client: restClient,
-		url:    url,
-		apiKey: cfg.APIKey,
+	if HTTPClient.retryWaitTime == nil || *HTTPClient.retryWaitTime == 0 {
+		retryWaitTime := 1 * time.Second
+		HTTPClient.retryWaitTime = &retryWaitTime
 	}
 
-	APIClient.TechnicalIndicator = &TechnicalIndicator{
-		Client: restClient,
-		url:    url,
-		apiKey: cfg.APIKey,
-	}
+	APIClient.Stock = &Stock{Client: HTTPClient}
+	APIClient.Form13F = &Form13F{Client: HTTPClient}
+	APIClient.Forex = &Forex{Client: HTTPClient}
+	APIClient.Crypto = &Crypto{Client: HTTPClient}
+	APIClient.CompanyValuation = &CompanyValuation{Client: HTTPClient}
+	APIClient.TechnicalIndicator = &TechnicalIndicator{Client: HTTPClient}
 
 	return APIClient, nil
 }
