@@ -88,6 +88,7 @@ func NewAPIClient(cfg Config) (*APIClient, error) {
 	HTTPClient := &HTTPClient{
 		client: restClient,
 		apiKey: cfg.APIKey,
+		logger: APIClient.Logger,
 	}
 
 	if cfg.RetryCount != nil {

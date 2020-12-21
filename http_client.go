@@ -5,10 +5,12 @@ import (
 	"time"
 
 	"github.com/go-resty/resty/v2"
+	"go.uber.org/zap"
 )
 
 // HTTPClient ...
 type HTTPClient struct {
+	logger        *zap.Logger
 	client        *resty.Client
 	apiKey        string
 	retryCount    *int
@@ -32,6 +34,14 @@ func (h *HTTPClient) Get(endpoint string, data map[string]string) (response *res
 		if response.StatusCode() != http.StatusOK {
 			time.Sleep(*h.retryWaitTime)
 			retries++
+
+			h.logger.Info(
+				"Retry request.",
+				zap.Int("retries", retries),
+				zap.Int("statusCode", response.StatusCode()),
+				zap.String("endpoint", endpoint),
+				zap.Any("data", data),
+			)
 
 			continue
 		}
