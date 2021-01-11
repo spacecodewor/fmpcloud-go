@@ -89,7 +89,7 @@ func (c *CompanyValuation) EarningCalendar(from, to *time.Time) (eList []objects
 	}
 
 	if to != nil {
-		reqParam["to"] = from.Format("2006-01-02")
+		reqParam["to"] = to.Format("2006-01-02")
 	}
 
 	data, err := c.Client.Get(urlAPICompanyValuationEarningCalendar, reqParam)
@@ -163,7 +163,7 @@ func (c *CompanyValuation) IPOCalendar(from, to *time.Time) (ipoList []objects.I
 	}
 
 	if to != nil {
-		reqParam["to"] = from.Format("2006-01-02")
+		reqParam["to"] = to.Format("2006-01-02")
 	}
 
 	data, err := c.Client.Get(urlAPICompanyValuationIPOCalendar, reqParam)
@@ -187,7 +187,7 @@ func (c *CompanyValuation) SplitCalendar(from, to *time.Time) (sList []objects.S
 	}
 
 	if to != nil {
-		reqParam["to"] = from.Format("2006-01-02")
+		reqParam["to"] = to.Format("2006-01-02")
 	}
 
 	data, err := c.Client.Get(urlAPICompanyValuationSplitCalendar, reqParam)
@@ -211,7 +211,7 @@ func (c *CompanyValuation) DividendCalendar(from, to *time.Time) (dList []object
 	}
 
 	if to != nil {
-		reqParam["to"] = from.Format("2006-01-02")
+		reqParam["to"] = to.Format("2006-01-02")
 	}
 
 	data, err := c.Client.Get(urlAPICompanyValuationDividendCalendar, reqParam)
