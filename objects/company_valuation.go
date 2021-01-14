@@ -362,10 +362,14 @@ type SplitCalendar struct {
 
 // DividendCalendar ...
 type DividendCalendar struct {
-	Date        string  `json:"date"`  // 2020-09-10
-	Label       string  `json:"label"` // September 10, 20
-	AdjDividend float64 `json:"adjDividend"`
-	Symbol      string  `json:"symbol"`
+	Date            string  `json:"date"`  // 2020-09-10
+	Label           string  `json:"label"` // September 10, 20
+	AdjDividend     float64 `json:"adjDividend"`
+	Symbol          string  `json:"symbol"`
+	Dividend        float64 `json:"dividend"`
+	RecordDate      string  `json:"recordDate"`
+	PaymentDate     string  `json:"paymentDate"`
+	DeclarationDate string  `json:"declarationDate"`
 }
 
 // InstitutionalHolder ...
