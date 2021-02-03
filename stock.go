@@ -38,6 +38,7 @@ const (
 	urlAPIStockGainers                   = "/gainers"
 	urlAPIStockSectorsPerformance        = "/sectors-performance"
 	urlAPIStockHistorySectorsPerformance = "/historical-sectors-performance"
+	urlAPIStockSurvivorshipBiasFree      = "/historical-price-full/%s/%s"
 )
 
 // Stock client
@@ -527,4 +528,19 @@ func (s *Stock) HistorySectorPerformance() (eList []objects.HistorySector, err e
 	}
 
 	return eList, nil
+}
+
+// SurvivorshipBiasFree - Survivorship Bias Free end of day (only for api v4)
+func (s *Stock) SurvivorshipBiasFree(symbol string, date time.Time) (sBias *objects.SurvivorshipBiasFree, err error) {
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockSurvivorshipBiasFree, symbol, date.Format("2006-01-02")), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sBias)
+	if err != nil {
+		return nil, err
+	}
+
+	return sBias, nil
 }

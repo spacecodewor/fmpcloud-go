@@ -778,6 +778,14 @@ func (c *CompanyValuation) StockScreener(req objects.RequestStockScreener) (sLis
 		reqParam["dividendLowerThan"] = fmt.Sprint(*req.DividendLowerThan)
 	}
 
+	if req.PriceMoreThan != nil {
+		reqParam["priceMoreThan"] = fmt.Sprint(*req.PriceMoreThan)
+	}
+
+	if req.PriceLowerThan != nil {
+		reqParam["priceLowerThan"] = fmt.Sprint(*req.PriceLowerThan)
+	}
+
 	data, err := c.Client.Get(urlAPICompanyValuationStockScreener, reqParam)
 	if err != nil {
 		return nil, err

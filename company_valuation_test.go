@@ -4,6 +4,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/jinzhu/now"
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
 
@@ -35,7 +36,64 @@ func TestEarningCalendar(t *testing.T) {
 		t.Fatal(err.Error())
 	}
 
-	_, err = APIClient.CompanyValuation.EarningCalendar(nil, nil)
+	timeZone, _ := time.LoadLocation("Europe/Moscow")
+	myConfig := &now.Config{
+		WeekStartDay: time.Monday,
+		TimeLocation: timeZone,
+		TimeFormats:  []string{time.RFC3339},
+	}
+
+	from := myConfig.With(time.Now().AddDate(0, 0, 1)).BeginningOfWeek()
+	to := myConfig.With(time.Now().AddDate(0, 0, 1)).EndOfWeek()
+
+	_, err = APIClient.CompanyValuation.EarningCalendar(&from, &to)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+}
+
+func TestDividendCalendar(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	timeZone, _ := time.LoadLocation("Europe/Moscow")
+	myConfig := &now.Config{
+		WeekStartDay: time.Monday,
+		TimeLocation: timeZone,
+		TimeFormats:  []string{time.RFC3339},
+	}
+
+	from := myConfig.With(time.Now().AddDate(0, 0, 1)).BeginningOfWeek()
+	to := myConfig.With(time.Now().AddDate(0, 0, 1)).EndOfWeek()
+
+	_, err = APIClient.CompanyValuation.DividendCalendar(&from, &to)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+}
+
+func TestEconomicCalendar(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	timeZone, _ := time.LoadLocation("Europe/Moscow")
+	myConfig := &now.Config{
+		WeekStartDay: time.Monday,
+		TimeLocation: timeZone,
+		TimeFormats:  []string{time.RFC3339},
+	}
+
+	from := myConfig.With(time.Now()).BeginningOfDay()
+	to := myConfig.With(time.Now().AddDate(0, 0, 1)).EndOfDay()
+
+	_, err = APIClient.CompanyValuation.EconomicCalendar(objects.RequestEconomicCalendar{
+		From: &from,
+		To:   &to,
+	})
 	if err != nil {
 		t.Fatal(err.Error())
 	}

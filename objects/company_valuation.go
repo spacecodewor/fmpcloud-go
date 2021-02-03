@@ -275,6 +275,8 @@ type RequestStockScreener struct {
 	BetaLowerThan      *float64
 	DividendMoreThan   *float64
 	DividendLowerThan  *float64
+	PriceMoreThan      *float64
+	PriceLowerThan     *float64
 }
 
 // RequestEarningCallTranscript ...
@@ -413,6 +415,7 @@ type IncomeStatement struct {
 	Date                             string  `json:"date"`
 	Symbol                           string  `json:"symbol"`
 	FillingDate                      string  `json:"fillingDate"`
+	ReportedCurrency                 string  `json:"reportedCurrency"`
 	AcceptedDate                     string  `json:"acceptedDate"`
 	Period                           string  `json:"period"`
 	Revenue                          int64   `json:"revenue"`
@@ -451,6 +454,7 @@ type IncomeStatementGrowth struct {
 	Symbol                                 string  `json:"symbol"`
 	Period                                 string  `json:"period"`
 	GrowthRevenue                          float64 `json:"growthRevenue"`
+	ReportedCurrency                       string  `json:"reportedCurrency"`
 	GrowthCostOfRevenue                    float64 `json:"growthCostOfRevenue"`
 	GrowthGrossProfit                      float64 `json:"growthGrossProfit"`
 	GrowthGrossProfitRatio                 float64 `json:"growthGrossProfitRatio"`
@@ -482,6 +486,7 @@ type IncomeStatementGrowth struct {
 type BalanceSheetStatement struct {
 	Date                                    string  `json:"date"`
 	Symbol                                  string  `json:"symbol"`
+	ReportedCurrency                        string  `json:"reportedCurrency"`
 	FillingDate                             string  `json:"fillingDate"`
 	AcceptedDate                            string  `json:"acceptedDate"`
 	Period                                  string  `json:"period"`
@@ -533,6 +538,7 @@ type BalanceSheetStatementGrowth struct {
 	Date                                          string  `json:"date"`
 	Symbol                                        string  `json:"symbol"`
 	Period                                        string  `json:"period"`
+	ReportedCurrency                              string  `json:"reportedCurrency"`
 	GrowthCashAndCashEquivalents                  float64 `json:"growthCashAndCashEquivalents"`
 	GrowthShortTermInvestments                    float64 `json:"growthShortTermInvestments"`
 	GrowthCashAndShortTermInvestments             float64 `json:"growthCashAndShortTermInvestments"`
@@ -581,6 +587,7 @@ type CashFlowStatement struct {
 	FillingDate                              string `json:"fillingDate"`
 	AcceptedDate                             string `json:"acceptedDate"`
 	Period                                   string `json:"period"`
+	ReportedCurrency                         string `json:"reportedCurrency"`
 	NetIncome                                int64  `json:"netIncome"`
 	DepreciationAndAmortization              int64  `json:"depreciationAndAmortization"`
 	DeferredIncomeTax                        int    `json:"deferredIncomeTax"`
@@ -620,6 +627,7 @@ type CashFlowStatementGrowth struct {
 	Date                                           string  `json:"date"`
 	Symbol                                         string  `json:"symbol"`
 	Period                                         string  `json:"period"`
+	ReportedCurrency                               string  `json:"reportedCurrency"`
 	GrowthNetIncome                                float64 `json:"growthNetIncome"`
 	GrowthDepreciationAndAmortization              float64 `json:"growthDepreciationAndAmortization"`
 	GrowthDeferredIncomeTax                        float64 `json:"growthDeferredIncomeTax"`

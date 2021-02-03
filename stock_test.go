@@ -363,3 +363,16 @@ func TestStockHistorySectorPerformance(t *testing.T) {
 		t.Fatal(err.Error())
 	}
 }
+
+func TestSurvivorshipBiasFree(t *testing.T) {
+	testCaseAPIConfig.Version = "v4"
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	_, err = APIClient.Stock.SurvivorshipBiasFree("ABI", time.Date(2005, 01, 03, 0, 0, 0, 0, time.UTC))
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+}

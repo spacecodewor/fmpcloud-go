@@ -88,3 +88,10 @@
 **Update:**
 * Add new logic for retries request if response not status Ok
 * Change Licinse to MIT
+
+## 2.1.0
+**Add:**
+* New endpoint: Survivorship Bias Free EOD
+* New params for Stock Screener: priceLowerThan and priceMoreThan
+* New property reportedCurrency for: Financial Statements
+* New API service for custome request for FMP
