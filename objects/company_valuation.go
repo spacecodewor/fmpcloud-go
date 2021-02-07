@@ -434,7 +434,7 @@ type IncomeStatement struct {
 	Ebitdaratio                      float64 `json:"ebitdaratio"`
 	OperatingIncome                  int64   `json:"operatingIncome"`
 	OperatingIncomeRatio             float64 `json:"operatingIncomeRatio"`
-	TotalOtherIncomeExpensesNet      int64   `json:"totalOtherIncomeExpensesNet"`
+	TotalOtherIncomeExpensesNet      float64 `json:"totalOtherIncomeExpensesNet"`
 	IncomeBeforeTax                  int64   `json:"incomeBeforeTax"`
 	IncomeBeforeTaxRatio             float64 `json:"incomeBeforeTaxRatio"`
 	IncomeTaxExpense                 int64   `json:"incomeTaxExpense"`
