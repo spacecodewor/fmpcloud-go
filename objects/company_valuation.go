@@ -428,7 +428,7 @@ type IncomeStatement struct {
 	OtherExpenses                    float64 `json:"otherExpenses"`
 	OperatingExpenses                float64 `json:"operatingExpenses"`
 	CostAndExpenses                  float64 `json:"costAndExpenses"`
-	InterestExpense                  int64   `json:"interestExpense"`
+	InterestExpense                  float64 `json:"interestExpense"`
 	DepreciationAndAmortization      int64   `json:"depreciationAndAmortization"`
 	Ebitda                           int64   `json:"ebitda"`
 	Ebitdaratio                      float64 `json:"ebitdaratio"`
