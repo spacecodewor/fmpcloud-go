@@ -33,6 +33,7 @@ type APIClient struct {
 	Crypto             *Crypto
 	CompanyValuation   *CompanyValuation
 	TechnicalIndicator *TechnicalIndicator
+	InsiderTrading     *InsiderTrading
 	API                *API
 	Logger             *zap.Logger
 	Debug              bool
@@ -117,6 +118,9 @@ func NewAPIClient(cfg Config) (*APIClient, error) {
 	APIClient.CompanyValuation = &CompanyValuation{Client: HTTPClient}
 	APIClient.TechnicalIndicator = &TechnicalIndicator{Client: HTTPClient}
 	APIClient.API = &API{Client: HTTPClient}
+
+	// Only for API v4
+	APIClient.InsiderTrading = &InsiderTrading{Client: HTTPClient}
 
 	return APIClient, nil
 }

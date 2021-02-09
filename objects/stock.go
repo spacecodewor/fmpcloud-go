@@ -236,6 +236,7 @@ type StockBatchDaily struct {
 	Data []StockBatchData `json:"historicalStockList"`
 }
 
+// StockBatchData ...
 type StockBatchData struct {
 	Symbol     string             `json:"symbol"`
 	Historical []StockDailyCandle `json:"historical"`

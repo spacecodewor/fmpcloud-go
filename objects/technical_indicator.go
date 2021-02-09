@@ -1,5 +1,6 @@
 package objects
 
+// Base const type TechnicalIndicatorResolution, TechnicalIndicatorType
 const (
 	TechnicalIndicatorResolution1Min  TechnicalIndicatorResolution = "1min"
 	TechnicalIndicatorResolution5Min  TechnicalIndicatorResolution = "5min"

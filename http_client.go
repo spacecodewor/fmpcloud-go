@@ -18,7 +18,7 @@ type HTTPClient struct {
 	retryWaitTime *time.Duration
 }
 
-// Create new logger
+// Get ...
 func (h *HTTPClient) Get(endpoint string, data map[string]string) (response *resty.Response, err error) {
 	if data == nil {
 		data = make(map[string]string)

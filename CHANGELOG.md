@@ -95,3 +95,11 @@
 * New params for Stock Screener: priceLowerThan and priceMoreThan
 * New property reportedCurrency for: Financial Statements
 * New API service for custome request for FMP
+
+## 2.2.0
+**Add:**
+* New endpoint: Stock Insider Trading (Only for API v4)
+* New endpoint: Insider Trading RSS Feed (Only for API v4)
+
+**Fix:**
+* Merge two pull request from [mariusgrigoriu](https://github.com/mariusgrigoriu) to fix panics

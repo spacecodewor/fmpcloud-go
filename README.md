@@ -5,7 +5,7 @@
 ## Overview
 - API documentation [FmpCloud](https://fmpcloud.io/documentation) or [Financial Modeling Prep](https://financialmodelingprep.com/developer/docs/)
 - API version: 3
-- Package version: 2.1.0
+- Package version: 2.2.0
 
 ## Support Methods 
 * Company Valuation
@@ -27,6 +27,7 @@
 * Economic Calendar
 * [Formulas](https://financialmodelingprep.com/developer/docs/formula/)
 * [Status](https://financialmodelingprep.com/developer/docs/status/)
+* Insider Trading (Only for API v4)
 
 ## Installation
 ```sh
