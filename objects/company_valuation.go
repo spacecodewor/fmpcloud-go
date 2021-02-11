@@ -264,6 +264,7 @@ type RequestStockNews struct {
 // RequestStockScreener ...
 type RequestStockScreener struct {
 	Exchange           []string // Example: StockScreenerExchangeNYSE
+	Country            *string
 	Sector             *StockScreenerSector
 	Industry           *StockScreenerIndustry
 	Limit              int64
@@ -277,6 +278,8 @@ type RequestStockScreener struct {
 	DividendLowerThan  *float64
 	PriceMoreThan      *float64
 	PriceLowerThan     *float64
+	IsETF              *bool
+	IsActivelyTrading  *bool
 }
 
 // RequestEarningCallTranscript ...
@@ -319,6 +322,22 @@ type RssFeed struct {
 	Cik      string `json:"cik"`
 	FormType string `json:"form_type"`
 	Ticker   string `json:"ticker"`
+}
+
+// ETF ...
+type ETF struct {
+	Symbol   string  `json:"symbol"`
+	Name     string  `json:"name"`
+	Price    float64 `json:"price"`
+	Exchange string  `json:"exchange"`
+}
+
+// AvailableTraded ...
+type AvailableTraded struct {
+	Symbol   string  `json:"symbol"`
+	Name     string  `json:"name"`
+	Price    float64 `json:"price"`
+	Exchange string  `json:"exchange"`
 }
 
 // IPOCalendar ...

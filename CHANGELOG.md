@@ -107,3 +107,8 @@
 ## 2.3.0
 **Add:**
 * New properties: isEtf and isActivelyTrading and defaultImage for: Company Profile
+## 2.4.0
+**Add:**
+* New endpoint: ETF List
+* New endpoint: Tradable Symbols List
+* New params for Stock Screener: isEtf, isActivelyTrading and country

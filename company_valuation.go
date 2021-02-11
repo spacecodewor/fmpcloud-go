@@ -59,6 +59,8 @@ const (
 	urlAPICompanyValuationEconomicCalendar                 = "/economic_calendar"
 	urlAPICompanyValuationHistoryEconomicCalendar          = "/historical/economic_calendar/%s"
 	urlAPICompanyValuationSECFillings                      = "/sec_filings/%s"
+	urlAPICompanyValuationETFList                          = "/etf/list"
+	urlAPICompanyValuationAvailableTradedList              = "/available-traded/list"
 )
 
 // CompanyValuation client
@@ -786,6 +788,18 @@ func (c *CompanyValuation) StockScreener(req objects.RequestStockScreener) (sLis
 		reqParam["priceLowerThan"] = fmt.Sprint(*req.PriceLowerThan)
 	}
 
+	if req.IsETF != nil {
+		reqParam["isEtf"] = fmt.Sprint(*req.IsETF)
+	}
+
+	if req.IsActivelyTrading != nil {
+		reqParam["isActivelyTrading"] = fmt.Sprint(*req.IsActivelyTrading)
+	}
+
+	if req.Country != nil {
+		reqParam["country"] = *req.Country
+	}
+
 	data, err := c.Client.Get(urlAPICompanyValuationStockScreener, reqParam)
 	if err != nil {
 		return nil, err
@@ -998,4 +1012,34 @@ func (c *CompanyValuation) EconomicCalendarEventList() (eList []objects.Economic
 	}
 
 	return eList, nil
+}
+
+// ETFList - All ETF symbols
+func (c *CompanyValuation) ETFList() (fList []objects.ETF, err error) {
+	data, err := c.Client.Get(urlAPICompanyValuationETFList, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &fList)
+	if err != nil {
+		return nil, err
+	}
+
+	return fList, nil
+}
+
+// AvailableTradedList - All tradable Symbols
+func (c *CompanyValuation) AvailableTradedList() (fList []objects.AvailableTraded, err error) {
+	data, err := c.Client.Get(urlAPICompanyValuationAvailableTradedList, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &fList)
+	if err != nil {
+		return nil, err
+	}
+
+	return fList, nil
 }
