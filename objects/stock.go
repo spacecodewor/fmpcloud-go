@@ -161,6 +161,9 @@ type StockCompanyProfile struct {
 	Dcf               float64 `json:"dcf"`
 	Image             string  `json:"image"`
 	IpoDate           string  `json:"ipoDate"` // 1980-12-12
+	DefaultImage      bool    `json:"defaultImage"`
+	IsEtf             bool    `json:"isEtf"`
+	IsActivelyTrading bool    `json:"isActivelyTrading"`
 }
 
 // CompanyExecutive ...

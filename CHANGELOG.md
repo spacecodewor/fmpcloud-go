@@ -103,3 +103,7 @@
 
 **Fix:**
 * Merge two pull request from [mariusgrigoriu](https://github.com/mariusgrigoriu) to fix panics
+
+## 2.3.0
+**Add:**
+* New properties: isEtf and isActivelyTrading and defaultImage for: Company Profile
