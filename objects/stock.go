@@ -230,8 +230,8 @@ type StockDailyLine struct {
 
 // StockDailyCandleList ...
 type StockDailyCandleList struct {
-	Symbol     string              `json:"symbol"`
-	Historical []CryptoDailyCandle `json:"historical"`
+	Symbol     string             `json:"symbol"`
+	Historical []StockDailyCandle `json:"historical"`
 }
 
 // StockBatchDaily ...

@@ -19,6 +19,7 @@ type InsiderTrading struct {
 	ReportingName           string  `json:"reportingName"`
 	AcquistionOrDisposition string  `json:"acquistionOrDisposition"`
 	FormType                string  `json:"formType"`
+	TypeOfOwner             string  `json:"typeOfOwner"`
 	SecuritiesTransacted    float64 `json:"securitiesTransacted"`
 	SecurityName            string  `json:"securityName"`
 	Link                    string  `json:"link"`

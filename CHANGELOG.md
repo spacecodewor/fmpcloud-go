@@ -112,3 +112,10 @@
 * New endpoint: ETF List
 * New endpoint: Tradable Symbols List
 * New params for Stock Screener: isEtf, isActivelyTrading and country
+
+## 2.4.1
+**Add:**
+* New property typeOfOwner for: Stock Insider Trading
+
+**Fix:**
+* CryptoDailyCandleList => StockDailyCandleList in StockDailyCandleList
