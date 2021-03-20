@@ -10,12 +10,14 @@ import (
 
 // Varibles for test check cases
 var (
-	retryCount               = 5
-	retryWaitTime            = 1 * time.Second
-	testCaseSymbolList       = []string{"AAPL", "GM", "NVDA", "TSLA", "ADBE", "JPM", "BAC", "MSFT", "GS", "AAL", "AAPL", "GM", "NVDA", "TSLA", "ADBE", "JPM", "BAC", "MSFT", "GS", "AAL", "AAPL", "GM", "NVDA", "TSLA", "ADBE", "JPM", "BAC", "MSFT", "GS", "AAL"}
-	testCaseETFList          = []string{"QQQ", "SPY"}
-	testCaseAPIConfig        = Config{Debug: true, Timeout: 60, RetryCount: &retryCount, RetryWaitTime: &retryWaitTime}
-	testCaseLimit      int64 = 5
+	retryCount                 = 5
+	retryWaitTime              = 1 * time.Second
+	testCaseSymbolList         = []string{"AAPL", "GM", "NVDA", "TSLA", "ADBE", "JPM", "BAC", "MSFT", "GS", "AAL", "AAPL", "GM", "NVDA", "TSLA", "ADBE", "JPM", "BAC", "MSFT", "GS", "AAL", "AAPL", "GM", "NVDA", "TSLA", "ADBE", "JPM", "BAC", "MSFT", "GS", "AAL"}
+	testCaseETFList            = []string{"QQQ", "SPY"}
+	testCaseSingleSymbol       = []string{"QQQ"}
+	testCaseAPIConfig          = Config{Debug: true, Timeout: 60, RetryCount: &retryCount, RetryWaitTime: &retryWaitTime}
+	testCaseAPIConfigV4        = Config{Debug: true, Timeout: 60, RetryCount: &retryCount, RetryWaitTime: &retryWaitTime, Version: "v4"}
+	testCaseLimit        int64 = 5
 )
 
 func TestRssFeed(t *testing.T) {
@@ -246,9 +248,9 @@ func TestIncomeStatement(t *testing.T) {
 	}
 
 	for _, symbol := range testCaseSymbolList {
-		_, err := APIClient.CompanyValuation.IncomeStatement(objects.RequestIncomeStatement{
+		_, err = APIClient.CompanyValuation.IncomeStatement(objects.RequestIncomeStatement{
 			Symbol: symbol,
-			Period: objects.CompanyValuationPeriodAnnual,
+			Period: objects.CompanyValuationPeriodQuarter,
 			Limit:  testCaseLimit,
 		})
 		if err != nil {
@@ -683,6 +685,7 @@ func TestAnalystEstimates(t *testing.T) {
 	for _, symbol := range testCaseSymbolList {
 		_, err = APIClient.CompanyValuation.AnalystEstimates(objects.RequestAnalystEstimates{
 			Symbol: symbol,
+			Period: objects.CompanyValuationPeriodQuarter,
 		})
 		if err != nil {
 			t.Fatal(err.Error())
@@ -753,6 +756,18 @@ func TestStockScreener(t *testing.T) {
 		Sector:   &sec,
 		Limit:    testCaseLimit,
 	})
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+}
+
+func TestCompanyOutlok(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfigV4)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	_, err = APIClient.CompanyValuation.CompanyOutlook("SPY")
 	if err != nil {
 		t.Fatal(err.Error())
 	}

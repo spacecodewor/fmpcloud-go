@@ -287,13 +287,27 @@ func (s *Stock) DailyBatch(symbolList []string, from *time.Time, to *time.Time) 
 		return nil, err
 	}
 
-	var resp objects.StockBatchDaily
-	err = json.Unmarshal(data.Body(), &resp)
-	if err != nil {
-		return nil, err
+	if len(symbolList) > 1 {
+		var resp objects.StockBatchDaily
+		err = json.Unmarshal(data.Body(), &resp)
+		if err != nil {
+			return nil, err
+		}
+
+		cList = resp.Data
 	}
 
-	return resp.Data, nil
+	if len(symbolList) == 1 {
+		var resp objects.StockBatchData
+		err = json.Unmarshal(data.Body(), &resp)
+		if err != nil {
+			return nil, err
+		}
+
+		cList = append(cList, resp)
+	}
+
+	return cList, nil
 }
 
 // Dividends - stock dividends

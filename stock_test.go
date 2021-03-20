@@ -144,7 +144,7 @@ func TestDailyBatch(t *testing.T) {
 
 	from := time.Now().AddDate(0, 0, -10)
 	to := time.Now()
-	_, err = APIClient.Stock.DailyBatch(testCaseETFList, &from, &to)
+	_, err = APIClient.Stock.DailyBatch(testCaseSingleSymbol, &from, &to)
 	if err != nil {
 		t.Fatal(err.Error())
 	}

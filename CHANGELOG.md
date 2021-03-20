@@ -107,6 +107,7 @@
 ## 2.3.0
 **Add:**
 * New properties: isEtf and isActivelyTrading and defaultImage for: Company Profile
+
 ## 2.4.0
 **Add:**
 * New endpoint: ETF List
@@ -119,3 +120,14 @@
 
 **Fix:**
 * CryptoDailyCandleList => StockDailyCandleList in StockDailyCandleList
+
+## 2.5.0
+**Add:**
+* New endpoint: Company Outlook
+* New endpoint: COT Trading Symbols List
+* New endpoint: Commitments of Traders Analysis
+* New endpoint: Commitments of Traders Report
+* New property price for: Stock Insider Trading
+
+**Fix:**
+* Stock => DailyBatch

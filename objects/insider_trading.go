@@ -10,19 +10,20 @@ type RequestInsiderTrading struct {
 
 // InsiderTrading ...
 type InsiderTrading struct {
-	Symbol                  string  `json:"symbol"`
-	TransactionDate         string  `json:"transactionDate"`
-	ReportingCik            string  `json:"reportingCik"`
-	TransactionType         string  `json:"transactionType"`
-	SecuritiesOwned         float64 `json:"securitiesOwned"`
-	CompanyCik              string  `json:"companyCik"`
-	ReportingName           string  `json:"reportingName"`
-	AcquistionOrDisposition string  `json:"acquistionOrDisposition"`
-	FormType                string  `json:"formType"`
-	TypeOfOwner             string  `json:"typeOfOwner"`
-	SecuritiesTransacted    float64 `json:"securitiesTransacted"`
-	SecurityName            string  `json:"securityName"`
-	Link                    string  `json:"link"`
+	Symbol                  string   `json:"symbol"`
+	TransactionDate         string   `json:"transactionDate"`
+	ReportingCik            string   `json:"reportingCik"`
+	TransactionType         string   `json:"transactionType"`
+	SecuritiesOwned         float64  `json:"securitiesOwned"`
+	CompanyCik              string   `json:"companyCik"`
+	ReportingName           string   `json:"reportingName"`
+	AcquistionOrDisposition string   `json:"acquistionOrDisposition"`
+	FormType                string   `json:"formType"`
+	TypeOfOwner             string   `json:"typeOfOwner"`
+	SecuritiesTransacted    float64  `json:"securitiesTransacted"`
+	SecurityName            string   `json:"securityName"`
+	Link                    string   `json:"link"`
+	Price                   *float64 `json:"price"`
 }
 
 // InsiderTradingRSSFeed ...

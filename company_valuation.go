@@ -61,6 +61,7 @@ const (
 	urlAPICompanyValuationSECFillings                      = "/sec_filings/%s"
 	urlAPICompanyValuationETFList                          = "/etf/list"
 	urlAPICompanyValuationAvailableTradedList              = "/available-traded/list"
+	urlAPICompanyValuationCompanyOutlook                   = "/company-outlook"
 )
 
 // CompanyValuation client
@@ -1042,4 +1043,19 @@ func (c *CompanyValuation) AvailableTradedList() (fList []objects.AvailableTrade
 	}
 
 	return fList, nil
+}
+
+// CompanyOutlook - Company Outlook
+func (c *CompanyValuation) CompanyOutlook(symbol string) (co *objects.CompanyOutlook, err error) {
+	data, err := c.Client.Get(urlAPICompanyValuationCompanyOutlook, map[string]string{"symbol": symbol})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &co)
+	if err != nil {
+		return nil, err
+	}
+
+	return co, nil
 }
