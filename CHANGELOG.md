@@ -131,3 +131,7 @@
 
 **Fix:**
 * Stock => DailyBatch
+
+## 2.6.0
+**Add:**
+* Added *HTTPClient to config to start new NewAPIClient

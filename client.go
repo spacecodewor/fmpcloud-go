@@ -16,6 +16,7 @@ type APIUrl string
 // Config for create new API client
 type Config struct {
 	Logger        *zap.Logger
+	HTTPClient    *resty.Client
 	Version       string
 	APIKey        string
 	APIUrl        APIUrl
@@ -67,9 +68,12 @@ func NewAPIClient(cfg Config) (*APIClient, error) {
 	}
 
 	// Init rest client (resty)
-	restClient := resty.New()
-	restClient.SetDebug(APIClient.Debug)
-	restClient.SetTimeout(time.Duration(cfg.Timeout) * time.Second)
+	if cfg.HTTPClient == nil {
+		cfg.HTTPClient = resty.New()
+	}
+
+	cfg.HTTPClient.SetDebug(APIClient.Debug)
+	cfg.HTTPClient.SetTimeout(time.Duration(cfg.Timeout) * time.Second)
 
 	// Check set APIUrl param
 	if len(cfg.APIUrl) == 0 {
@@ -86,10 +90,10 @@ func NewAPIClient(cfg Config) (*APIClient, error) {
 		cfg.APIKey = apiDefaultKey
 	}
 
-	restClient.SetHostURL(fmt.Sprintf(string(cfg.APIUrl), cfg.Version))
+	cfg.HTTPClient.SetHostURL(fmt.Sprintf(string(cfg.APIUrl), cfg.Version))
 
 	HTTPClient := &HTTPClient{
-		client: restClient,
+		client: cfg.HTTPClient,
 		apiKey: cfg.APIKey,
 		logger: APIClient.Logger,
 	}
