@@ -135,3 +135,15 @@
 ## 2.6.0
 **Add:**
 * Added *HTTPClient to config to start new NewAPIClient
+
+## 2.7.0
+**Add:**
+* New property rating for: Company Outlook
+* New property dividendPerShareTTM for: Company Key Metrics
+* New property period for: Company Financial Growth
+* New properties: dividendYielTTM, yearHigh, yearLow and volume for: Company Outlook
+* New property period for: Company Key Metrics
+* New property period for: Company Financial Ratios
+
+**Fix:**
+* json: cannot unmarshal FinancialRatios.ebtPerEbit

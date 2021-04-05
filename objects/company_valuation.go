@@ -1195,6 +1195,7 @@ type FullFinancialStatementAsReported struct {
 type FinancialRatios struct {
 	Symbol                             string  `json:"symbol"`
 	Date                               string  `json:"date"`
+	Period                             string  `json:"period"`
 	CurrentRatio                       float64 `json:"currentRatio"`
 	QuickRatio                         float64 `json:"quickRatio"`
 	CashRatio                          float64 `json:"cashRatio"`
@@ -1212,7 +1213,7 @@ type FinancialRatios struct {
 	ReturnOnEquity                     float64 `json:"returnOnEquity"`
 	ReturnOnCapitalEmployed            float64 `json:"returnOnCapitalEmployed"`
 	NetIncomePerEBT                    float64 `json:"netIncomePerEBT"`
-	EbtPerEbit                         int64   `json:"ebtPerEbit"`
+	EbtPerEbit                         float64 `json:"ebtPerEbit"`
 	EbitPerRevenue                     float64 `json:"ebitPerRevenue"`
 	DebtRatio                          float64 `json:"debtRatio"`
 	DebtEquityRatio                    float64 `json:"debtEquityRatio"`
@@ -1338,6 +1339,7 @@ type KeyMetricsTTM struct {
 	EarningsYieldTTM                          float64 `json:"earningsYieldTTM"`
 	FreeCashFlowYieldTTM                      float64 `json:"freeCashFlowYieldTTM"`
 	DebtToEquityTTM                           float64 `json:"debtToEquityTTM"`
+	DividendPerShareTTM                       float64 `json:"dividendPerShareTTM"`
 	DebtToAssetsTTM                           float64 `json:"debtToAssetsTTM"`
 	NetDebtToEBITDATTM                        float64 `json:"netDebtToEBITDATTM"`
 	CurrentRatioTTM                           float64 `json:"currentRatioTTM"`
@@ -1376,65 +1378,66 @@ type KeyMetricsTTM struct {
 
 // KeyMetrics ...
 type KeyMetrics struct {
-	Symbol                                 string   `json:"symbol"`
-	Date                                   string   `json:"date"`
-	RevenuePerShare                        float64  `json:"revenuePerShare"`
-	NetIncomePerShare                      float64  `json:"netIncomePerShare"`
-	OperatingCashFlowPerShare              float64  `json:"operatingCashFlowPerShare"`
-	FreeCashFlowPerShare                   float64  `json:"freeCashFlowPerShare"`
-	CashPerShare                           float64  `json:"cashPerShare"`
-	BookValuePerShare                      float64  `json:"bookValuePerShare"`
-	TangibleBookValuePerShare              float64  `json:"tangibleBookValuePerShare"`
-	ShareholdersEquityPerShare             float64  `json:"shareholdersEquityPerShare"`
-	InterestDebtPerShare                   float64  `json:"interestDebtPerShare"`
-	MarketCap                              float64  `json:"marketCap"`
-	EnterpriseValue                        float64  `json:"enterpriseValue"`
-	PeRatio                                float64  `json:"peRatio"`
-	PriceToSalesRatio                      float64  `json:"priceToSalesRatio"`
-	Pocfratio                              float64  `json:"pocfratio"`
-	PfcfRatio                              float64  `json:"pfcfRatio"`
-	PbRatio                                float64  `json:"pbRatio"`
-	PtbRatio                               float64  `json:"ptbRatio"`
-	EvToSales                              float64  `json:"evToSales"`
-	EnterpriseValueOverEBITDA              float64  `json:"enterpriseValueOverEBITDA"`
-	EvToOperatingCashFlow                  float64  `json:"evToOperatingCashFlow"`
-	EvToFreeCashFlow                       float64  `json:"evToFreeCashFlow"`
-	EarningsYield                          float64  `json:"earningsYield"`
-	FreeCashFlowYield                      float64  `json:"freeCashFlowYield"`
-	DebtToEquity                           float64  `json:"debtToEquity"`
-	DebtToAssets                           float64  `json:"debtToAssets"`
-	NetDebtToEBITDA                        float64  `json:"netDebtToEBITDA"`
-	CurrentRatio                           float64  `json:"currentRatio"`
-	InterestCoverage                       float64  `json:"interestCoverage"`
-	IncomeQuality                          float64  `json:"incomeQuality"`
-	DividendYield                          *float64 `json:"dividendYield"`
-	PayoutRatio                            float64  `json:"payoutRatio"`
-	SalesGeneralAndAdministrativeToRevenue float64  `json:"salesGeneralAndAdministrativeToRevenue"`
-	ResearchAndDdevelopementToRevenue      float64  `json:"researchAndDdevelopementToRevenue"`
-	IntangiblesToTotalAssets               float64  `json:"intangiblesToTotalAssets"`
-	CapexToOperatingCashFlow               float64  `json:"capexToOperatingCashFlow"`
-	CapexToRevenue                         float64  `json:"capexToRevenue"`
-	CapexToDepreciation                    float64  `json:"capexToDepreciation"`
-	StockBasedCompensationToRevenue        float64  `json:"stockBasedCompensationToRevenue"`
-	GrahamNumber                           float64  `json:"grahamNumber"`
-	Roic                                   float64  `json:"roic"`
-	ReturnOnTangibleAssets                 float64  `json:"returnOnTangibleAssets"`
-	GrahamNetNet                           float64  `json:"grahamNetNet"`
-	WorkingCapital                         float64  `json:"workingCapital"`
-	TangibleAssetValue                     float64  `json:"tangibleAssetValue"`
-	NetCurrentAssetValue                   float64  `json:"netCurrentAssetValue"`
-	InvestedCapital                        *float64 `json:"investedCapital"`
-	AverageReceivables                     float64  `json:"averageReceivables"`
-	AveragePayables                        float64  `json:"averagePayables"`
-	AverageInventory                       float64  `json:"averageInventory"`
-	DaysSalesOutstanding                   float64  `json:"daysSalesOutstanding"`
-	DaysPayablesOutstanding                float64  `json:"daysPayablesOutstanding"`
-	DaysOfInventoryOnHand                  float64  `json:"daysOfInventoryOnHand"`
-	ReceivablesTurnover                    float64  `json:"receivablesTurnover"`
-	PayablesTurnover                       float64  `json:"payablesTurnover"`
-	InventoryTurnover                      float64  `json:"inventoryTurnover"`
-	Roe                                    float64  `json:"roe"`
-	CapexPerShare                          float64  `json:"capexPerShare"`
+	Symbol                                 string  `json:"symbol"`
+	Date                                   string  `json:"date"`
+	Period                                 string  `json:"period"`
+	RevenuePerShare                        float64 `json:"revenuePerShare"`
+	NetIncomePerShare                      float64 `json:"netIncomePerShare"`
+	OperatingCashFlowPerShare              float64 `json:"operatingCashFlowPerShare"`
+	FreeCashFlowPerShare                   float64 `json:"freeCashFlowPerShare"`
+	CashPerShare                           float64 `json:"cashPerShare"`
+	BookValuePerShare                      float64 `json:"bookValuePerShare"`
+	TangibleBookValuePerShare              float64 `json:"tangibleBookValuePerShare"`
+	ShareholdersEquityPerShare             float64 `json:"shareholdersEquityPerShare"`
+	InterestDebtPerShare                   float64 `json:"interestDebtPerShare"`
+	MarketCap                              float64 `json:"marketCap"`
+	EnterpriseValue                        float64 `json:"enterpriseValue"`
+	PeRatio                                float64 `json:"peRatio"`
+	PriceToSalesRatio                      float64 `json:"priceToSalesRatio"`
+	Pocfratio                              float64 `json:"pocfratio"`
+	PfcfRatio                              float64 `json:"pfcfRatio"`
+	PbRatio                                float64 `json:"pbRatio"`
+	PtbRatio                               float64 `json:"ptbRatio"`
+	EvToSales                              float64 `json:"evToSales"`
+	EnterpriseValueOverEBITDA              float64 `json:"enterpriseValueOverEBITDA"`
+	EvToOperatingCashFlow                  float64 `json:"evToOperatingCashFlow"`
+	EvToFreeCashFlow                       float64 `json:"evToFreeCashFlow"`
+	EarningsYield                          float64 `json:"earningsYield"`
+	FreeCashFlowYield                      float64 `json:"freeCashFlowYield"`
+	DebtToEquity                           float64 `json:"debtToEquity"`
+	DebtToAssets                           float64 `json:"debtToAssets"`
+	NetDebtToEBITDA                        float64 `json:"netDebtToEBITDA"`
+	CurrentRatio                           float64 `json:"currentRatio"`
+	InterestCoverage                       float64 `json:"interestCoverage"`
+	IncomeQuality                          float64 `json:"incomeQuality"`
+	DividendYield                          float64 `json:"dividendYield"`
+	PayoutRatio                            float64 `json:"payoutRatio"`
+	SalesGeneralAndAdministrativeToRevenue float64 `json:"salesGeneralAndAdministrativeToRevenue"`
+	ResearchAndDdevelopementToRevenue      float64 `json:"researchAndDdevelopementToRevenue"`
+	IntangiblesToTotalAssets               float64 `json:"intangiblesToTotalAssets"`
+	CapexToOperatingCashFlow               float64 `json:"capexToOperatingCashFlow"`
+	CapexToRevenue                         float64 `json:"capexToRevenue"`
+	CapexToDepreciation                    float64 `json:"capexToDepreciation"`
+	StockBasedCompensationToRevenue        float64 `json:"stockBasedCompensationToRevenue"`
+	GrahamNumber                           float64 `json:"grahamNumber"`
+	Roic                                   float64 `json:"roic"`
+	ReturnOnTangibleAssets                 float64 `json:"returnOnTangibleAssets"`
+	GrahamNetNet                           float64 `json:"grahamNetNet"`
+	WorkingCapital                         float64 `json:"workingCapital"`
+	TangibleAssetValue                     float64 `json:"tangibleAssetValue"`
+	NetCurrentAssetValue                   float64 `json:"netCurrentAssetValue"`
+	InvestedCapital                        float64 `json:"investedCapital"`
+	AverageReceivables                     float64 `json:"averageReceivables"`
+	AveragePayables                        float64 `json:"averagePayables"`
+	AverageInventory                       float64 `json:"averageInventory"`
+	DaysSalesOutstanding                   float64 `json:"daysSalesOutstanding"`
+	DaysPayablesOutstanding                float64 `json:"daysPayablesOutstanding"`
+	DaysOfInventoryOnHand                  float64 `json:"daysOfInventoryOnHand"`
+	ReceivablesTurnover                    float64 `json:"receivablesTurnover"`
+	PayablesTurnover                       float64 `json:"payablesTurnover"`
+	InventoryTurnover                      float64 `json:"inventoryTurnover"`
+	Roe                                    float64 `json:"roe"`
+	CapexPerShare                          float64 `json:"capexPerShare"`
 }
 
 // EnterpriseValue ...
@@ -1453,6 +1456,7 @@ type EnterpriseValue struct {
 type FinancialStatementsGrowth struct {
 	Symbol                                 string  `json:"symbol"`
 	Date                                   string  `json:"date"` // 2019-09-28
+	Period                                 string  `json:"period"`
 	RevenueGrowth                          float64 `json:"revenueGrowth"`
 	GrossProfitGrowth                      float64 `json:"grossProfitGrowth"`
 	Ebitgrowth                             float64 `json:"ebitgrowth"`
@@ -1714,7 +1718,7 @@ type CompanyOutlook struct {
 		IsEtf             bool    `json:"isEtf"`
 		IsActivelyTrading bool    `json:"isActivelyTrading"`
 	} `json:"profile"`
-	Insidetrades []struct {
+	InsideTrades []struct {
 		Symbol                  string  `json:"symbol"`
 		TransactionDate         string  `json:"transactionDate"`
 		ReportingCik            string  `json:"reportingCik"`
@@ -1730,20 +1734,20 @@ type CompanyOutlook struct {
 		SecuritiesTransacted    float64 `json:"securitiesTransacted"`
 		Price                   float64 `json:"price"`
 	} `json:"insideTrades"`
-	Keyexecutives []struct {
+	KeyExecutives []struct {
 		Title       string  `json:"title"`
 		Name        string  `json:"name"`
 		Gender      string  `json:"gender"`
 		CurrencyPay string  `json:"currencyPay"`
 		Pay         float64 `json:"pay"`
 	} `json:"keyExecutives"`
-	Splithistory []struct {
+	SplitHistory []struct {
 		Date        string  `json:"date"`
 		Label       string  `json:"label"`
 		Numerator   float64 `json:"numerator"`
 		Denominator float64 `json:"denominator"`
 	} `json:"splitHistory"`
-	Stockdividend []struct {
+	StockDividend []struct {
 		Date            string  `json:"date"`
 		Label           string  `json:"label"`
 		RecordDate      string  `json:"recordDate"`
@@ -1752,7 +1756,7 @@ type CompanyOutlook struct {
 		AdjDividend     float64 `json:"adjDividend"`
 		Dividend        float64 `json:"dividend"`
 	} `json:"stockDividend"`
-	Stocknews []struct {
+	StockNews []struct {
 		Symbol        string `json:"symbol"`
 		PublishedDate string `json:"publishedDate"`
 		Title         string `json:"title"`
@@ -1761,7 +1765,91 @@ type CompanyOutlook struct {
 		Text          string `json:"text"`
 		URL           string `json:"url"`
 	} `json:"stockNews"`
-	Financialsannual struct {
+	Metrics struct {
+		DividendYielTTM float64 `json:"dividendYielTTM"`
+		Volume          int     `json:"volume"`
+		YearHigh        float64 `json:"yearHigh"`
+		YearLow         float64 `json:"yearLow"`
+	} `json:"metrics"`
+	Ratios []struct {
+		DividendYielTTM                       float64 `json:"dividendYielTTM"`
+		DividendYielPercentageTTM             float64 `json:"dividendYielPercentageTTM"`
+		PeRatioTTM                            float64 `json:"peRatioTTM"`
+		PegRatioTTM                           float64 `json:"pegRatioTTM"`
+		PayoutRatioTTM                        float64 `json:"payoutRatioTTM"`
+		CurrentRatioTTM                       float64 `json:"currentRatioTTM"`
+		QuickRatioTTM                         float64 `json:"quickRatioTTM"`
+		CashRatioTTM                          float64 `json:"cashRatioTTM"`
+		DaysOfSalesOutstandingTTM             float64 `json:"daysOfSalesOutstandingTTM"`
+		DaysOfInventoryOutstandingTTM         float64 `json:"daysOfInventoryOutstandingTTM"`
+		OperatingCycleTTM                     float64 `json:"operatingCycleTTM"`
+		DaysOfPayablesOutstandingTTM          float64 `json:"daysOfPayablesOutstandingTTM"`
+		CashConversionCycleTTM                float64 `json:"cashConversionCycleTTM"`
+		GrossProfitMarginTTM                  float64 `json:"grossProfitMarginTTM"`
+		OperatingProfitMarginTTM              float64 `json:"operatingProfitMarginTTM"`
+		PretaxProfitMarginTTM                 float64 `json:"pretaxProfitMarginTTM"`
+		NetProfitMarginTTM                    float64 `json:"netProfitMarginTTM"`
+		EffectiveTaxRateTTM                   float64 `json:"effectiveTaxRateTTM"`
+		ReturnOnAssetsTTM                     float64 `json:"returnOnAssetsTTM"`
+		ReturnOnEquityTTM                     float64 `json:"returnOnEquityTTM"`
+		ReturnOnCapitalEmployedTTM            float64 `json:"returnOnCapitalEmployedTTM"`
+		NetIncomePerEBTTTM                    float64 `json:"netIncomePerEBTTTM"`
+		EbtPerEbitTTM                         float64 `json:"ebtPerEbitTTM"`
+		EbitPerRevenueTTM                     float64 `json:"ebitPerRevenueTTM"`
+		DebtRatioTTM                          float64 `json:"debtRatioTTM"`
+		DebtEquityRatioTTM                    float64 `json:"debtEquityRatioTTM"`
+		LongTermDebtToCapitalizationTTM       float64 `json:"longTermDebtToCapitalizationTTM"`
+		TotalDebtToCapitalizationTTM          float64 `json:"totalDebtToCapitalizationTTM"`
+		InterestCoverageTTM                   float64 `json:"interestCoverageTTM"`
+		CashFlowToDebtRatioTTM                float64 `json:"cashFlowToDebtRatioTTM"`
+		CompanyEquityMultiplierTTM            float64 `json:"companyEquityMultiplierTTM"`
+		ReceivablesTurnoverTTM                float64 `json:"receivablesTurnoverTTM"`
+		PayablesTurnoverTTM                   float64 `json:"payablesTurnoverTTM"`
+		InventoryTurnoverTTM                  float64 `json:"inventoryTurnoverTTM"`
+		FixedAssetTurnoverTTM                 float64 `json:"fixedAssetTurnoverTTM"`
+		AssetTurnoverTTM                      float64 `json:"assetTurnoverTTM"`
+		OperatingCashFlowPerShareTTM          float64 `json:"operatingCashFlowPerShareTTM"`
+		FreeCashFlowPerShareTTM               float64 `json:"freeCashFlowPerShareTTM"`
+		CashPerShareTTM                       float64 `json:"cashPerShareTTM"`
+		OperatingCashFlowSalesRatioTTM        float64 `json:"operatingCashFlowSalesRatioTTM"`
+		FreeCashFlowOperatingCashFlowRatioTTM float64 `json:"freeCashFlowOperatingCashFlowRatioTTM"`
+		CashFlowCoverageRatiosTTM             float64 `json:"cashFlowCoverageRatiosTTM"`
+		ShortTermCoverageRatiosTTM            float64 `json:"shortTermCoverageRatiosTTM"`
+		CapitalExpenditureCoverageRatioTTM    float64 `json:"capitalExpenditureCoverageRatioTTM"`
+		DividendPaidAndCapexCoverageRatioTTM  float64 `json:"dividendPaidAndCapexCoverageRatioTTM"`
+		PriceBookValueRatioTTM                float64 `json:"priceBookValueRatioTTM"`
+		PriceToBookRatioTTM                   float64 `json:"priceToBookRatioTTM"`
+		PriceToSalesRatioTTM                  float64 `json:"priceToSalesRatioTTM"`
+		PriceEarningsRatioTTM                 float64 `json:"priceEarningsRatioTTM"`
+		PriceToFreeCashFlowsRatioTTM          float64 `json:"priceToFreeCashFlowsRatioTTM"`
+		PriceToOperatingCashFlowsRatioTTM     float64 `json:"priceToOperatingCashFlowsRatioTTM"`
+		PriceCashFlowRatioTTM                 float64 `json:"priceCashFlowRatioTTM"`
+		PriceEarningsToGrowthRatioTTM         float64 `json:"priceEarningsToGrowthRatioTTM"`
+		PriceSalesRatioTTM                    float64 `json:"priceSalesRatioTTM"`
+		DividendYieldTTM                      float64 `json:"dividendYieldTTM"`
+		EnterpriseValueMultipleTTM            float64 `json:"enterpriseValueMultipleTTM"`
+		PriceFairValueTTM                     float64 `json:"priceFairValueTTM"`
+	} `json:"ratios"`
+	Rating []struct {
+		Symbol                         string `json:"symbol"`
+		Date                           string `json:"date"`
+		Rating                         string `json:"rating"`
+		Ratingscore                    int    `json:"ratingScore"`
+		Ratingrecommendation           string `json:"ratingRecommendation"`
+		Ratingdetailsdcfscore          int    `json:"ratingDetailsDCFScore"`
+		Ratingdetailsdcfrecommendation string `json:"ratingDetailsDCFRecommendation"`
+		Ratingdetailsroescore          int    `json:"ratingDetailsROEScore"`
+		Ratingdetailsroerecommendation string `json:"ratingDetailsROERecommendation"`
+		Ratingdetailsroascore          int    `json:"ratingDetailsROAScore"`
+		Ratingdetailsroarecommendation string `json:"ratingDetailsROARecommendation"`
+		Ratingdetailsdescore           int    `json:"ratingDetailsDEScore"`
+		Ratingdetailsderecommendation  string `json:"ratingDetailsDERecommendation"`
+		Ratingdetailspescore           int    `json:"ratingDetailsPEScore"`
+		Ratingdetailsperecommendation  string `json:"ratingDetailsPERecommendation"`
+		Ratingdetailspbscore           int    `json:"ratingDetailsPBScore"`
+		Ratingdetailspbrecommendation  string `json:"ratingDetailsPBRecommendation"`
+	} `json:"rating"`
+	FinancialsAnnual struct {
 		Income []struct {
 			Date                             string  `json:"date"`
 			Symbol                           string  `json:"symbol"`
@@ -1854,41 +1942,41 @@ type CompanyOutlook struct {
 			FillingDate                              string  `json:"fillingDate"`
 			AcceptedDate                             string  `json:"acceptedDate"`
 			Period                                   string  `json:"period"`
-			NetIncome                                int64   `json:"netIncome"`
-			DepreciationAndAmortization              int64   `json:"depreciationAndAmortization"`
-			DeferredIncomeTax                        int     `json:"deferredIncomeTax"`
-			StockBasedCompensation                   int64   `json:"stockBasedCompensation"`
-			ChangeInWorkingCapital                   int64   `json:"changeInWorkingCapital"`
-			AccountsReceivables                      int64   `json:"accountsReceivables"`
-			Inventory                                int     `json:"inventory"`
-			AccountsPayables                         int64   `json:"accountsPayables"`
-			OtherWorkingCapital                      int     `json:"otherWorkingCapital"`
-			OtherNonCashItems                        int     `json:"otherNonCashItems"`
-			NetCashProvidedByOperatingActivities     int64   `json:"netCashProvidedByOperatingActivities"`
-			InvestmentsInPropertyPlantAndEquipment   int64   `json:"investmentsInPropertyPlantAndEquipment"`
-			AcquisitionsNet                          int     `json:"acquisitionsNet"`
-			PurchasesOfInvestments                   int64   `json:"purchasesOfInvestments"`
-			SalesMaturitiesOfInvestments             int64   `json:"salesMaturitiesOfInvestments"`
-			OtherInvestingActivites                  int     `json:"otherInvestingActivites"`
-			NetCashUsedForInvestingActivites         int64   `json:"netCashUsedForInvestingActivites"`
-			DebtRepayment                            int64   `json:"debtRepayment"`
-			CommonStockIssued                        int     `json:"commonStockIssued"`
-			CommonStockRepurchased                   int64   `json:"commonStockRepurchased"`
-			DividendsPaid                            int64   `json:"dividendsPaid"`
-			OtherFinancingActivites                  int64   `json:"otherFinancingActivites"`
-			NetCashUsedProvidedByFinancingActivities int64   `json:"netCashUsedProvidedByFinancingActivities"`
+			NetIncome                                float64 `json:"netIncome"`
+			DepreciationAndAmortization              float64 `json:"depreciationAndAmortization"`
+			DeferredIncomeTax                        float64 `json:"deferredIncomeTax"`
+			StockBasedCompensation                   float64 `json:"stockBasedCompensation"`
+			ChangeInWorkingCapital                   float64 `json:"changeInWorkingCapital"`
+			AccountsReceivables                      float64 `json:"accountsReceivables"`
+			Inventory                                float64 `json:"inventory"`
+			AccountsPayables                         float64 `json:"accountsPayables"`
+			OtherWorkingCapital                      float64 `json:"otherWorkingCapital"`
+			OtherNonCashItems                        float64 `json:"otherNonCashItems"`
+			NetCashProvidedByOperatingActivities     float64 `json:"netCashProvidedByOperatingActivities"`
+			InvestmentsInPropertyPlantAndEquipment   float64 `json:"investmentsInPropertyPlantAndEquipment"`
+			AcquisitionsNet                          float64 `json:"acquisitionsNet"`
+			PurchasesOfInvestments                   float64 `json:"purchasesOfInvestments"`
+			SalesMaturitiesOfInvestments             float64 `json:"salesMaturitiesOfInvestments"`
+			OtherInvestingActivites                  float64 `json:"otherInvestingActivites"`
+			NetCashUsedForInvestingActivites         float64 `json:"netCashUsedForInvestingActivites"`
+			DebtRepayment                            float64 `json:"debtRepayment"`
+			CommonStockIssued                        float64 `json:"commonStockIssued"`
+			CommonStockRepurchased                   float64 `json:"commonStockRepurchased"`
+			DividendsPaid                            float64 `json:"dividendsPaid"`
+			OtherFinancingActivites                  float64 `json:"otherFinancingActivites"`
+			NetCashUsedProvidedByFinancingActivities float64 `json:"netCashUsedProvidedByFinancingActivities"`
 			EffectOfForexChangesOnCash               float64 `json:"effectOfForexChangesOnCash"`
-			NetChangeInCash                          int64   `json:"netChangeInCash"`
-			CashAtEndOfPeriod                        int64   `json:"cashAtEndOfPeriod"`
-			CashAtBeginningOfPeriod                  int64   `json:"cashAtBeginningOfPeriod"`
-			OperatingCashFlow                        int64   `json:"operatingCashFlow"`
-			CapitalExpenditure                       int64   `json:"capitalExpenditure"`
-			FreeCashFlow                             int64   `json:"freeCashFlow"`
+			NetChangeInCash                          float64 `json:"netChangeInCash"`
+			CashAtEndOfPeriod                        float64 `json:"cashAtEndOfPeriod"`
+			CashAtBeginningOfPeriod                  float64 `json:"cashAtBeginningOfPeriod"`
+			OperatingCashFlow                        float64 `json:"operatingCashFlow"`
+			CapitalExpenditure                       float64 `json:"capitalExpenditure"`
+			FreeCashFlow                             float64 `json:"freeCashFlow"`
 			Link                                     string  `json:"link"`
 			FinalLink                                string  `json:"finalLink"`
 		} `json:"cash"`
 	} `json:"financialsAnnual"`
-	Financialsquarter struct {
+	FinancialsQuarter struct {
 		Income []struct {
 			Date                             string  `json:"date"`
 			Symbol                           string  `json:"symbol"`
