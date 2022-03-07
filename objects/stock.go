@@ -164,6 +164,8 @@ type StockCompanyProfile struct {
 	DefaultImage      bool    `json:"defaultImage"`
 	IsEtf             bool    `json:"isEtf"`
 	IsActivelyTrading bool    `json:"isActivelyTrading"`
+	IsFund            bool    `json:"isFund"`
+	IsAdr             bool    `json:"isAdr"`
 }
 
 // CompanyExecutive ...
