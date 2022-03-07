@@ -160,7 +160,7 @@ type StockCompanyProfile struct {
 	DcfDiff           float64 `json:"dcfDiff" csv:"DCF_diff"`
 	Dcf               float64 `json:"dcf" csv:"DCF"`
 	Image             string  `json:"image" csv:"image"`
-	IpoDate           string  `json:"ipoDate"` // 1980-12-1 json:"ipoDate"` // 1980-12-12
+	IpoDate           string  `json:"ipoDate" csv:"ipoDate"` // 1980-12-1
 	DefaultImage      bool    `json:"defaultImage" csv:"defaultImage"`
 	IsEtf             bool    `json:"isEtf" csv:"isEtf"`
 	IsActivelyTrading bool    `json:"isActivelyTrading" csv:"isActivelyTrading"`
