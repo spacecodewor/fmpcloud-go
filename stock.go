@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gocarina/gocsv"
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
 
@@ -150,6 +151,17 @@ func (s *Stock) SearchTiker(req objects.RequestStockSearch) (sList []objects.Sto
 	}
 
 	return sList, nil
+}
+
+// BulkProfile - get all available profiles. Requires v4 client
+func (s *Stock) BulkProfile() (companyProfile []objects.StockCompanyProfile, err error) {
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockCompanyProfile, "all"), nil)
+	if err != nil {
+		return
+	}
+
+	err = gocsv.UnmarshalBytes(data.Body(), &companyProfile)
+	return
 }
 
 // CompanyProfile - get general information of a company. You can query by symbol.

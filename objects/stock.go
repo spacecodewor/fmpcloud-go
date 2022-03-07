@@ -130,40 +130,42 @@ type StockSymbol struct {
 
 // StockCompanyProfile ...
 type StockCompanyProfile struct {
-	Symbol            string  `json:"symbol"`
-	Price             float64 `json:"price"`
-	Beta              float64 `json:"beta"`
-	VolAvg            int64   `json:"volAvg"`
-	MktCap            int64   `json:"mktCap"`
-	LastDiv           float64 `json:"lastDiv"`
-	Range             string  `json:"range"`
-	Changes           float64 `json:"changes"`
-	CompanyName       string  `json:"companyName"`
-	Currency          string  `json:"currency"`
-	Cik               string  `json:"cik"`
-	Isin              string  `json:"isin"`
-	Cusip             string  `json:"cusip"`
-	Exchange          string  `json:"exchange"`
-	ExchangeShortName string  `json:"exchangeShortName"`
-	Industry          string  `json:"industry"`
-	Website           string  `json:"website"`
-	Description       string  `json:"description"`
-	Ceo               string  `json:"ceo"`
-	Sector            string  `json:"sector"`
-	Country           string  `json:"country"`
-	FullTimeEmployees string  `json:"fullTimeEmployees"`
-	Phone             string  `json:"phone"`
-	Address           string  `json:"address"`
-	City              string  `json:"city"`
-	State             string  `json:"state"`
-	Zip               string  `json:"zip"`
-	DcfDiff           float64 `json:"dcfDiff"`
-	Dcf               float64 `json:"dcf"`
-	Image             string  `json:"image"`
-	IpoDate           string  `json:"ipoDate"` // 1980-12-12
-	DefaultImage      bool    `json:"defaultImage"`
-	IsEtf             bool    `json:"isEtf"`
-	IsActivelyTrading bool    `json:"isActivelyTrading"`
+	Symbol            string  `json:"symbol" csv:"Symbol"`
+	Price             float64 `json:"price" csv:"Price"`
+	Beta              float64 `json:"beta" csv:"Beta"`
+	VolAvg            int64   `json:"volAvg" csv:"VolAvg"`
+	MktCap            int64   `json:"mktCap" csv:"MktCap"`
+	LastDiv           float64 `json:"lastDiv" csv:"LastDiv"`
+	Range             string  `json:"range" csv:"Range"`
+	Changes           float64 `json:"changes" csv:"Changes"`
+	CompanyName       string  `json:"companyName" csv:"companyName"`
+	Currency          string  `json:"currency" csv:"currency"`
+	Cik               string  `json:"cik" csv:"cik"`
+	Isin              string  `json:"isin" csv:"isin"`
+	Cusip             string  `json:"cusip" csv:"cusip"`
+	Exchange          string  `json:"exchange" csv:"exchange"`
+	ExchangeShortName string  `json:"exchangeShortName" csv:"exchangeShortName"`
+	Industry          string  `json:"industry" csv:"industry"`
+	Website           string  `json:"website" csv:"website"`
+	Description       string  `json:"description" csv:"description"`
+	Ceo               string  `json:"ceo" csv:"CEO"`
+	Sector            string  `json:"sector" csv:"sector"`
+	Country           string  `json:"country" csv:"country"`
+	FullTimeEmployees string  `json:"fullTimeEmployees" csv:"fullTimeEmployees"`
+	Phone             string  `json:"phone" csv:"phone"`
+	Address           string  `json:"address" csv:"address"`
+	City              string  `json:"city" csv:"city"`
+	State             string  `json:"state" csv:"state"`
+	Zip               string  `json:"zip" csv:"zip"`
+	DcfDiff           float64 `json:"dcfDiff" csv:"DCF_diff"`
+	Dcf               float64 `json:"dcf" csv:"DCF"`
+	Image             string  `json:"image" csv:"image"`
+	IpoDate           string  `json:"ipoDate" csv:"ipoDate"` // 1980-12-1
+	DefaultImage      bool    `json:"defaultImage" csv:"defaultImage"`
+	IsEtf             bool    `json:"isEtf" csv:"isEtf"`
+	IsActivelyTrading bool    `json:"isActivelyTrading" csv:"isActivelyTrading"`
+	IsFund            bool    `json:"isFund" csv:"isFund"`
+	IsAdr             bool    `json:"isAdr" csv:"isAdr"`
 }
 
 // CompanyExecutive ...
