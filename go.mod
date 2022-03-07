@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/go-resty/resty/v2 v2.4.0
+	github.com/gocarina/gocsv v0.0.0-20220304222734-caabc5f00d30 // indirect
 	github.com/jinzhu/now v1.1.1
 	github.com/pkg/errors v0.9.1
 	go.uber.org/multierr v1.6.0 // indirect

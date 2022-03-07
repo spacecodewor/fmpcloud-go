@@ -76,6 +76,20 @@ func TestStockSearch(t *testing.T) {
 	}
 }
 
+func TestStockBulkProfile(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfigV4)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	profiles, err := APIClient.Stock.BulkProfile()
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	t.Log(profiles)
+}
+
 func TestStockCompanyProfile(t *testing.T) {
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
