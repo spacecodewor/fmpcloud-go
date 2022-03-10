@@ -12,34 +12,35 @@ import (
 
 // Url const for request
 const (
-	urlAPIStockSymbolList                = "/stock/list"
-	urlAPIStockSymbolByExchangeList      = "/symbol/%s"
-	urlAPIStockCompanyProfile            = "/profile/%s"
-	urlAPIStockCompanyExecutives         = "/key-executives/%s"
-	urlAPIStockDividends                 = "/historical-price-full/stock_dividend/%s"
-	urlAPIStockSplits                    = "/historical-price-full/stock_split/%s"
-	urlAPIStockQuote                     = "/quote/%s"
-	urlAPIStockQuoteShot                 = "/quote-short/%s"
-	urlAPIStockQuotes                    = "/quotes/%s"
-	urlAPIStockSearch                    = "/search"
-	urlAPIStockSearchTicker              = "/search-ticker"
-	urlAPIStockCandles                   = "/historical-chart/%s/%s"
-	urlAPIStockDaily                     = "/historical-price-full/%s"
-	urlAPIStockSP500List                 = "/sp500_constituent"
-	urlAPIStockHistorySP500List          = "/historical/sp500_constituent"
-	urlAPIStockDowJonesList              = "/dowjones_constituent"
-	urlAPIStockHistoryDowJonesList       = "/historical/dowjones_constituent"
-	urlAPIStockNasdaqList                = "/nasdaq_constituent"
-	urlAPIStockHistoryNasdaqList         = "/historical/nasdaq_constituent"
-	urlAPIStockEODCandles                = "/batch-request-end-of-day-prices"
-	urlAPIStockEODBatchCandles           = "/batch-request-end-of-day-prices/%s"
-	urlAPIStockMarketHours               = "/market-hours"
-	urlAPIStockActives                   = "/actives"
-	urlAPIStockLosers                    = "/losers"
-	urlAPIStockGainers                   = "/gainers"
-	urlAPIStockSectorsPerformance        = "/sectors-performance"
-	urlAPIStockHistorySectorsPerformance = "/historical-sectors-performance"
-	urlAPIStockSurvivorshipBiasFree      = "/historical-price-full/%s/%s"
+	urlAPIStockSymbolList                = "/v3/stock/list"
+	urlAPIStockSymbolByExchangeList      = "/v3/symbol/%s"
+	urlAPIStockBulkProfile               = "/v4/profile/all"
+	urlAPIStockCompanyProfile            = "/v3/profile/%s"
+	urlAPIStockCompanyExecutives         = "/v3/key-executives/%s"
+	urlAPIStockDividends                 = "/v3/historical-price-full/stock_dividend/%s"
+	urlAPIStockSplits                    = "/v3/historical-price-full/stock_split/%s"
+	urlAPIStockQuote                     = "/v3/quote/%s"
+	urlAPIStockQuoteShot                 = "/v3/quote-short/%s"
+	urlAPIStockQuotes                    = "/v3/quotes/%s"
+	urlAPIStockSearch                    = "/v3/search"
+	urlAPIStockSearchTicker              = "/v3/search-ticker"
+	urlAPIStockCandles                   = "/v3/historical-chart/%s/%s"
+	urlAPIStockDaily                     = "/v3/historical-price-full/%s"
+	urlAPIStockSP500List                 = "/v3/sp500_constituent"
+	urlAPIStockHistorySP500List          = "/v3/historical/sp500_constituent"
+	urlAPIStockDowJonesList              = "/v3/dowjones_constituent"
+	urlAPIStockHistoryDowJonesList       = "/v3/historical/dowjones_constituent"
+	urlAPIStockNasdaqList                = "/v3/nasdaq_constituent"
+	urlAPIStockHistoryNasdaqList         = "/v3/historical/nasdaq_constituent"
+	urlAPIStockEODCandles                = "/v3/batch-request-end-of-day-prices"
+	urlAPIStockEODBatchCandles           = "/v3/batch-request-end-of-day-prices/%s"
+	urlAPIStockMarketHours               = "/v3/market-hours"
+	urlAPIStockActives                   = "/v3/actives"
+	urlAPIStockLosers                    = "/v3/losers"
+	urlAPIStockGainers                   = "/v3/gainers"
+	urlAPIStockSectorsPerformance        = "/v3/sectors-performance"
+	urlAPIStockHistorySectorsPerformance = "/v3/historical-sectors-performance"
+	urlAPIStockSurvivorshipBiasFree      = "/v4/historical-price-full/%s/%s"
 )
 
 // Stock client
@@ -153,9 +154,9 @@ func (s *Stock) SearchTiker(req objects.RequestStockSearch) (sList []objects.Sto
 	return sList, nil
 }
 
-// BulkProfile - get all available profiles. Requires v4 client
+// BulkProfile - get all available profiles
 func (s *Stock) BulkProfile() (companyProfile []objects.StockCompanyProfile, err error) {
-	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockCompanyProfile, "all"), nil)
+	data, err := s.Client.Get(urlAPIStockBulkProfile, nil)
 	if err != nil {
 		return
 	}

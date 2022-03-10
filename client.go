@@ -1,7 +1,6 @@
 package fmpcloud
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -17,7 +16,6 @@ type APIUrl string
 type Config struct {
 	Logger        *zap.Logger
 	HTTPClient    *resty.Client
-	Version       string
 	APIKey        string
 	APIUrl        APIUrl
 	Debug         bool
@@ -43,8 +41,8 @@ type APIClient struct {
 
 // Core params
 const (
-	APIFmpcloudURL              APIUrl = "https://fmpcloud.io/api/%s"
-	APIFinancialModelingPrepURL APIUrl = "https://financialmodelingprep.com/api/%s"
+	APIFmpcloudURL              APIUrl = "https://fmpcloud.io/api"
+	APIFinancialModelingPrepURL APIUrl = "https://financialmodelingprep.com/api"
 	apiDefaultVersion                  = "v3"
 	apiDefaultKey                      = "demo"
 	apiDefaultTimeout                  = 25
@@ -80,17 +78,12 @@ func NewAPIClient(cfg Config) (*APIClient, error) {
 		cfg.APIUrl = APIFinancialModelingPrepURL
 	}
 
-	// Check set Version param
-	if len(cfg.Version) == 0 {
-		cfg.Version = apiDefaultVersion
-	}
-
 	// Check set APIKey param
 	if len(cfg.APIKey) == 0 {
 		cfg.APIKey = apiDefaultKey
 	}
 
-	cfg.HTTPClient.SetHostURL(fmt.Sprintf(string(cfg.APIUrl), cfg.Version))
+	cfg.HTTPClient.SetHostURL(string(cfg.APIUrl))
 
 	HTTPClient := &HTTPClient{
 		client: cfg.HTTPClient,

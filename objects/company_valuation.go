@@ -374,11 +374,11 @@ type EarningCallTranscript struct {
 
 // SplitCalendar ...
 type SplitCalendar struct {
-	Date        string `json:"date"` // 2020-09-10
-	Label       string `json:"label"`
-	Symbol      string `json:"symbol"`
-	Numerator   int    `json:"numerator"`
-	Denominator int    `json:"denominator"`
+	Date        string  `json:"date"` // 2020-09-10
+	Label       string  `json:"label"`
+	Symbol      string  `json:"symbol"`
+	Numerator   float64 `json:"numerator"`
+	Denominator float64 `json:"denominator"`
 }
 
 // DividendCalendar ...
@@ -1584,21 +1584,21 @@ type StockScreener struct {
 type AnalystEstimates struct {
 	Symbol                        string  `json:"symbol"`
 	Date                          string  `json:"date"` // 2020-09-15
-	EstimatedRevenueLow           int64   `json:"estimatedRevenueLow"`
-	EstimatedRevenueHigh          int64   `json:"estimatedRevenueHigh"`
-	EstimatedRevenueAvg           int64   `json:"estimatedRevenueAvg"`
-	EstimatedEbitdaLow            int64   `json:"estimatedEbitdaLow"`
-	EstimatedEbitdaHigh           int64   `json:"estimatedEbitdaHigh"`
-	EstimatedEbitdaAvg            int64   `json:"estimatedEbitdaAvg"`
-	EstimatedEbitLow              int64   `json:"estimatedEbitLow"`
-	EstimatedEbitHigh             int64   `json:"estimatedEbitHigh"`
-	EstimatedEbitAvg              int64   `json:"estimatedEbitAvg"`
-	EstimatedNetIncomeLow         int64   `json:"estimatedNetIncomeLow"`
-	EstimatedNetIncomeHigh        int64   `json:"estimatedNetIncomeHigh"`
-	EstimatedNetIncomeAvg         int64   `json:"estimatedNetIncomeAvg"`
-	EstimatedSgaExpenseLow        int64   `json:"estimatedSgaExpenseLow"`
-	EstimatedSgaExpenseHigh       int64   `json:"estimatedSgaExpenseHigh"`
-	EstimatedSgaExpenseAvg        int64   `json:"estimatedSgaExpenseAvg"`
+	EstimatedRevenueLow           float64 `json:"estimatedRevenueLow"`
+	EstimatedRevenueHigh          float64 `json:"estimatedRevenueHigh"`
+	EstimatedRevenueAvg           float64 `json:"estimatedRevenueAvg"`
+	EstimatedEbitdaLow            float64 `json:"estimatedEbitdaLow"`
+	EstimatedEbitdaHigh           float64 `json:"estimatedEbitdaHigh"`
+	EstimatedEbitdaAvg            float64 `json:"estimatedEbitdaAvg"`
+	EstimatedEbitLow              float64 `json:"estimatedEbitLow"`
+	EstimatedEbitHigh             float64 `json:"estimatedEbitHigh"`
+	EstimatedEbitAvg              float64 `json:"estimatedEbitAvg"`
+	EstimatedNetIncomeLow         float64 `json:"estimatedNetIncomeLow"`
+	EstimatedNetIncomeHigh        float64 `json:"estimatedNetIncomeHigh"`
+	EstimatedNetIncomeAvg         float64 `json:"estimatedNetIncomeAvg"`
+	EstimatedSgaExpenseLow        float64 `json:"estimatedSgaExpenseLow"`
+	EstimatedSgaExpenseHigh       float64 `json:"estimatedSgaExpenseHigh"`
+	EstimatedSgaExpenseAvg        float64 `json:"estimatedSgaExpenseAvg"`
 	EstimatedEpsAvg               float64 `json:"estimatedEpsAvg"`
 	EstimatedEpsHigh              float64 `json:"estimatedEpsHigh"`
 	EstimatedEpsLow               float64 `json:"estimatedEpsLow"`

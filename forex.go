@@ -10,11 +10,11 @@ import (
 
 // Url const for request
 const (
-	urlAPIForexListAndQuotes = "/fx"
-	urlAPIForexSymbols       = "/symbol/available-forex-currency-pairs"
-	urlAPIForexQuotes        = "/quotes/forex"
-	urlAPIForexCandles       = "/historical-chart/%s/%s"
-	urlAPIForexDaily         = "/historical-price-full/%s"
+	urlAPIForexListAndQuotes = "/v3/fx"
+	urlAPIForexSymbols       = "/v3/symbol/available-forex-currency-pairs"
+	urlAPIForexQuotes        = "/v3/quotes/forex"
+	urlAPIForexCandles       = "/v3/historical-chart/%s/%s"
+	urlAPIForexDaily         = "/v3/historical-price-full/%s"
 )
 
 // Forex client

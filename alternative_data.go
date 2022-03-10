@@ -10,11 +10,11 @@ import (
 
 // Url const for request
 const (
-	urlAPIAlternativeDataCommitmentOfTradersReportPeriod         = "/commitment_of_traders_report"
-	urlAPIAlternativeDataCommitmentOfTradersReportSymbol         = "/commitment_of_traders_report/%s"
-	urlAPIAlternativeDataCommitmentOfTradersReportPeriodAnalysis = "/commitment_of_traders_report_analysis"
-	urlAPIAlternativeDataCommitmentOfTradersReportSymbolAnalysis = "/commitment_of_traders_report_analysis/%s"
-	urlAPIAlternativeDataCommitmentOfTradersReportList           = "/commitment_of_traders_report/list"
+	urlAPIAlternativeDataCommitmentOfTradersReportPeriod         = "/v4/commitment_of_traders_report"
+	urlAPIAlternativeDataCommitmentOfTradersReportSymbol         = "/v4/commitment_of_traders_report/%s"
+	urlAPIAlternativeDataCommitmentOfTradersReportPeriodAnalysis = "/v4/commitment_of_traders_report_analysis"
+	urlAPIAlternativeDataCommitmentOfTradersReportSymbolAnalysis = "/v4/commitment_of_traders_report_analysis/%s"
+	urlAPIAlternativeDataCommitmentOfTradersReportList           = "/v4/commitment_of_traders_report/list"
 )
 
 // Available for API v4

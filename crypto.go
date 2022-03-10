@@ -10,10 +10,10 @@ import (
 
 // Url const for request
 const (
-	urlAPICryptoSymbols = "/symbol/available-cryptocurrencies"
-	urlAPICryptoQuotes  = "/quotes/crypto"
-	urlAPICryptoCandles = "/historical-chart/%s/%s"
-	urlAPICryptoDaily   = "/historical-price-full/%s"
+	urlAPICryptoSymbols = "/v3/symbol/available-cryptocurrencies"
+	urlAPICryptoQuotes  = "/v3/quotes/crypto"
+	urlAPICryptoCandles = "/v3/historical-chart/%s/%s"
+	urlAPICryptoDaily   = "/v3/historical-price-full/%s"
 )
 
 // Crypto client

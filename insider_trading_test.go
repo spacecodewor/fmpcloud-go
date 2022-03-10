@@ -7,7 +7,6 @@ import (
 )
 
 func TestInsiderTradingList(t *testing.T) {
-	testCaseAPIConfig.Version = "v4"
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
@@ -23,7 +22,6 @@ func TestInsiderTradingList(t *testing.T) {
 }
 
 func TestInsiderTradingRSSFeed(t *testing.T) {
-	testCaseAPIConfig.Version = "v4"
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
@@ -36,7 +34,6 @@ func TestInsiderTradingRSSFeed(t *testing.T) {
 }
 
 func TestInsiderTradingMapperCikCompany(t *testing.T) {
-	testCaseAPIConfig.Version = "v4"
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
@@ -49,7 +46,6 @@ func TestInsiderTradingMapperCikCompany(t *testing.T) {
 }
 
 func TestInsiderTradingMapperCikName(t *testing.T) {
-	testCaseAPIConfig.Version = "v4"
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
