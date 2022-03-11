@@ -77,7 +77,7 @@ func TestStockSearch(t *testing.T) {
 }
 
 func TestStockBulkProfile(t *testing.T) {
-	APIClient, err := NewAPIClient(testCaseAPIConfigV4)
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -379,7 +379,6 @@ func TestStockHistorySectorPerformance(t *testing.T) {
 }
 
 func TestSurvivorshipBiasFree(t *testing.T) {
-	testCaseAPIConfig.Version = "v4"
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())

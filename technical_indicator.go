@@ -9,7 +9,7 @@ import (
 
 // Url const for request
 const (
-	urlAPITechnicalIndicatorSymbol = "/technical_indicator/%s/%s"
+	urlAPITechnicalIndicatorSymbol = "/v3/technical_indicator/%s/%s"
 )
 
 // TechnicalIndicator client

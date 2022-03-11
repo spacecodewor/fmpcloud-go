@@ -10,11 +10,11 @@ import (
 
 // Url const for request
 const (
-	urlAPIForm13FList         = "/cik_list"
-	urlAPIForm13FSearchByName = "/cik-search/%s"
-	urlAPIForm13FGetByCik     = "/cik/%s"
-	urlAPIForm13FGetThirteen  = "/form-thirteen/%s"
-	urlAPIForm13FCusipMapper  = "/cusip/%s"
+	urlAPIForm13FList         = "/v3/cik_list"
+	urlAPIForm13FSearchByName = "/v3/cik-search/%s"
+	urlAPIForm13FGetByCik     = "/v3/cik/%s"
+	urlAPIForm13FGetThirteen  = "/v3/form-thirteen/%s"
+	urlAPIForm13FCusipMapper  = "/v3/cusip/%s"
 )
 
 // Form13F client

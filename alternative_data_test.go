@@ -6,7 +6,7 @@ import (
 )
 
 func TestCOTSymbolList(t *testing.T) {
-	APIClient, err := NewAPIClient(testCaseAPIConfigV4)
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -18,7 +18,7 @@ func TestCOTSymbolList(t *testing.T) {
 }
 
 func TestCOTReportListBySymbol(t *testing.T) {
-	APIClient, err := NewAPIClient(testCaseAPIConfigV4)
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -30,7 +30,7 @@ func TestCOTReportListBySymbol(t *testing.T) {
 }
 
 func TestCOTReportListByPeriod(t *testing.T) {
-	APIClient, err := NewAPIClient(testCaseAPIConfigV4)
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -44,7 +44,7 @@ func TestCOTReportListByPeriod(t *testing.T) {
 }
 
 func TestCOTAnalysisListBySymbol(t *testing.T) {
-	APIClient, err := NewAPIClient(testCaseAPIConfigV4)
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
@@ -56,7 +56,7 @@ func TestCOTAnalysisListBySymbol(t *testing.T) {
 }
 
 func TestCOTAnalysisListByPeriod(t *testing.T) {
-	APIClient, err := NewAPIClient(testCaseAPIConfigV4)
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}

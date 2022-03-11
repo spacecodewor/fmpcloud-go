@@ -16,7 +16,6 @@ var (
 	testCaseETFList            = []string{"QQQ", "SPY"}
 	testCaseSingleSymbol       = []string{"QQQ"}
 	testCaseAPIConfig          = Config{Debug: true, Timeout: 60, RetryCount: &retryCount, RetryWaitTime: &retryWaitTime}
-	testCaseAPIConfigV4        = Config{Debug: true, Timeout: 60, RetryCount: &retryCount, RetryWaitTime: &retryWaitTime, Version: "v4"}
 	testCaseLimit        int64 = 5
 )
 
@@ -762,7 +761,7 @@ func TestStockScreener(t *testing.T) {
 }
 
 func TestCompanyOutlok(t *testing.T) {
-	APIClient, err := NewAPIClient(testCaseAPIConfigV4)
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
 		t.Fatal(err.Error())
 	}

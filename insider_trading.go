@@ -9,10 +9,10 @@ import (
 
 // Url const for request
 const (
-	urlAPIInsiderTrading                 = "/insider-trading"
-	urlAPIInsiderTradingRSSFeed          = "/insider-trading-rss-feed"
-	urlAPIInsiderTradingMapperCikName    = "/mapper-cik-name"
-	urlAPIInsiderTradingMapperCikCompany = "/mapper-cik-company/%s"
+	urlAPIInsiderTrading                 = "/v4/insider-trading"
+	urlAPIInsiderTradingRSSFeed          = "/v4/insider-trading-rss-feed"
+	urlAPIInsiderTradingMapperCikName    = "/v4/mapper-cik-name"
+	urlAPIInsiderTradingMapperCikCompany = "/v4/mapper-cik-company/%s"
 )
 
 // Available for API v4
