@@ -453,41 +453,43 @@ type ETFCountryWeighting struct {
 
 // IncomeStatement ...
 type IncomeStatement struct {
-	Date                                    string  `json:"date"`
-	Symbol                                  string  `json:"symbol"`
-	FillingDate                             string  `json:"fillingDate"`
-	ReportedCurrency                        string  `json:"reportedCurrency"`
-	AcceptedDate                            string  `json:"acceptedDate"`
-	Period                                  string  `json:"period"`
-	Revenue                                 float64 `json:"revenue"`
-	CostOfRevenue                           float64 `json:"costOfRevenue"`
-	GrossProfit                             float64 `json:"grossProfit"`
-	GrossProfitRatio                        float64 `json:"grossProfitRatio"`
-	ResearchAndDevelopmentExpenses          float64 `json:"researchAndDevelopmentExpenses"`
-	GeneralAndAdministrativeExpenses        float64 `json:"generalAndAdministrativeExpenses"`
-	SellingAndMarketingExpenses             float64 `json:"sellingAndMarketingExpenses"`
-	SellingGeneralAndAdministrativeExpenses float64 `json:"sellingGeneralAndAdministrativeExpenses"`
-	OtherExpenses                           float64 `json:"otherExpenses"`
-	OperatingExpenses                       float64 `json:"operatingExpenses"`
-	CostAndExpenses                         float64 `json:"costAndExpenses"`
-	InterestExpense                         float64 `json:"interestExpense"`
-	DepreciationAndAmortization             float64 `json:"depreciationAndAmortization"`
-	Ebitda                                  float64 `json:"ebitda"`
-	Ebitdaratio                             float64 `json:"ebitdaratio"`
-	OperatingIncome                         float64 `json:"operatingIncome"`
-	OperatingIncomeRatio                    float64 `json:"operatingIncomeRatio"`
-	TotalOtherIncomeExpensesNet             float64 `json:"totalOtherIncomeExpensesNet"`
-	IncomeBeforeTax                         float64 `json:"incomeBeforeTax"`
-	IncomeBeforeTaxRatio                    float64 `json:"incomeBeforeTaxRatio"`
-	IncomeTaxExpense                        float64 `json:"incomeTaxExpense"`
-	NetIncome                               float64 `json:"netIncome"`
-	NetIncomeRatio                          float64 `json:"netIncomeRatio"`
-	Eps                                     float64 `json:"eps"`
-	Epsdiluted                              float64 `json:"epsdiluted"`
-	WeightedAverageShsOut                   float64 `json:"weightedAverageShsOut"`
-	WeightedAverageShsOutDil                float64 `json:"weightedAverageShsOutDil"`
-	Link                                    string  `json:"link"`
-	FinalLink                               string  `json:"finalLink"`
+	Date                                    string  `json:"date" csv:"date"`
+	Symbol                                  string  `json:"symbol" csv:"symbol"`
+	FillingDate                             string  `json:"fillingDate" csv:"fillingDate"`
+	Cik                                     string  `json:"cik" csv:"cik"`
+	CalendarYear                            string  `json:"calendarYear" csv:"calendarYear"`
+	ReportedCurrency                        string  `json:"reportedCurrency" csv:"reportedCurrency"`
+	AcceptedDate                            string  `json:"acceptedDate" csv:"acceptedDate"`
+	Period                                  string  `json:"period" csv:"period"`
+	Revenue                                 float64 `json:"revenue" csv:"revenue"`
+	CostOfRevenue                           float64 `json:"costOfRevenue" csv:"costOfRevenue"`
+	GrossProfit                             float64 `json:"grossProfit" csv:"grossProfit"`
+	GrossProfitRatio                        float64 `json:"grossProfitRatio" csv:"grossProfitRatio"`
+	ResearchAndDevelopmentExpenses          float64 `json:"researchAndDevelopmentExpenses" csv:"ResearchAndDevelopmentExpenses"`
+	GeneralAndAdministrativeExpenses        float64 `json:"generalAndAdministrativeExpenses" csv:"GeneralAndAdministrativeExpenses"`
+	SellingAndMarketingExpenses             float64 `json:"sellingAndMarketingExpenses" csv:"SellingAndMarketingExpenses"`
+	SellingGeneralAndAdministrativeExpenses float64 `json:"sellingGeneralAndAdministrativeExpenses" csv:"sellingGeneralAndAdministrativeExpenses"`
+	OtherExpenses                           float64 `json:"otherExpenses" csv:"otherExpenses"`
+	OperatingExpenses                       float64 `json:"operatingExpenses" csv:"operatingExpenses"`
+	CostAndExpenses                         float64 `json:"costAndExpenses" csv:"costAndExpenses"`
+	InterestExpense                         float64 `json:"interestExpense" csv:"interestExpense"`
+	DepreciationAndAmortization             float64 `json:"depreciationAndAmortization" csv:"depreciationAndAmortization"`
+	Ebitda                                  float64 `json:"ebitda" csv:"EBITDA"`
+	Ebitdaratio                             float64 `json:"ebitdaratio" csv:"EBITDARatio"`
+	OperatingIncome                         float64 `json:"operatingIncome" csv:"operatingIncome"`
+	OperatingIncomeRatio                    float64 `json:"operatingIncomeRatio" csv:"operatingIncomeRatio"`
+	TotalOtherIncomeExpensesNet             float64 `json:"totalOtherIncomeExpensesNet" csv:"totalOtherIncomeExpensesNet"`
+	IncomeBeforeTax                         float64 `json:"incomeBeforeTax" csv:"incomeBeforeTax"`
+	IncomeBeforeTaxRatio                    float64 `json:"incomeBeforeTaxRatio" csv:"incomeBeforeTaxRatio"`
+	IncomeTaxExpense                        float64 `json:"incomeTaxExpense" csv:"incomeTaxExpense"`
+	NetIncome                               float64 `json:"netIncome" csv:"netIncome"`
+	NetIncomeRatio                          float64 `json:"netIncomeRatio" csv:"netIncomeRatio"`
+	Eps                                     float64 `json:"eps" csv:"EPS"`
+	Epsdiluted                              float64 `json:"epsdiluted" csv:"EPSDiluted"`
+	WeightedAverageShsOut                   float64 `json:"weightedAverageShsOut" csv:"weightedAverageShsOut"`
+	WeightedAverageShsOutDil                float64 `json:"weightedAverageShsOutDil" csv:"weightedAverageShsOutDil"`
+	Link                                    string  `json:"link" csv:"link"`
+	FinalLink                               string  `json:"finalLink" csv:"finalLink"`
 }
 
 // IncomeStatementGrowth ...

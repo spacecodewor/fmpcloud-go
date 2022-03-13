@@ -34,6 +34,7 @@ const (
 	urlAPIStockHistoryNasdaqList         = "/v3/historical/nasdaq_constituent"
 	urlAPIStockEODCandles                = "/v3/batch-request-end-of-day-prices"
 	urlAPIStockEODBatchCandles           = "/v3/batch-request-end-of-day-prices/%s"
+	urlAPIStockEODBatchPrices            = "/v4/batch-request-end-of-day-prices"
 	urlAPIStockMarketHours               = "/v3/market-hours"
 	urlAPIStockActives                   = "/v3/actives"
 	urlAPIStockLosers                    = "/v3/losers"
@@ -504,6 +505,21 @@ func (s *Stock) BatchEODCandleList(symbolList []string, date time.Time) (sList [
 		map[string]string{
 			"date": date.Format("2006-01-02"),
 		})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// EODBatchPrices ...
+func (s *Stock) EODBatchPrices() (sList []objects.StockEODCandle, err error) {
+	data, err := s.Client.Get(urlAPIStockEODBatchPrices, nil)
 	if err != nil {
 		return nil, err
 	}

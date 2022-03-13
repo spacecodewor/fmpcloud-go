@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gocarina/gocsv"
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
 
@@ -30,6 +31,13 @@ const (
 	urlAPICompanyValuationETFCountryWeightings             = "/v3/etf-country-weightings/%s"
 	urlAPICompanyValuationIncomeStatement                  = "/v3/income-statement/%s"
 	urlAPICompanyValuationIncomeStatementGrowth            = "/v3/income-statement-growth/%s"
+	urlAPICompanyValuationBulkIncomeStatement              = "/v4/income-statement-bulk"
+	urlAPICompanyValuationBulkBalanceSheetStatement        = "/v4/balance-sheet-statement-bulk"
+	urlAPICompanyValuationBulkCashFlowStatement            = "/v4/cash-flow-statement-bulk"
+	urlAPICompanyValuationBulkRatios                       = "/v4/ratios-bulk"
+	urlAPICompanyValuationBulkKeyMetrics                   = "/v4/key-metrics-bulk"
+	urlAPICompanyValuationBulkEarningsSurpises             = "/v4/earnings-surprises-bulk"
+	urlAPICompanyValuationBulkRating                       = "/v4/rating-bulk"
 	urlAPICompanyValuationBalanceSheetStatement            = "/v3/balance-sheet-statement/%s"
 	urlAPICompanyValuationBalanceSheetStatementGrowth      = "/v3/balance-sheet-statement-growth/%s"
 	urlAPICompanyValuationCashFlowStatement                = "/v3/cash-flow-statement/%s"
@@ -1221,6 +1229,46 @@ func (c *CompanyValuation) SocialSentimentChange(tType, source string) (sList []
 // HistoricalSocialSentiment - Historical Social Media sentiment for stock (time in UTC)
 func (c *CompanyValuation) HistoricalSocialSentiment(symbol string) (sList []objects.SocialSentiment, err error) {
 	data, err := c.Client.Get(urlAPICompanyValuationHistoricalSocialSentiment, map[string]string{"symbol": symbol})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// BulkIncomeStatement ...
+func (c *CompanyValuation) BulkIncomeStatement(year int, period string) (pList []objects.IncomeStatement, err error) {
+	data, err := c.Client.Get(
+		urlAPICompanyValuationBulkIncomeStatement,
+		map[string]string{
+			"year":   fmt.Sprint(year),
+			"period": period,
+		})
+	if err != nil {
+		return nil, err
+	}
+
+	err = gocsv.UnmarshalBytes(data.Body(), &pList)
+	if err != nil {
+		return nil, err
+	}
+
+	return pList, nil
+}
+
+// BulkBalanceSheetStatement ...
+func (c *CompanyValuation) BulkBalanceSheetStatement(req objects.RequestBalanceSheetStatement) (sList []objects.BalanceSheetStatement, err error) {
+	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
+	if req.Period != objects.CompanyValuationPeriodAnnual {
+		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
+	}
+
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationBalanceSheetStatement, req.Symbol), reqParam)
 	if err != nil {
 		return nil, err
 	}

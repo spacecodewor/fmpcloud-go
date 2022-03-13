@@ -306,14 +306,14 @@ type HistoryIndexSymbol struct {
 
 // StockEODCandle ...
 type StockEODCandle struct {
-	Symbol   string  `json:"symbol"`
-	Date     string  `json:"date"`
-	Open     float64 `json:"open"`
-	Low      float64 `json:"low"`
-	High     float64 `json:"high"`
-	Close    float64 `json:"close"`
-	AdjClose float64 `json:"adjClose"`
-	Volume   int     `json:"volume"`
+	Symbol   string  `json:"symbol" csv:"symbol"`
+	Date     string  `json:"date" csv:"date"`
+	Open     float64 `json:"open" csv:"open"`
+	Low      float64 `json:"low" csv:"low"`
+	High     float64 `json:"high" csv:"high"`
+	Close    float64 `json:"close" csv:"close"`
+	AdjClose float64 `json:"adjClose" csv:"adjClose"`
+	Volume   int     `json:"volume" csv:"volume"`
 }
 
 // Active ...
