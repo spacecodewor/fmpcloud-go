@@ -1262,13 +1262,13 @@ func (c *CompanyValuation) BulkIncomeStatement(year int, period string) (pList [
 }
 
 // BulkBalanceSheetStatement ...
-func (c *CompanyValuation) BulkBalanceSheetStatement(req objects.RequestBalanceSheetStatement) (sList []objects.BalanceSheetStatement, err error) {
-	reqParam := map[string]string{"limit": fmt.Sprint(req.Limit)}
-	if req.Period != objects.CompanyValuationPeriodAnnual {
-		reqParam["period"] = string(objects.CompanyValuationPeriodQuarter)
-	}
-
-	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationBalanceSheetStatement, req.Symbol), reqParam)
+func (c *CompanyValuation) BulkBalanceSheetStatement(year int, period string) (sList []objects.BalanceSheetStatement, err error) {
+	data, err := c.Client.Get(
+		urlAPICompanyValuationBulkBalanceSheetStatement,
+		map[string]string{
+			"year":   fmt.Sprint(year),
+			"period": period,
+		})
 	if err != nil {
 		return nil, err
 	}
