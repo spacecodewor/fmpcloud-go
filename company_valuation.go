@@ -1280,3 +1280,63 @@ func (c *CompanyValuation) BulkBalanceSheetStatement(year int, period string) (s
 
 	return sList, nil
 }
+
+// BulkCashFlowStatement ...
+func (c *CompanyValuation) BulkCashFlowStatement(year int, period string) (sList []objects.CashFlowStatement, err error) {
+	data, err := c.Client.Get(
+		urlAPICompanyValuationBulkCashFlowStatement,
+		map[string]string{
+			"year":   fmt.Sprint(year),
+			"period": period,
+		})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// BulkCashFlowStatement ...
+func (c *CompanyValuation) BulkKeyMetrics(year int, period string) (sList []objects.KeyMetrics, err error) {
+	data, err := c.Client.Get(
+		urlAPICompanyValuationBulkKeyMetrics,
+		map[string]string{
+			"year":   fmt.Sprint(year),
+			"period": period,
+		})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// BulkRatios ...
+func (c *CompanyValuation) BulkRatios(year int, period string) (sList []objects.FinancialRatios, err error) {
+	data, err := c.Client.Get(
+		urlAPICompanyValuationBulkRatios,
+		map[string]string{
+			"year":   fmt.Sprint(year),
+			"period": period,
+		})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
