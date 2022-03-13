@@ -13,15 +13,19 @@ import (
 const (
 	urlAPICompanyValuationRSSFeed                          = "/v3/rss_feed"
 	urlAPICompanyValuationEarningCalendar                  = "/v3/earning_calendar"
+	urlAPICompanyValuationEarningCalendarConfirmed         = "/v4/earning-calendar-confirmed"
 	urlAPICompanyValuationEarningsSurpises                 = "/v3/earnings-surpises/%s"
 	urlAPICompanyValuationEarningCallTranscript            = "/v3/earning_call_transcript/%s"
 	urlAPICompanyValuationHistoryEarningCalendar           = "/v3/historical/earning_calendar/%s"
 	urlAPICompanyValuationIPOCalendar                      = "/v3/ipo_calendar"
+	urlAPICompanyValuationIPOCalendarConfirmed             = "/v4/ipo-calendar-confirmed"
+	urlAPICompanyValuationIPOCalendarProspectus            = "/v4/ipo-calendar-prospectus"
 	urlAPICompanyValuationSplitCalendar                    = "/v3/stock_split_calendar"
 	urlAPICompanyValuationDividendCalendar                 = "/v3/stock_dividend_calendar"
 	urlAPICompanyValuationInstituionalHolder               = "/v3/institutional-holder/%s"
 	urlAPICompanyValuationMutualFundHolder                 = "/v3/mutual-fund-holder/%s"
 	urlAPICompanyValuationETFHolder                        = "/v3/etf-holder/%s"
+	urlAPICompanyValuationETFStockExposure                 = "/v3/etf-stock-exposure/%s"
 	urlAPICompanyValuationETFSectorWeightings              = "/v3/etf-sector-weightings/%s"
 	urlAPICompanyValuationETFCountryWeightings             = "/v3/etf-country-weightings/%s"
 	urlAPICompanyValuationIncomeStatement                  = "/v3/income-statement/%s"
@@ -62,6 +66,10 @@ const (
 	urlAPICompanyValuationETFList                          = "/v3/etf/list"
 	urlAPICompanyValuationAvailableTradedList              = "/v3/available-traded/list"
 	urlAPICompanyValuationCompanyOutlook                   = "/v4/company-outlook"
+	urlAPICompanyValuationEmployeeCount                    = "/v4/employee_count"
+	urlAPICompanyValuationSocialSentimentTrending          = "/v4/social-sentiment/trending"
+	urlAPICompanyValuationSocialSentimentChange            = "/v4/social-sentiments/change"
+	urlAPICompanyValuationHistoricalSocialSentiment        = "/v4/historical/social-sentiment"
 )
 
 // CompanyValuation client
@@ -96,6 +104,30 @@ func (c *CompanyValuation) EarningCalendar(from, to *time.Time) (eList []objects
 	}
 
 	data, err := c.Client.Get(urlAPICompanyValuationEarningCalendar, reqParam)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &eList)
+	if err != nil {
+		return nil, err
+	}
+
+	return eList, nil
+}
+
+// EarningCalendarConfirmed - Earnings calendar confirmed (between the "from" and "to" parameters the maximum time interval can be 3 months)
+func (c *CompanyValuation) EarningCalendarConfirmed(from, to *time.Time) (eList []objects.EarningCalendarConfirmed, err error) {
+	reqParam := make(map[string]string)
+	if from != nil {
+		reqParam["from"] = from.Format("2006-01-02")
+	}
+
+	if to != nil {
+		reqParam["to"] = to.Format("2006-01-02")
+	}
+
+	data, err := c.Client.Get(urlAPICompanyValuationEarningCalendarConfirmed, reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -170,6 +202,54 @@ func (c *CompanyValuation) IPOCalendar(from, to *time.Time) (ipoList []objects.I
 	}
 
 	data, err := c.Client.Get(urlAPICompanyValuationIPOCalendar, reqParam)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &ipoList)
+	if err != nil {
+		return nil, err
+	}
+
+	return ipoList, nil
+}
+
+// IPOCalendarConfirmed - IPO Calendar confirmed (between the "from" and "to" parameters the maximum time interval can be 3 months)
+func (c *CompanyValuation) IPOCalendarConfirmed(from, to *time.Time) (ipoList []objects.IPOCalendarConfirmed, err error) {
+	reqParam := make(map[string]string)
+	if from != nil {
+		reqParam["from"] = from.Format("2006-01-02")
+	}
+
+	if to != nil {
+		reqParam["to"] = to.Format("2006-01-02")
+	}
+
+	data, err := c.Client.Get(urlAPICompanyValuationIPOCalendarConfirmed, reqParam)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &ipoList)
+	if err != nil {
+		return nil, err
+	}
+
+	return ipoList, nil
+}
+
+// IPOCalendarProspectus - IPO Calendar with prospectus (between the "from" and "to" parameters the maximum time interval can be 3 months)
+func (c *CompanyValuation) IPOCalendarProspectus(from, to *time.Time) (ipoList []objects.IPOCalendarProspectus, err error) {
+	reqParam := make(map[string]string)
+	if from != nil {
+		reqParam["from"] = from.Format("2006-01-02")
+	}
+
+	if to != nil {
+		reqParam["to"] = to.Format("2006-01-02")
+	}
+
+	data, err := c.Client.Get(urlAPICompanyValuationIPOCalendarProspectus, reqParam)
 	if err != nil {
 		return nil, err
 	}
@@ -273,6 +353,21 @@ func (c *CompanyValuation) ETFHolders(symbol string) (hList []objects.ETFHolder,
 	}
 
 	return hList, nil
+}
+
+// ETFStockExposure - ETF stock exposure
+func (c *CompanyValuation) ETFStockExposure(symbol string) (eList []objects.ETFStockExposure, err error) {
+	data, err := c.Client.Get(fmt.Sprintf(urlAPICompanyValuationETFStockExposure, symbol), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &eList)
+	if err != nil {
+		return nil, err
+	}
+
+	return eList, nil
 }
 
 // ETFSectorWeightings - ETF sector weightings
@@ -1058,4 +1153,82 @@ func (c *CompanyValuation) CompanyOutlook(symbol string) (co *objects.CompanyOut
 	}
 
 	return co, nil
+}
+
+// EmployeeCount - Historical number of employees
+func (c *CompanyValuation) EmployeeCount(symbol string) (eList *objects.EmployeeCount, err error) {
+	data, err := c.Client.Get(urlAPICompanyValuationEmployeeCount, map[string]string{"symbol": symbol})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &eList)
+	if err != nil {
+		return nil, err
+	}
+
+	return eList, nil
+}
+
+// SocialSentimentTrending - Trending social sentiment
+func (c *CompanyValuation) SocialSentimentTrending(tType, source string) (sList []objects.SocialSentiment, err error) {
+	req := map[string]string{}
+	if len(tType) != 0 {
+		req["type"] = tType
+	}
+
+	if len(source) != 0 {
+		req["source"] = source
+	}
+
+	data, err := c.Client.Get(urlAPICompanyValuationSocialSentimentTrending, req)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// SocialSentimentChange - Biggest changes in social sentiment per type and source
+func (c *CompanyValuation) SocialSentimentChange(tType, source string) (sList []objects.SocialSentimentChange, err error) {
+	req := map[string]string{}
+	if len(tType) != 0 {
+		req["type"] = tType
+	}
+
+	if len(source) != 0 {
+		req["source"] = source
+	}
+
+	data, err := c.Client.Get(urlAPICompanyValuationSocialSentimentChange, req)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// HistoricalSocialSentiment - Historical Social Media sentiment for stock (time in UTC)
+func (c *CompanyValuation) HistoricalSocialSentiment(symbol string) (sList []objects.SocialSentiment, err error) {
+	data, err := c.Client.Get(urlAPICompanyValuationHistoricalSocialSentiment, map[string]string{"symbol": symbol})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
 }

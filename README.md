@@ -32,7 +32,7 @@
 - [Status](https://financialmodelingprep.com/developer/docs/status/)
 - Insider Trading
 - Alternative Data
-- Bulk Profile
+- Bulk Endpoints
 
 ## Installation
 
@@ -102,8 +102,6 @@ logger, err := cfg.Build()
 if err != nil {
     return nil, errors.Wrap(err, "Logger Error: init")
 }
-
-return logger, nil
 
 // Init your custome API client
 APIClient, err := NewAPIClient(Config{

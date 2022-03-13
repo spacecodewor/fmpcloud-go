@@ -326,10 +326,11 @@ type RssFeed struct {
 
 // ETF ...
 type ETF struct {
-	Symbol   string  `json:"symbol"`
-	Name     string  `json:"name"`
-	Price    float64 `json:"price"`
-	Exchange string  `json:"exchange"`
+	Symbol            string  `json:"symbol"`
+	Name              string  `json:"name"`
+	Price             float64 `json:"price"`
+	Exchange          string  `json:"exchange"`
+	ExchangeShortName string  `json:"exchangeShortName"`
 }
 
 // AvailableTraded ...
@@ -361,6 +362,18 @@ type EarningCalendar struct {
 	Time             string  `json:"time"` // Indicates whether the earnings is announced before market open(bmo), after market close(amc), or during market hour(dmh).
 	Revenue          float64 `json:"revenue"`
 	RevenueEstimated float64 `json:"revenueEstimated"`
+}
+
+// EarningCalendarConfirmed ...
+type EarningCalendarConfirmed struct {
+	Symbol          string `json:"symbol"`
+	Exchange        string `json:"exchange"`
+	Time            string `json:"time"`
+	When            string `json:"when"`
+	Date            string `json:"date"`
+	PublicationDate string `json:"publicationDate"`
+	Title           string `json:"title"`
+	URL             string `json:"url"`
 }
 
 // EarningCallTranscript ...
@@ -415,6 +428,15 @@ type ETFHolder struct {
 	Asset            string  `json:"asset"`
 	SharesNumber     int64   `json:"sharesNumber"`
 	WeightPercentage float64 `json:"weightPercentage"`
+}
+
+// ETFStockExposure ...
+type ETFStockExposure struct {
+	ETFSymbol        string  `json:"etfSymbol"`
+	AssetExposure    string  `json:"assetExposure"`
+	SharesNumber     int     `json:"sharesNumber"`
+	WeightPercentage float64 `json:"weightPercentage"`
+	MarketValue      float64 `json:"marketValue"`
 }
 
 // ETFSectorWeighting ...
@@ -2104,4 +2126,70 @@ type CompanyOutlook struct {
 			FreeCashFlow                             float64 `json:"freeCashFlow"`
 		} `json:"cash"`
 	} `json:"financialsQuarter"`
+}
+
+// EmployeeCount ...
+type EmployeeCount struct {
+	Symbol         string `json:"symbol"`
+	Cik            string `json:"cik"`
+	AcceptanceTime string `json:"acceptanceTime"`
+	PeriodOfReport string `json:"periodOfReport"`
+	CompanyName    string `json:"companyName"`
+	FormType       string `json:"formType"`
+	FilingDate     string `json:"filingDate"`
+	Source         string `json:"source"`
+	EmployeeCount  int    `json:"employeeCount"`
+}
+
+// IPOCalendarConfirmed ...
+type IPOCalendarConfirmed struct {
+	Symbol            string `json:"symbol"`
+	Cik               string `json:"cik"`
+	Form              string `json:"form"`
+	FilingDate        string `json:"filingDate"`
+	AcceptedDate      string `json:"acceptedDate"`
+	EffectivenessDate string `json:"effectivenessDate"`
+	URL               string `json:"url"`
+}
+
+// IPOCalendarProspectus ...
+type IPOCalendarProspectus struct {
+	Symbol                          string  `json:"symbol"`
+	Cik                             string  `json:"cik"`
+	Form                            string  `json:"form"`
+	FilingDate                      string  `json:"filingDate"`
+	AcceptedDate                    string  `json:"acceptedDate"`
+	IpoDate                         string  `json:"ipoDate"`
+	URL                             string  `json:"url"`
+	PricePublicPerShare             float64 `json:"pricePublicPerShare"`
+	PricePublicTotal                float64 `json:"pricePublicTotal"`
+	DiscountsAndCommissionsPerShare float64 `json:"discountsAndCommissionsPerShare"`
+	DiscountsAndCommissionsTotal    float64 `json:"discountsAndCommissionsTotal"`
+	ProceedsBeforeExpensesPerShare  float64 `json:"proceedsBeforeExpensesPerShare"`
+	ProceedsBeforeExpensesTotal     float64 `json:"proceedsBeforeExpensesTotal"`
+}
+
+// SocialSentiment ...
+type SocialSentiment struct {
+	Date                  string  `json:"date"`
+	Symbol                string  `json:"symbol"`
+	StocktwitsPosts       int     `json:"stocktwitsPosts"`
+	TwitterPosts          int     `json:"twitterPosts"`
+	StocktwitsComments    int     `json:"stocktwitsComments"`
+	TwitterComments       int     `json:"twitterComments"`
+	StocktwitsLikes       int     `json:"stocktwitsLikes"`
+	TwitterLikes          int     `json:"twitterLikes"`
+	StocktwitsImpressions int     `json:"stocktwitsImpressions"`
+	TwitterImpressions    int     `json:"twitterImpressions"`
+	StocktwitsSentiment   float64 `json:"stocktwitsSentiment"`
+	TwitterSentiment      float64 `json:"twitterSentiment"`
+}
+
+// SocialSentimentChange ...
+type SocialSentimentChange struct {
+	Symbol          string  `json:"symbol"`
+	Name            string  `json:"name"`
+	Rank            int     `json:"rank"`
+	Sentiment       float64 `json:"sentiment"`
+	SentimentChange float64 `json:"sentimentChange"`
 }

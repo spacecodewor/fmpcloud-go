@@ -39,7 +39,11 @@ const (
 	urlAPIStockLosers                    = "/v3/losers"
 	urlAPIStockGainers                   = "/v3/gainers"
 	urlAPIStockSectorsPerformance        = "/v3/sectors-performance"
+	urlAPIStockOTCRealTimePrice          = "/v3/otc/real-time-price/%s"
 	urlAPIStockHistorySectorsPerformance = "/v3/historical-sectors-performance"
+	urlAPIStockPeers                     = "/v4/stock_peers"
+	urlAPIStockBulkPeers                 = "/v4/stock_peers_bulk"
+	urlAPIStockCompanyCoreInformation    = "/v4/company-core-information"
 	urlAPIStockSurvivorshipBiasFree      = "/v4/historical-price-full/%s/%s"
 )
 
@@ -178,6 +182,51 @@ func (s *Stock) CompanyProfile(symbol string) (companyProfile []objects.StockCom
 	}
 
 	return companyProfile, nil
+}
+
+// Peers - Stock peers based on sector, exchange and market cap
+func (s *Stock) Peers(symbol string) (pList []objects.StockPeers, err error) {
+	data, err := s.Client.Get(urlAPIStockPeers, map[string]string{"symbol": symbol})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &pList)
+	if err != nil {
+		return nil, err
+	}
+
+	return pList, nil
+}
+
+// BulkPeers - Stock peers for all symbols with profile CSV
+func (s *Stock) BulkPeers() (pList []objects.StockBulkPeers, err error) {
+	data, err := s.Client.Get(urlAPIStockBulkPeers, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = gocsv.UnmarshalBytes(data.Body(), &pList)
+	if err != nil {
+		return nil, err
+	}
+
+	return pList, nil
+}
+
+// CompanyCoreInformation - Company core information
+func (s *Stock) CompanyCoreInformation(symbol string) (company []objects.CompanyCoreInformation, err error) {
+	data, err := s.Client.Get(urlAPIStockCompanyCoreInformation, map[string]string{"symbol": symbol})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &company)
+	if err != nil {
+		return nil, err
+	}
+
+	return company, nil
 }
 
 // CompanyExecutive - get a list of company's executives and members of the Board.
@@ -570,4 +619,19 @@ func (s *Stock) SurvivorshipBiasFree(symbol string, date time.Time) (sBias *obje
 	}
 
 	return sBias, nil
+}
+
+// OTCRealTimePrice - Prices of OTC companies
+func (s *Stock) OTCRealTimePrice(symbolList []string) (pList *objects.OTCRealTimePrice, err error) {
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockOTCRealTimePrice, strings.Join(symbolList, ",")), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &pList)
+	if err != nil {
+		return nil, err
+	}
+
+	return pList, nil
 }

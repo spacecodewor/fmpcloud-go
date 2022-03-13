@@ -34,6 +34,7 @@ type APIClient struct {
 	TechnicalIndicator *TechnicalIndicator
 	InsiderTrading     *InsiderTrading
 	AlternativeData    *AlternativeData
+	Economics          *Economics
 	API                *API
 	Logger             *zap.Logger
 	Debug              bool
@@ -43,7 +44,6 @@ type APIClient struct {
 const (
 	APIFmpcloudURL              APIUrl = "https://fmpcloud.io/api"
 	APIFinancialModelingPrepURL APIUrl = "https://financialmodelingprep.com/api"
-	apiDefaultVersion                  = "v3"
 	apiDefaultKey                      = "demo"
 	apiDefaultTimeout                  = 25
 )
@@ -116,10 +116,9 @@ func NewAPIClient(cfg Config) (*APIClient, error) {
 	APIClient.CompanyValuation = &CompanyValuation{Client: HTTPClient}
 	APIClient.TechnicalIndicator = &TechnicalIndicator{Client: HTTPClient}
 	APIClient.API = &API{Client: HTTPClient}
-
-	// Only for API v4
 	APIClient.InsiderTrading = &InsiderTrading{Client: HTTPClient}
 	APIClient.AlternativeData = &AlternativeData{Client: HTTPClient}
+	APIClient.Economics = &Economics{Client: HTTPClient}
 
 	return APIClient, nil
 }

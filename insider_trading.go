@@ -3,6 +3,7 @@ package fmpcloud
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
@@ -10,12 +11,11 @@ import (
 // Url const for request
 const (
 	urlAPIInsiderTrading                 = "/v4/insider-trading"
+	urlAPIInsiderTradingTransactionType  = "/v4/insider-trading-transaction-type"
 	urlAPIInsiderTradingRSSFeed          = "/v4/insider-trading-rss-feed"
 	urlAPIInsiderTradingMapperCikName    = "/v4/mapper-cik-name"
 	urlAPIInsiderTradingMapperCikCompany = "/v4/mapper-cik-company/%s"
 )
-
-// Available for API v4
 
 // InsiderTrading client
 type InsiderTrading struct {
@@ -43,6 +43,10 @@ func (i *InsiderTrading) List(req objects.RequestInsiderTrading) (iList []object
 
 	if len(req.ReportingCik) != 0 {
 		reqData["reportingCik"] = req.ReportingCik
+	}
+
+	if len(req.TransactionType) != 0 {
+		reqData["transactionType"] = strings.Join(req.TransactionType, ",")
 	}
 
 	data, err := i.Client.Get(urlAPIInsiderTrading, reqData)
@@ -75,6 +79,21 @@ func (i *InsiderTrading) RSSFeed(limit int64) (iList []objects.InsiderTradingRSS
 	}
 
 	return iList, nil
+}
+
+// TransactionType - list
+func (i *InsiderTrading) TransactionType() (tList []string, err error) {
+	data, err := i.Client.Get(urlAPIInsiderTradingTransactionType, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &tList)
+	if err != nil {
+		return nil, err
+	}
+
+	return tList, nil
 }
 
 // MapperCikCompany - Company CIK mapper

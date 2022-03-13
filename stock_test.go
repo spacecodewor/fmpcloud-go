@@ -90,6 +90,20 @@ func TestStockBulkProfile(t *testing.T) {
 	t.Log(profiles)
 }
 
+func TestStockBulkPeers(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	peers, err := APIClient.Stock.BulkPeers()
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	t.Log(peers)
+}
+
 func TestStockCompanyProfile(t *testing.T) {
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {

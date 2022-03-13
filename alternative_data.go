@@ -17,8 +17,6 @@ const (
 	urlAPIAlternativeDataCommitmentOfTradersReportList           = "/v4/commitment_of_traders_report/list"
 )
 
-// Available for API v4
-
 // AlternativeData client
 type AlternativeData struct {
 	Client *HTTPClient

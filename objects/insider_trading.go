@@ -2,10 +2,11 @@ package objects
 
 // RequestInsiderTrading ...
 type RequestInsiderTrading struct {
-	Symbol       string
-	ReportingCik string
-	CompanyCik   string
-	Limit        int64
+	Symbol          string
+	TransactionType []string
+	ReportingCik    string
+	CompanyCik      string
+	Limit           int64
 }
 
 // InsiderTrading ...

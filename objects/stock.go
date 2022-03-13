@@ -380,6 +380,48 @@ type SurvivorshipBiasFree struct {
 	From   string  `json:"from"`
 }
 
+// OTCRealTimePrice ...
+type OTCRealTimePrice struct {
+	Symbol        string    `json:"symbol"`
+	Volume        int64     `json:"volume"`
+	PrevClose     float64   `json:"prevClose"`
+	High          float64   `json:"high"`
+	Low           float64   `json:"low"`
+	Open          float64   `json:"open"`
+	LastSalePrice float64   `json:"lastSalePrice"`
+	FmpLast       float64   `json:"fmpLast"`
+	LastUpdated   time.Time `json:"lastUpdated"`
+}
+
+// CompanyCoreInformation ...
+type CompanyCoreInformation struct {
+	Cik                     string `json:"cik"`
+	Symbol                  string `json:"symbol"`
+	Exchange                string `json:"exchange"`
+	SicCode                 string `json:"sicCode"`
+	SicGroup                string `json:"sicGroup"`
+	SicDescription          string `json:"sicDescription"`
+	StateLocation           string `json:"stateLocation"`
+	StateOfIncorporation    string `json:"stateOfIncorporation"`
+	FiscalYearEnd           string `json:"fiscalYearEnd"`
+	BusinessAddress         string `json:"businessAddress"`
+	MailingAddress          string `json:"mailingAddress"`
+	TaxIdentificationNumber string `json:"taxIdentificationNumber"`
+	RegistrantName          string `json:"registrantName"`
+}
+
+// StockPeers ...
+type StockPeers struct {
+	Symbol    string   `json:"symbol"`
+	PeersList []string `json:"peersList"`
+}
+
+// StockBulkPeers ...
+type StockBulkPeers struct {
+	Symbol    string `csv:"symbol"`
+	PeersList string `csv:"peers"`
+}
+
 // StockSerieType return string
 func (s StockSerieType) String() string {
 	return string(s)
