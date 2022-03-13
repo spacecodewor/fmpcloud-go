@@ -1543,23 +1543,23 @@ type HistoryDiscountedCashFlow struct {
 
 // Rating ...
 type Rating struct {
-	Symbol                         string `json:"symbol"`
-	Date                           string `json:"date"` // 2020-09-14
-	Rating                         string `json:"rating"`
-	RatingScore                    int64  `json:"ratingScore"`
-	RatingRecommendation           string `json:"ratingRecommendation"`
-	RatingDetailsDCFScore          int64  `json:"ratingDetailsDCFScore"`
-	RatingDetailsDCFRecommendation string `json:"ratingDetailsDCFRecommendation"`
-	RatingDetailsROEScore          int64  `json:"ratingDetailsROEScore"`
-	RatingDetailsROERecommendation string `json:"ratingDetailsROERecommendation"`
-	RatingDetailsROAScore          int64  `json:"ratingDetailsROAScore"`
-	RatingDetailsROARecommendation string `json:"ratingDetailsROARecommendation"`
-	RatingDetailsDEScore           int64  `json:"ratingDetailsDEScore"`
-	RatingDetailsDERecommendation  string `json:"ratingDetailsDERecommendation"`
-	RatingDetailsPEScore           int64  `json:"ratingDetailsPEScore"`
-	RatingDetailsPERecommendation  string `json:"ratingDetailsPERecommendation"`
-	RatingDetailsPBScore           int64  `json:"ratingDetailsPBScore"`
-	RatingDetailsPBRecommendation  string `json:"ratingDetailsPBRecommendation"`
+	Symbol                         string `json:"symbol" csv:"symbol"`
+	Date                           string `json:"date" csv:"date"` // 2020-09-14
+	Rating                         string `json:"rating" csv:"rating"`
+	RatingScore                    int64  `json:"ratingScore" csv:"ratingScore"`
+	RatingRecommendation           string `json:"ratingRecommendation" csv:"ratingRecommendation"`
+	RatingDetailsDCFScore          int64  `json:"ratingDetailsDCFScore" csv:"ratingDetailsDCFScore"`
+	RatingDetailsDCFRecommendation string `json:"ratingDetailsDCFRecommendation" csv:"ratingDetailsDCFRecommendation"`
+	RatingDetailsROEScore          int64  `json:"ratingDetailsROEScore" csv:"ratingDetailsROEScore"`
+	RatingDetailsROERecommendation string `json:"ratingDetailsROERecommendation" csv:"ratingDetailsROERecommendation"`
+	RatingDetailsROAScore          int64  `json:"ratingDetailsROAScore" csv:"ratingDetailsROAScore"`
+	RatingDetailsROARecommendation string `json:"ratingDetailsROARecommendation" csv:"ratingDetailsROARecommendation"`
+	RatingDetailsDEScore           int64  `json:"ratingDetailsDEScore" csv:"ratingDetailsDEScore"`
+	RatingDetailsDERecommendation  string `json:"ratingDetailsDERecommendation" csv:"ratingDetailsDERecommendation"`
+	RatingDetailsPEScore           int64  `json:"ratingDetailsPEScore" csv:"ratingDetailsPEScore"`
+	RatingDetailsPERecommendation  string `json:"ratingDetailsPERecommendation" csv:"ratingDetailsPERecommendation"`
+	RatingDetailsPBScore           int64  `json:"ratingDetailsPBScore" csv:"ratingDetailsPBScore"`
+	RatingDetailsPBRecommendation  string `json:"ratingDetailsPBRecommendation" csv:"ratingDetailsPBRecommendation"`
 }
 
 // MarketCapitalization ...
@@ -1678,10 +1678,10 @@ type EconomicCalendar struct {
 
 // EarningSurprise ...
 type EarningSurprise struct {
-	Date                string  `json:"date"` // 2020-09-08
-	Symbol              string  `json:"symbol"`
-	ActualEarningResult float64 `json:"actualEarningResult"`
-	EstimatedEarning    float64 `json:"estimatedEarning"`
+	Date                string  `json:"date" csv:"date"` // 2020-09-08
+	Symbol              string  `json:"symbol" csv:"symbol"`
+	ActualEarningResult float64 `json:"actualEarningResult" csv:"actualEarningResult"`
+	EstimatedEarning    float64 `json:"estimatedEarning" csv:"estimatedEarning"`
 }
 
 // HistoryEconomicCalendar ...

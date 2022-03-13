@@ -1340,3 +1340,33 @@ func (c *CompanyValuation) BulkRatios(year int, period string) (sList []objects.
 
 	return sList, nil
 }
+
+// BulkEarningsSurpises ...
+func (c *CompanyValuation) BulkEarningsSurpises(year int) (sList []objects.EarningSurprise, err error) {
+	data, err := c.Client.Get(urlAPICompanyValuationBulkEarningsSurpises, map[string]string{"year": fmt.Sprint(year)})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// BulkRating ...
+func (c *CompanyValuation) BulkRating() (sList []objects.Rating, err error) {
+	data, err := c.Client.Get(urlAPICompanyValuationBulkRating, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
