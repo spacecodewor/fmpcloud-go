@@ -1669,6 +1669,7 @@ type EconomicCalendar struct {
 	Event            string   `json:"event"`
 	Date             string   `json:"date"` // 2020-09-16 11:00:00
 	Country          string   `json:"country"`
+	Impact           *string  `json:"impact"`
 	Actual           *float64 `json:"actual"`
 	Previous         *float64 `json:"previous"`
 	Change           *float64 `json:"change"`
