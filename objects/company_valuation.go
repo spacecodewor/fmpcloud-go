@@ -2196,3 +2196,17 @@ type SocialSentimentChange struct {
 	Sentiment       float64 `json:"sentiment"`
 	SentimentChange float64 `json:"sentimentChange"`
 }
+
+// Score ...
+type Score struct {
+	Symbol           string  `json:"symbol"`
+	AltmanZScore     float64 `json:"altmanZScore"`
+	PiotroskiScore   float64 `json:"piotroskiScore"`
+	WorkingCapital   string  `json:"workingCapital"`
+	TotalAssets      string  `json:"totalAssets"`
+	RetainedEarnings string  `json:"retainedEarnings"`
+	Ebit             string  `json:"ebit"`
+	MarketCap        string  `json:"marketCap"`
+	TotalLiabilities string  `json:"totalLiabilities"`
+	Revenue          string  `json:"revenue"`
+}

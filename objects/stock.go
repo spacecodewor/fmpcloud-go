@@ -24,6 +24,9 @@ const (
 	StockSearchCommodity  StockSearch = "commodity"
 	StockSearchForex      StockSearch = "forex"
 	StockSearchCrypto     StockSearch = "crypto"
+	StockSearchXetra      StockSearch = "xetra"
+	StockSearchNSE        StockSearch = "nse"
+	StockSearchLSE        StockSearch = "lse"
 
 	IndexSP500     Index = "S&P 500"
 	IndexDowJones  Index = "Dow Jones"

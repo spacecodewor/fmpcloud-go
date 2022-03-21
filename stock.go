@@ -24,6 +24,7 @@ const (
 	urlAPIStockQuotes                    = "/v3/quotes/%s"
 	urlAPIStockSearch                    = "/v3/search"
 	urlAPIStockSearchTicker              = "/v3/search-ticker"
+	urlAPIStockSearchName                = "/v3/search-name"
 	urlAPIStockCandles                   = "/v3/historical-chart/%s/%s"
 	urlAPIStockDaily                     = "/v3/historical-price-full/%s"
 	urlAPIStockSP500List                 = "/v3/sp500_constituent"
@@ -113,7 +114,7 @@ func (s *Stock) QuoteByExchange(exchange objects.StockSearch) (qList []objects.S
 	return qList, nil
 }
 
-// Search - ticker search exchange (nasdaq | nyse | tsx | euronext | mutual_fund | etf | amex | index | commodity | forex | crypto)
+// Search - Search via ticker and company name
 func (s *Stock) Search(req objects.RequestStockSearch) (sList []objects.StockSymbol, err error) {
 	reqParam := map[string]string{
 		"limit": fmt.Sprint(req.Limit),
@@ -136,7 +137,7 @@ func (s *Stock) Search(req objects.RequestStockSearch) (sList []objects.StockSym
 	return sList, nil
 }
 
-// SearchTiker - only ticker search exchange (nasdaq | nyse | tsx | euronext | mutual_fund | etf | amex | index | commodity | forex | crypto)
+// SearchTiker - Search only via ticker
 func (s *Stock) SearchTiker(req objects.RequestStockSearch) (sList []objects.StockSymbol, err error) {
 	reqParam := map[string]string{
 		"limit": fmt.Sprint(req.Limit),
@@ -147,6 +148,29 @@ func (s *Stock) SearchTiker(req objects.RequestStockSearch) (sList []objects.Sto
 	}
 
 	data, err := s.Client.Get(urlAPIStockSearchTicker, reqParam)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// SearchByName - Search only via company name
+func (s *Stock) SearchByName(req objects.RequestStockSearch) (sList []objects.StockSymbol, err error) {
+	reqParam := map[string]string{
+		"limit": fmt.Sprint(req.Limit),
+		"query": req.Query,
+	}
+	if req.Exchange != nil {
+		reqParam["exchange"] = req.Exchange.String()
+	}
+
+	data, err := s.Client.Get(urlAPIStockSearchName, reqParam)
 	if err != nil {
 		return nil, err
 	}

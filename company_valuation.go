@@ -78,6 +78,7 @@ const (
 	urlAPICompanyValuationSocialSentimentTrending          = "/v4/social-sentiment/trending"
 	urlAPICompanyValuationSocialSentimentChange            = "/v4/social-sentiments/change"
 	urlAPICompanyValuationHistoricalSocialSentiment        = "/v4/historical/social-sentiment"
+	urlAPICompanyValuationScore                            = "/v4/score"
 )
 
 // CompanyValuation client
@@ -1229,6 +1230,21 @@ func (c *CompanyValuation) SocialSentimentChange(tType, source string) (sList []
 // HistoricalSocialSentiment - Historical Social Media sentiment for stock (time in UTC)
 func (c *CompanyValuation) HistoricalSocialSentiment(symbol string) (sList []objects.SocialSentiment, err error) {
 	data, err := c.Client.Get(urlAPICompanyValuationHistoricalSocialSentiment, map[string]string{"symbol": symbol})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// Score - Stock Financial scores
+func (c *CompanyValuation) Score(symbol string) (sList []objects.Score, err error) {
+	data, err := c.Client.Get(urlAPICompanyValuationScore, map[string]string{"symbol": symbol})
 	if err != nil {
 		return nil, err
 	}
