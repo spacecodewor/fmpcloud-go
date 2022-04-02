@@ -2199,14 +2199,14 @@ type SocialSentimentChange struct {
 
 // Score ...
 type Score struct {
-	Symbol           string  `json:"symbol"`
-	AltmanZScore     float64 `json:"altmanZScore"`
-	PiotroskiScore   float64 `json:"piotroskiScore"`
-	WorkingCapital   string  `json:"workingCapital"`
-	TotalAssets      string  `json:"totalAssets"`
-	RetainedEarnings string  `json:"retainedEarnings"`
-	Ebit             string  `json:"ebit"`
-	MarketCap        string  `json:"marketCap"`
-	TotalLiabilities string  `json:"totalLiabilities"`
-	Revenue          string  `json:"revenue"`
+	Symbol           string  `json:"symbol" csv:"symbol"`
+	AltmanZScore     float64 `json:"altmanZScore" csv:"altmanZScore"`
+	PiotroskiScore   float64 `json:"piotroskiScore" csv:"piotroskiScore"`
+	WorkingCapital   string  `json:"workingCapital" csv:"workingCapital"`
+	TotalAssets      string  `json:"totalAssets" csv:"totalAssets"`
+	RetainedEarnings string  `json:"retainedEarnings" csv:"retainedEarnings"`
+	Ebit             string  `json:"ebit" csv:"ebit"`
+	MarketCap        string  `json:"marketCap" csv:"marketCap"`
+	TotalLiabilities string  `json:"totalLiabilities" csv:"totalLiabilities"`
+	Revenue          string  `json:"revenue" csv:"revenue"`
 }

@@ -771,3 +771,15 @@ func TestCompanyOutlok(t *testing.T) {
 		t.Fatal(err.Error())
 	}
 }
+
+func TestBulkScores(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	_, err = APIClient.CompanyValuation.BulkScores()
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+}

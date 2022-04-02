@@ -38,6 +38,7 @@ const (
 	urlAPICompanyValuationBulkKeyMetrics                   = "/v4/key-metrics-bulk"
 	urlAPICompanyValuationBulkEarningsSurpises             = "/v4/earnings-surprises-bulk"
 	urlAPICompanyValuationBulkRating                       = "/v4/rating-bulk"
+	urlAPICompanyValuationBulkScores                       = "/v4/scores-bulk"
 	urlAPICompanyValuationBalanceSheetStatement            = "/v3/balance-sheet-statement/%s"
 	urlAPICompanyValuationBalanceSheetStatementGrowth      = "/v3/balance-sheet-statement-growth/%s"
 	urlAPICompanyValuationCashFlowStatement                = "/v3/cash-flow-statement/%s"
@@ -1250,6 +1251,21 @@ func (c *CompanyValuation) Score(symbol string) (sList []objects.Score, err erro
 	}
 
 	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// BulkScores - Stock Financial scores (bulk)
+func (c *CompanyValuation) BulkScores() (sList []objects.Score, err error) {
+	data, err := c.Client.Get(urlAPICompanyValuationBulkScores, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = gocsv.UnmarshalBytes(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
