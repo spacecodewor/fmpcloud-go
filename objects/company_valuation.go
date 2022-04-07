@@ -335,10 +335,11 @@ type ETF struct {
 
 // AvailableTraded ...
 type AvailableTraded struct {
-	Symbol   string  `json:"symbol"`
-	Name     string  `json:"name"`
-	Price    float64 `json:"price"`
-	Exchange string  `json:"exchange"`
+	Symbol            string  `json:"symbol"`
+	Name              string  `json:"name"`
+	Price             float64 `json:"price"`
+	Exchange          string  `json:"exchange"`
+	ExchangeShortName string  `json:"exchangeShortName"`
 }
 
 // IPOCalendar ...

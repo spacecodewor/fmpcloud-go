@@ -279,10 +279,12 @@ type StockCandle struct {
 
 // StockSymbolList ...
 type StockSymbolList struct {
-	Symbol   string  `json:"symbol"`
-	Name     string  `json:"name"`
-	Price    float64 `json:"price"`
-	Exchange string  `json:"exchange"`
+	Symbol            string  `json:"symbol"`
+	Name              string  `json:"name"`
+	Price             float64 `json:"price"`
+	Exchange          string  `json:"exchange"`
+	ExchangeShortName string  `json:"exchangeShortName"`
+	Type              string  `json:"type"`
 }
 
 // IndexSymbol ...
