@@ -363,6 +363,8 @@ type EarningCalendar struct {
 	Time             string  `json:"time"` // Indicates whether the earnings is announced before market open(bmo), after market close(amc), or during market hour(dmh).
 	Revenue          float64 `json:"revenue"`
 	RevenueEstimated float64 `json:"revenueEstimated"`
+	UpdatedFromDate  string  `json:"updatedFromDate"`
+	FiscalDateEnding string  `json:"fiscalDateEnding"`
 }
 
 // EarningCalendarConfirmed ...
