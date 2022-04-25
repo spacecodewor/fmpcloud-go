@@ -48,8 +48,8 @@ type PingPongConfig struct {
 	PingPeriod time.Duration
 }
 
-// event ...
-type event struct {
+// quote ...
+type quote struct {
 	S    string   `json:"s"`
 	T    int64    `json:"t"`
 	Type string   `json:"type"`
@@ -60,6 +60,12 @@ type event struct {
 	Bs   *float64 `json:"bs"`
 	Lp   *float64 `json:"lp"`
 	Ls   *float64 `json:"ls"`
+}
+
+type event struct {
+	Event   string `json:"event"`
+	Status  int    `json:"status"`
+	Message string `json:"message"`
 }
 
 // NewWebsocketClient creates a new API client
@@ -85,6 +91,11 @@ func NewWebsocketClient(cfg WebsocketConfig) (*WebsocketClient, error) {
 
 func (w *WebsocketClient) Close() error {
 	w.pingTicker.Stop()
+
+	err := w.conn.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
+	if err != nil {
+		return err
+	}
 
 	return w.conn.Close()
 }
@@ -173,8 +184,21 @@ func (w *WebsocketClient) RunReadLoop(fn func(event interface{}) error) error {
 			continue
 		}
 
-		if err := fn(event); err != nil {
-			return err
+		switch event.Event {
+		case "login", "subscribe", "unsubscribe":
+			if err := fn(event); err != nil {
+				return err
+			}
+		default:
+			var event quote
+			if err := json.Unmarshal(msg, &event); err != nil {
+				w.logger.Error("Can't unmarshal quote event", zap.Any("message", string(msg)))
+				continue
+			}
+
+			if err := fn(event); err != nil {
+				return err
+			}
 		}
 	}
 }

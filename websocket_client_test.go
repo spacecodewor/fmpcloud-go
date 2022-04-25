@@ -7,8 +7,8 @@ import (
 
 func TestWebsocketClient(t *testing.T) {
 	websocketClient, err := NewWebsocketClient(WebsocketConfig{
-		APIKey:       "test",
-		WebsocketUrl: WebsocketCrypto,
+		APIKey:       "demo",
+		WebsocketUrl: WebsocketStock,
 		PingPongCfg: &PingPongConfig{
 			IsEnabled:  true,
 			PongWait:   DefaultPongWait,
@@ -34,11 +34,44 @@ func TestWebsocketClient(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if err := websocketClient.Subscribe("btcusd"); err != nil {
+	// if err := websocketClient.Subscribe("btcusd"); err != nil {
+	// 	t.Fatal(err)
+	// }
+
+	if err := websocketClient.Subscribe("aapl"); err != nil {
 		t.Fatal(err)
 	}
 
-	time.Sleep(30 * time.Second)
+	if err := websocketClient.Subscribe("amd"); err != nil {
+		t.Fatal(err)
+	}
+
+	if err := websocketClient.Subscribe("fb"); err != nil {
+		t.Fatal(err)
+	}
+
+	if err := websocketClient.Subscribe("twtr"); err != nil {
+		t.Fatal(err)
+	}
+
+	time.Sleep(60 * time.Second)
+	// if err := websocketClient.Unsubscribe("btcusd"); err != nil {
+	// 	t.Fatal(err)
+	// }
+	if err := websocketClient.Unsubscribe("aapl"); err != nil {
+		t.Fatal(err)
+	}
+	if err := websocketClient.Unsubscribe("amd"); err != nil {
+		t.Fatal(err)
+	}
+	if err := websocketClient.Unsubscribe("fb"); err != nil {
+		t.Fatal(err)
+	}
+	if err := websocketClient.Unsubscribe("twtr"); err != nil {
+		t.Fatal(err)
+	}
+
+	time.Sleep(10 * time.Second)
 	if err := websocketClient.Close(); err != nil {
 		t.Fatal(err)
 	}
