@@ -47,6 +47,8 @@ const (
 	urlAPIStockBulkPeers                 = "/v4/stock_peers_bulk"
 	urlAPIStockCompanyCoreInformation    = "/v4/company-core-information"
 	urlAPIStockSurvivorshipBiasFree      = "/v4/historical-price-full/%s/%s"
+	urlAPIStockPriceChange               = "/v3/stock-price-change/%s"
+	urlAPIStockPriceChangeBatch          = "/v3/stock-price-change/%s"
 )
 
 // Stock client
@@ -529,6 +531,36 @@ func (s *Stock) BatchEODCandleList(symbolList []string, date time.Time) (sList [
 		map[string]string{
 			"date": date.Format("2006-01-02"),
 		})
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// PriceChangeBatch - Price percentage change for multiple timeframes
+func (s *Stock) PriceChange(symbol string) (sList []objects.StockPriceChange, err error) {
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockPriceChangeBatch, symbol), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// PriceChangeBatch - Multiple companies price percentage change
+func (s *Stock) PriceChangeBatch(symbolList []string) (sList []objects.StockPriceChange, err error) {
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockPriceChangeBatch, strings.Join(symbolList, ",")), nil)
 	if err != nil {
 		return nil, err
 	}

@@ -429,6 +429,21 @@ type StockBulkPeers struct {
 	PeersList string `csv:"peers"`
 }
 
+// StockPriceChange ...
+type StockPriceChange struct {
+	Symbol string  `json:"symbol"`
+	OneD   float64 `json:"1D"`
+	FiveD  float64 `json:"5D"`
+	OneM   float64 `json:"1M"`
+	ThreeM float64 `json:"3M"`
+	SixM   float64 `json:"6M"`
+	Ytd    float64 `json:"ytd"`
+	OneY   float64 `json:"1Y"`
+	FiveY  float64 `json:"5Y"`
+	TenY   float64 `json:"10Y"`
+	Max    float64 `json:"max"`
+}
+
 // StockSerieType return string
 func (s StockSerieType) String() string {
 	return string(s)
