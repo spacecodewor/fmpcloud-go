@@ -17,6 +17,7 @@ const (
 
 	WebsocketStock  WebsocketUrl = "wss://websockets.financialmodelingprep.com"
 	WebsocketCrypto WebsocketUrl = "wss://crypto.financialmodelingprep.com"
+	WebsocketForex  WebsocketUrl = "wss://forex.financialmodelingprep.com"
 )
 
 // WebsocketUrl type for websocket url
@@ -48,24 +49,21 @@ type PingPongConfig struct {
 	PingPeriod time.Duration
 }
 
-// quote ...
-type quote struct {
-	S    string   `json:"s"`
-	T    int64    `json:"t"`
-	Type string   `json:"type"`
-	E    string   `json:"e"`
-	Ap   *float64 `json:"ap"`
-	As   *float64 `json:"as"`
-	Bp   *float64 `json:"bp"`
-	Bs   *float64 `json:"bs"`
-	Lp   *float64 `json:"lp"`
-	Ls   *float64 `json:"ls"`
-}
-
+// event ...
 type event struct {
-	Event   string `json:"event"`
-	Status  int    `json:"status"`
-	Message string `json:"message"`
+	Event   string   `json:"event"`
+	Message string   `json:"message"`
+	Status  int      `json:"status"`
+	S       string   `json:"s"`
+	Type    string   `json:"type"`
+	E       string   `json:"e"`
+	T       int64    `json:"t"`
+	Ap      *float64 `json:"ap"`
+	As      *float64 `json:"as"`
+	Bp      *float64 `json:"bp"`
+	Bs      *float64 `json:"bs"`
+	Lp      *float64 `json:"lp"`
+	Ls      *float64 `json:"ls"`
 }
 
 // NewWebsocketClient creates a new API client
@@ -180,25 +178,15 @@ func (w *WebsocketClient) RunReadLoop(fn func(event interface{}) error) error {
 
 		var event event
 		if err := json.Unmarshal(msg, &event); err != nil {
-			w.logger.Error("Can't unmarshal event", zap.Any("message", string(msg)))
+			w.logger.Error(
+				"Can't unmarshal event",
+				zap.Error(err),
+				zap.Any("message", string(msg)))
 			continue
 		}
 
-		switch event.Event {
-		case "login", "subscribe", "unsubscribe":
-			if err := fn(event); err != nil {
-				return err
-			}
-		default:
-			var event quote
-			if err := json.Unmarshal(msg, &event); err != nil {
-				w.logger.Error("Can't unmarshal quote event", zap.Any("message", string(msg)))
-				continue
-			}
-
-			if err := fn(event); err != nil {
-				return err
-			}
+		if err := fn(event); err != nil {
+			return err
 		}
 	}
 }
