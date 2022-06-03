@@ -49,8 +49,8 @@ type PingPongConfig struct {
 	PingPeriod time.Duration
 }
 
-// event ...
-type event struct {
+// Event ...
+type Event struct {
 	Event   string   `json:"event"`
 	Message string   `json:"message"`
 	Status  int      `json:"status"`
@@ -176,12 +176,14 @@ func (w *WebsocketClient) RunReadLoop(fn func(event interface{}) error) error {
 			return errors.Wrap(err, "can't read message")
 		}
 
-		var event event
+		var event Event
 		if err := json.Unmarshal(msg, &event); err != nil {
 			w.logger.Error(
 				"Can't unmarshal event",
 				zap.Error(err),
-				zap.Any("message", string(msg)))
+				zap.Any("message", string(msg)),
+			)
+
 			continue
 		}
 
