@@ -88,7 +88,9 @@ func NewWebsocketClient(cfg WebsocketConfig) (*WebsocketClient, error) {
 }
 
 func (w *WebsocketClient) Close() error {
-	w.pingTicker.Stop()
+	if w.pingTicker != nil {
+		w.pingTicker.Stop()
+	}
 
 	err := w.conn.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
 	if err != nil {
