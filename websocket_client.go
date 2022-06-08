@@ -2,8 +2,6 @@ package fmpcloud
 
 import (
 	"encoding/json"
-	"net"
-	"time"
 
 	"github.com/gorilla/websocket"
 	"github.com/pkg/errors"
@@ -12,9 +10,6 @@ import (
 
 // Core params
 const (
-	DefaultPongWait   = 60 * time.Second
-	DefaultPingPeriod = 50 * time.Second
-
 	WebsocketStock  WebsocketUrl = "wss://websockets.financialmodelingprep.com"
 	WebsocketCrypto WebsocketUrl = "wss://crypto.financialmodelingprep.com"
 	WebsocketForex  WebsocketUrl = "wss://forex.financialmodelingprep.com"
@@ -29,24 +24,14 @@ type WebsocketConfig struct {
 	APIKey       string
 	WebsocketUrl WebsocketUrl
 	Debug        bool
-	PingPongCfg  *PingPongConfig
 }
 
 // WebsocketClient ...
 type WebsocketClient struct {
-	conn        *websocket.Conn
-	apiKey      string
-	logger      *zap.Logger
-	debug       bool
-	pingPongCfg *PingPongConfig
-	pingTicker  *time.Ticker
-}
-
-// PingPongConfig ...
-type PingPongConfig struct {
-	IsEnabled  bool
-	PongWait   time.Duration
-	PingPeriod time.Duration
+	conn   *websocket.Conn
+	apiKey string
+	logger *zap.Logger
+	debug  bool
 }
 
 // Event ...
@@ -78,25 +63,12 @@ func NewWebsocketClient(cfg WebsocketConfig) (*WebsocketClient, error) {
 		websocketClient.logger = logger
 	}
 
-	if cfg.PingPongCfg != nil {
-		websocketClient.pingPongCfg = cfg.PingPongCfg
-	}
-
 	websocketClient.connect(cfg.WebsocketUrl)
 
 	return websocketClient, nil
 }
 
 func (w *WebsocketClient) Close() error {
-	if w.pingTicker != nil {
-		w.pingTicker.Stop()
-	}
-
-	err := w.conn.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
-	if err != nil {
-		return err
-	}
-
 	return w.conn.Close()
 }
 
@@ -108,35 +80,6 @@ func (w *WebsocketClient) connect(websocketUrl WebsocketUrl) {
 	ws, _, err := websocket.DefaultDialer.Dial(string(websocketUrl), nil)
 	if err != nil {
 		return
-	}
-
-	if w.pingPongCfg != nil && w.pingPongCfg.IsEnabled {
-		ws.SetReadDeadline(time.Now().Add(w.pingPongCfg.PongWait))
-
-		ws.SetPingHandler(func(message string) error {
-			err := ws.WriteControl(websocket.PongMessage, []byte(message), time.Now().Add(time.Second))
-			if err == websocket.ErrCloseSent {
-				return nil
-			} else if e, ok := err.(net.Error); ok && e.Temporary() {
-				return nil
-			}
-			return err
-		})
-
-		ws.SetPongHandler(func(string) error {
-			ws.SetReadDeadline(time.Now().Add(w.pingPongCfg.PongWait))
-			return nil
-		})
-
-		w.pingTicker = time.NewTicker(w.pingPongCfg.PingPeriod)
-
-		go func() {
-			<-w.pingTicker.C
-
-			if err := ws.WriteMessage(websocket.PingMessage, nil); err != nil {
-				return
-			}
-		}()
 	}
 
 	w.conn = ws
