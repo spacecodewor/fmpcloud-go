@@ -49,6 +49,8 @@ func (i *InsiderTrading) List(req objects.RequestInsiderTrading) (iList []object
 		reqData["transactionType"] = strings.Join(req.TransactionType, ",")
 	}
 
+	reqData["page"] = fmt.Sprint(req.Page)
+
 	data, err := i.Client.Get(urlAPIInsiderTrading, reqData)
 	if err != nil {
 		return nil, err

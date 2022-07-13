@@ -7,6 +7,7 @@ type RequestInsiderTrading struct {
 	ReportingCik    string
 	CompanyCik      string
 	Limit           int64
+	Page            int
 }
 
 // InsiderTrading ...
