@@ -36,7 +36,7 @@ type ForexCandle struct {
 	Low    float64 `json:"low"`
 	High   float64 `json:"high"`
 	Close  float64 `json:"close"`
-	Volume int64   `json:"volume"`
+	Volume float64 `json:"volume"`
 }
 
 // ForexBindAsk ...
@@ -65,7 +65,7 @@ type ForexQuote struct {
 	MarketCap            *float64 `json:"marketCap"`
 	PriceAvg50           float64  `json:"priceAvg50"`
 	PriceAvg200          float64  `json:"priceAvg200"`
-	Volume               int64    `json:"volume"`
+	Volume               float64  `json:"volume"`
 	AvgVolume            int64    `json:"avgVolume"`
 	Exchange             string   `json:"exchange"`
 	Open                 float64  `json:"open"`

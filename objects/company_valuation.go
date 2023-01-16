@@ -1602,7 +1602,7 @@ type StockScreener struct {
 	Beta               float64 `json:"beta"`
 	Price              float64 `json:"price"`
 	LastAnnualDividend float64 `json:"lastAnnualDividend"`
-	Volume             int64   `json:"volume"`
+	Volume             float64 `json:"volume"`
 	Exchange           string  `json:"exchange"`
 	ExchangeShortName  string  `json:"exchangeShortName"`
 }
@@ -1796,7 +1796,7 @@ type CompanyOutlook struct {
 	} `json:"stockNews"`
 	Metrics struct {
 		DividendYielTTM float64 `json:"dividendYielTTM"`
-		Volume          int     `json:"volume"`
+		Volume          float64 `json:"volume"`
 		YearHigh        float64 `json:"yearHigh"`
 		YearLow         float64 `json:"yearLow"`
 	} `json:"metrics"`
