@@ -73,7 +73,7 @@ type ForexQuote struct {
 	Eps                  *float64 `json:"eps"`
 	Pe                   *float64 `json:"pe"`
 	EarningsAnnouncement *float64 `json:"earningsAnnouncement"`
-	SharesOutstanding    *int64   `json:"sharesOutstanding"`
+	SharesOutstanding    *float64 `json:"sharesOutstanding"`
 	Timestamp            int64    `json:"timestamp"`
 }
 
