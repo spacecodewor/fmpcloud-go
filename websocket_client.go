@@ -1,9 +1,8 @@
 package fmpcloud
 
 import (
-	"encoding/json"
-
 	"github.com/gorilla/websocket"
+	jsoniter "github.com/json-iterator/go"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 )
@@ -122,7 +121,7 @@ func (w *WebsocketClient) RunReadLoop(fn func(event interface{}) error) error {
 		}
 
 		var event Event
-		if err := json.Unmarshal(msg, &event); err != nil {
+		if err := jsoniter.Unmarshal(msg, &event); err != nil {
 			w.logger.Error(
 				"Can't unmarshal event",
 				zap.Error(err),

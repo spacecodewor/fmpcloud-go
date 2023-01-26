@@ -1,10 +1,10 @@
 package fmpcloud
 
 import (
-	"encoding/json"
 	"fmt"
 	"time"
 
+	jsoniter "github.com/json-iterator/go"
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
 
@@ -29,7 +29,7 @@ func (f *Forex) AvalibleSymbols() (sList []objects.ForexSymbol, err error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +44,7 @@ func (f *Forex) Quotes() (qList []objects.ForexQuote, err error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &qList)
+	err = jsoniter.Unmarshal(data.Body(), &qList)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (f *Forex) ListSymbolsAndQuotes() (bList []objects.ForexBindAsk, err error)
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &bList)
+	err = jsoniter.Unmarshal(data.Body(), &bList)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +83,7 @@ func (f *Forex) Candles(req objects.RequestForexCandleList) (cList []objects.For
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &cList)
+	err = jsoniter.Unmarshal(data.Body(), &cList)
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (f *Forex) DailyLine(symbol string, serieType objects.ForexSerieType) (cLis
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &cList)
+	err = jsoniter.Unmarshal(data.Body(), &cList)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +113,7 @@ func (f *Forex) DailyChangeAndVolume(symbol string) (cList *objects.ForexDailyCa
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &cList)
+	err = jsoniter.Unmarshal(data.Body(), &cList)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +133,7 @@ func (f *Forex) DailySpecificPeriod(symbol string, from time.Time, to time.Time)
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &cList)
+	err = jsoniter.Unmarshal(data.Body(), &cList)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (f *Forex) DailyLastNDays(symbol string, days int) (cList *objects.ForexDai
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &cList)
+	err = jsoniter.Unmarshal(data.Body(), &cList)
 	if err != nil {
 		return nil, err
 	}

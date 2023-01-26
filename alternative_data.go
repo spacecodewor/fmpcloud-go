@@ -1,10 +1,10 @@
 package fmpcloud
 
 import (
-	"encoding/json"
 	"fmt"
 	"time"
 
+	jsoniter "github.com/json-iterator/go"
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
 
@@ -29,7 +29,7 @@ func (a *AlternativeData) COTSymbolList() (sList []objects.COTSymbol, err error)
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +44,7 @@ func (a *AlternativeData) COTReportListBySymbol(symbol string) (rList []objects.
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &rList)
+	err = jsoniter.Unmarshal(data.Body(), &rList)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (a *AlternativeData) COTReportListByPeriod(from, to *time.Time) (rList []ob
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &rList)
+	err = jsoniter.Unmarshal(data.Body(), &rList)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +83,7 @@ func (a *AlternativeData) COTAnalysisListBySymbol(symbol string) (aList []object
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &aList)
+	err = jsoniter.Unmarshal(data.Body(), &aList)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +107,7 @@ func (a *AlternativeData) COTAnalysisListByPeriod(from, to *time.Time) (aList []
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &aList)
+	err = jsoniter.Unmarshal(data.Body(), &aList)
 	if err != nil {
 		return nil, err
 	}

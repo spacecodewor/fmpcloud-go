@@ -1,12 +1,12 @@
 package fmpcloud
 
 import (
-	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
 
 	"github.com/gocarina/gocsv"
+	jsoniter "github.com/json-iterator/go"
 	"github.com/spacecodewor/fmpcloud-go/objects"
 )
 
@@ -63,7 +63,7 @@ func (s *Stock) QuoteShort(symbol string) (qList []objects.StockQuoteShot, err e
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &qList)
+	err = jsoniter.Unmarshal(data.Body(), &qList)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (s *Stock) Quote(symbol string) (qList []objects.StockQuote, err error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &qList)
+	err = jsoniter.Unmarshal(data.Body(), &qList)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (s *Stock) BatchQuote(symbolList []string) (qList []objects.StockQuote, err
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &qList)
+	err = jsoniter.Unmarshal(data.Body(), &qList)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func (s *Stock) QuoteByExchange(exchange objects.StockSearch) (qList []objects.S
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &qList)
+	err = jsoniter.Unmarshal(data.Body(), &qList)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +131,7 @@ func (s *Stock) Search(req objects.RequestStockSearch) (sList []objects.StockSym
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -154,7 +154,7 @@ func (s *Stock) SearchTiker(req objects.RequestStockSearch) (sList []objects.Sto
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -177,7 +177,7 @@ func (s *Stock) SearchByName(req objects.RequestStockSearch) (sList []objects.St
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -203,7 +203,7 @@ func (s *Stock) CompanyProfile(symbol string) (companyProfile []objects.StockCom
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &companyProfile)
+	err = jsoniter.Unmarshal(data.Body(), &companyProfile)
 	if err != nil {
 		return nil, err
 	}
@@ -218,7 +218,7 @@ func (s *Stock) Peers(symbol string) (pList []objects.StockPeers, err error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &pList)
+	err = jsoniter.Unmarshal(data.Body(), &pList)
 	if err != nil {
 		return nil, err
 	}
@@ -248,7 +248,7 @@ func (s *Stock) CompanyCoreInformation(symbol string) (company []objects.Company
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &company)
+	err = jsoniter.Unmarshal(data.Body(), &company)
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +263,7 @@ func (s *Stock) CompanyExecutive(symbol string) (companyProfile []objects.Compan
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &companyProfile)
+	err = jsoniter.Unmarshal(data.Body(), &companyProfile)
 	if err != nil {
 		return nil, err
 	}
@@ -287,7 +287,7 @@ func (s *Stock) Candles(req objects.RequestStockCandleList) (cList []objects.Sto
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &cList)
+	err = jsoniter.Unmarshal(data.Body(), &cList)
 	if err != nil {
 		return nil, err
 	}
@@ -302,7 +302,7 @@ func (s *Stock) DailyLine(symbol string, serieType objects.StockSerieType) (cLis
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &cList)
+	err = jsoniter.Unmarshal(data.Body(), &cList)
 	if err != nil {
 		return nil, err
 	}
@@ -317,7 +317,7 @@ func (s *Stock) DailyChangeAndVolume(symbol string) (cList *objects.StockDailyCa
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &cList)
+	err = jsoniter.Unmarshal(data.Body(), &cList)
 	if err != nil {
 		return nil, err
 	}
@@ -337,7 +337,7 @@ func (s *Stock) DailySpecificPeriod(symbol string, from time.Time, to time.Time)
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &cList)
+	err = jsoniter.Unmarshal(data.Body(), &cList)
 	if err != nil {
 		return nil, err
 	}
@@ -352,7 +352,7 @@ func (s *Stock) DailyLastNDays(symbol string, days int) (cList *objects.StockDai
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &cList)
+	err = jsoniter.Unmarshal(data.Body(), &cList)
 	if err != nil {
 		return nil, err
 	}
@@ -378,7 +378,7 @@ func (s *Stock) DailyBatch(symbolList []string, from *time.Time, to *time.Time) 
 
 	if len(symbolList) > 1 {
 		var resp objects.StockBatchDaily
-		err = json.Unmarshal(data.Body(), &resp)
+		err = jsoniter.Unmarshal(data.Body(), &resp)
 		if err != nil {
 			return nil, err
 		}
@@ -388,7 +388,7 @@ func (s *Stock) DailyBatch(symbolList []string, from *time.Time, to *time.Time) 
 
 	if len(symbolList) == 1 {
 		var resp objects.StockBatchData
-		err = json.Unmarshal(data.Body(), &resp)
+		err = jsoniter.Unmarshal(data.Body(), &resp)
 		if err != nil {
 			return nil, err
 		}
@@ -406,7 +406,7 @@ func (s *Stock) Dividends(symbol string) (dList *objects.StockDividends, err err
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &dList)
+	err = jsoniter.Unmarshal(data.Body(), &dList)
 	if err != nil {
 		return nil, err
 	}
@@ -421,7 +421,7 @@ func (s *Stock) Splits(symbol string) (sList *objects.StockSplit, err error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -436,7 +436,7 @@ func (s *Stock) AvalibleSymbolsByExchange(exchange objects.StockSymbolExchange) 
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -451,7 +451,7 @@ func (s *Stock) AvalibleSymbols() (sList []objects.StockSymbolList, err error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -476,7 +476,7 @@ func (s *Stock) IndexConstituentList(index objects.Index) (sList []objects.Index
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -501,7 +501,7 @@ func (s *Stock) HistoryIndexConstituentList(index objects.Index) (sList []object
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -516,7 +516,7 @@ func (s *Stock) EODCandleList(date time.Time) (sList []objects.StockEODCandle, e
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -535,7 +535,7 @@ func (s *Stock) BatchEODCandleList(symbolList []string, date time.Time) (sList [
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -550,7 +550,7 @@ func (s *Stock) PriceChange(symbol string) (sList []objects.StockPriceChange, er
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -565,7 +565,7 @@ func (s *Stock) PriceChangeBatch(symbolList []string) (sList []objects.StockPric
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -580,7 +580,7 @@ func (s *Stock) EODBatchPrices() (sList []objects.StockEODCandle, err error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sList)
+	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -595,7 +595,7 @@ func (s *Stock) ExchangeTradingHours() (eList []objects.Exchange, err error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &eList)
+	err = jsoniter.Unmarshal(data.Body(), &eList)
 	if err != nil {
 		return nil, err
 	}
@@ -610,7 +610,7 @@ func (s *Stock) Actives() (aList []objects.Active, err error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &aList)
+	err = jsoniter.Unmarshal(data.Body(), &aList)
 	if err != nil {
 		return nil, err
 	}
@@ -625,7 +625,7 @@ func (s *Stock) Losers() (lList []objects.Loser, err error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &lList)
+	err = jsoniter.Unmarshal(data.Body(), &lList)
 	if err != nil {
 		return nil, err
 	}
@@ -640,7 +640,7 @@ func (s *Stock) Gainers() (gList []objects.Gainer, err error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &gList)
+	err = jsoniter.Unmarshal(data.Body(), &gList)
 	if err != nil {
 		return nil, err
 	}
@@ -655,7 +655,7 @@ func (s *Stock) SectorPerformance() (eList []objects.Sector, err error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &eList)
+	err = jsoniter.Unmarshal(data.Body(), &eList)
 	if err != nil {
 		return nil, err
 	}
@@ -670,7 +670,7 @@ func (s *Stock) HistorySectorPerformance() (eList []objects.HistorySector, err e
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &eList)
+	err = jsoniter.Unmarshal(data.Body(), &eList)
 	if err != nil {
 		return nil, err
 	}
@@ -685,7 +685,7 @@ func (s *Stock) SurvivorshipBiasFree(symbol string, date time.Time) (sBias *obje
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &sBias)
+	err = jsoniter.Unmarshal(data.Body(), &sBias)
 	if err != nil {
 		return nil, err
 	}
@@ -700,7 +700,7 @@ func (s *Stock) OTCRealTimePrice(symbolList []string) (pList *objects.OTCRealTim
 		return nil, err
 	}
 
-	err = json.Unmarshal(data.Body(), &pList)
+	err = jsoniter.Unmarshal(data.Body(), &pList)
 	if err != nil {
 		return nil, err
 	}
