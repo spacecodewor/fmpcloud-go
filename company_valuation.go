@@ -80,6 +80,10 @@ const (
 	urlAPICompanyValuationSocialSentimentChange            = "/v4/social-sentiments/change"
 	urlAPICompanyValuationHistoricalSocialSentiment        = "/v4/historical/social-sentiment"
 	urlAPICompanyValuationScore                            = "/v4/score"
+	urlAPICompanyValuationSharesFloat                      = "/v4/shares_float/all"
+	urlAPICompanyValuationSharesFloatAll                   = "/v4/shares_float"
+	urlAPICompanyValuationRatiosTTMBulk                    = "/v4/ratios-ttm-bulk"
+	urlAPICompanyValuationDCFBulk                          = "/v4/dcf-bulk"
 )
 
 // CompanyValuation client
@@ -1380,7 +1384,7 @@ func (c *CompanyValuation) BulkEarningsSurpises(year int) (sList []objects.Earni
 		return nil, err
 	}
 
-	err = jsoniter.Unmarshal(data.Body(), &sList)
+	err = gocsv.UnmarshalBytes(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -1395,10 +1399,75 @@ func (c *CompanyValuation) BulkRating() (sList []objects.Rating, err error) {
 		return nil, err
 	}
 
+	err = gocsv.UnmarshalBytes(data.Body(), &sList)
+	if err != nil {
+		return nil, err
+	}
+
+	return sList, nil
+}
+
+// RatiosTTMBulk ...
+func (c *CompanyValuation) RatiosTTMBulk() (rList []objects.FinancialRatiosTTM, err error) {
+	data, err := c.Client.Get(urlAPICompanyValuationRatiosTTMBulk, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = gocsv.UnmarshalBytes(data.Body(), &rList)
+	if err != nil {
+		return nil, err
+	}
+
+	return rList, nil
+}
+
+// DCFBulk ...
+func (c *CompanyValuation) DCFBulk() (dList []objects.DailyDiscountedCashFlow, err error) {
+	data, err := c.Client.Get(urlAPICompanyValuationDCFBulk, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	err = gocsv.UnmarshalBytes(data.Body(), &dList)
+	if err != nil {
+		return nil, err
+	}
+
+	return dList, nil
+}
+
+// SharesFloatAll - All latest shares float available
+func (c *CompanyValuation) SharesFloatAll() (sList []objects.SharesFloat, err error) {
+	data, err := c.Client.Get(urlAPICompanyValuationSharesFloatAll, nil)
+	if err != nil {
+		return nil, err
+	}
+
 	err = jsoniter.Unmarshal(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
 
 	return sList, nil
+}
+
+// SharesFloat - Shares float for symbol
+func (c *CompanyValuation) SharesFloat(symbol string) (ipoList []objects.IPOCalendar, err error) {
+	data, err := c.Client.Get(
+		urlAPICompanyValuationSharesFloat,
+		map[string]string{
+			"symbol": symbol,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	err = jsoniter.Unmarshal(data.Body(), &ipoList)
+	if err != nil {
+		return nil, err
+	}
+
+	return ipoList, nil
 }

@@ -103,6 +103,7 @@ func (w *WebsocketClient) Subscribe(tiker string) error {
 
 	return nil
 }
+
 func (w *WebsocketClient) Unsubscribe(tiker string) error {
 	sub := `{ "event": "unsubscribe", "data": { "ticker": "` + tiker + `" } }`
 

@@ -545,7 +545,7 @@ func (s *Stock) BatchEODCandleList(symbolList []string, date time.Time) (sList [
 
 // PriceChangeBatch - Price percentage change for multiple timeframes
 func (s *Stock) PriceChange(symbol string) (sList []objects.StockPriceChange, err error) {
-	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockPriceChangeBatch, symbol), nil)
+	data, err := s.Client.Get(fmt.Sprintf(urlAPIStockPriceChange, symbol), nil)
 	if err != nil {
 		return nil, err
 	}

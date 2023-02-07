@@ -1282,63 +1282,65 @@ type FinancialRatios struct {
 
 // FinancialRatiosTTM ...
 type FinancialRatiosTTM struct {
-	DividendYielTTM                       float64 `json:"dividendYielTTM"`
-	DividendYielPercentageTTM             float64 `json:"dividendYielPercentageTTM"`
-	PeRatioTTM                            float64 `json:"peRatioTTM"`
-	PegRatioTTM                           float64 `json:"pegRatioTTM"`
-	PayoutRatioTTM                        float64 `json:"payoutRatioTTM"`
-	CurrentRatioTTM                       float64 `json:"currentRatioTTM"`
-	QuickRatioTTM                         float64 `json:"quickRatioTTM"`
-	CashRatioTTM                          float64 `json:"cashRatioTTM"`
-	DaysOfSalesOutstandingTTM             float64 `json:"daysOfSalesOutstandingTTM"`
-	DaysOfInventoryOutstandingTTM         float64 `json:"daysOfInventoryOutstandingTTM"`
-	OperatingCycleTTM                     float64 `json:"operatingCycleTTM"`
-	DaysOfPayablesOutstandingTTM          float64 `json:"daysOfPayablesOutstandingTTM"`
-	CashConversionCycleTTM                float64 `json:"cashConversionCycleTTM"`
-	GrossProfitMarginTTM                  float64 `json:"grossProfitMarginTTM"`
-	OperatingProfitMarginTTM              float64 `json:"operatingProfitMarginTTM"`
-	PretaxProfitMarginTTM                 float64 `json:"pretaxProfitMarginTTM"`
-	NetProfitMarginTTM                    float64 `json:"netProfitMarginTTM"`
-	EffectiveTaxRateTTM                   float64 `json:"effectiveTaxRateTTM"`
-	ReturnOnAssetsTTM                     float64 `json:"returnOnAssetsTTM"`
-	ReturnOnEquityTTM                     float64 `json:"returnOnEquityTTM"`
-	ReturnOnCapitalEmployedTTM            float64 `json:"returnOnCapitalEmployedTTM"`
-	NetIncomePerEBTTTM                    float64 `json:"netIncomePerEBTTTM"`
-	EbtPerEbitTTM                         float64 `json:"ebtPerEbitTTM"`
-	EbitPerRevenueTTM                     float64 `json:"ebitPerRevenueTTM"`
-	DebtRatioTTM                          float64 `json:"debtRatioTTM"`
-	DebtEquityRatioTTM                    float64 `json:"debtEquityRatioTTM"`
-	LongTermDebtToCapitalizationTTM       float64 `json:"longTermDebtToCapitalizationTTM"`
-	TotalDebtToCapitalizationTTM          float64 `json:"totalDebtToCapitalizationTTM"`
-	InterestCoverageTTM                   float64 `json:"interestCoverageTTM"`
-	CashFlowToDebtRatioTTM                float64 `json:"cashFlowToDebtRatioTTM"`
-	CompanyEquityMultiplierTTM            float64 `json:"companyEquityMultiplierTTM"`
-	ReceivablesTurnoverTTM                float64 `json:"receivablesTurnoverTTM"`
-	PayablesTurnoverTTM                   float64 `json:"payablesTurnoverTTM"`
-	InventoryTurnoverTTM                  float64 `json:"inventoryTurnoverTTM"`
-	FixedAssetTurnoverTTM                 float64 `json:"fixedAssetTurnoverTTM"`
-	AssetTurnoverTTM                      float64 `json:"assetTurnoverTTM"`
-	OperatingCashFlowPerShareTTM          float64 `json:"operatingCashFlowPerShareTTM"`
-	FreeCashFlowPerShareTTM               float64 `json:"freeCashFlowPerShareTTM"`
-	CashPerShareTTM                       float64 `json:"cashPerShareTTM"`
-	OperatingCashFlowSalesRatioTTM        float64 `json:"operatingCashFlowSalesRatioTTM"`
-	FreeCashFlowOperatingCashFlowRatioTTM float64 `json:"freeCashFlowOperatingCashFlowRatioTTM"`
-	CashFlowCoverageRatiosTTM             float64 `json:"cashFlowCoverageRatiosTTM"`
-	ShortTermCoverageRatiosTTM            float64 `json:"shortTermCoverageRatiosTTM"`
-	CapitalExpenditureCoverageRatioTTM    float64 `json:"capitalExpenditureCoverageRatioTTM"`
-	DividendPaidAndCapexCoverageRatioTTM  float64 `json:"dividendPaidAndCapexCoverageRatioTTM"`
-	PriceBookValueRatioTTM                float64 `json:"priceBookValueRatioTTM"`
-	PriceToBookRatioTTM                   float64 `json:"priceToBookRatioTTM"`
-	PriceToSalesRatioTTM                  float64 `json:"priceToSalesRatioTTM"`
-	PriceEarningsRatioTTM                 float64 `json:"priceEarningsRatioTTM"`
-	PriceToFreeCashFlowsRatioTTM          float64 `json:"priceToFreeCashFlowsRatioTTM"`
-	PriceToOperatingCashFlowsRatioTTM     float64 `json:"priceToOperatingCashFlowsRatioTTM"`
-	PriceCashFlowRatioTTM                 float64 `json:"priceCashFlowRatioTTM"`
-	PriceEarningsToGrowthRatioTTM         float64 `json:"priceEarningsToGrowthRatioTTM"`
-	PriceSalesRatioTTM                    float64 `json:"priceSalesRatioTTM"`
-	DividendYieldTTM                      float64 `json:"dividendYieldTTM"`
-	EnterpriseValueMultipleTTM            float64 `json:"enterpriseValueMultipleTTM"`
-	PriceFairValueTTM                     float64 `json:"priceFairValueTTM"`
+	Symbol                                string  `csv:"symbol"`
+	DividendYielTTM                       float64 `json:"dividendYielTTM" csv:"dividendYielTTM"`
+	DividendYielPercentageTTM             float64 `json:"dividendYielPercentageTTM" csv:"dividendYielPercentageTTM"`
+	PeRatioTTM                            float64 `json:"peRatioTTM" csv:"peRatioTTM"`
+	PegRatioTTM                           float64 `json:"pegRatioTTM" csv:"pegRatioTTM"`
+	PayoutRatioTTM                        float64 `json:"payoutRatioTTM" csv:"payoutRatioTTM"`
+	CurrentRatioTTM                       float64 `json:"currentRatioTTM" csv:"currentRatioTTM"`
+	QuickRatioTTM                         float64 `json:"quickRatioTTM" csv:"quickRatioTTM"`
+	CashRatioTTM                          float64 `json:"cashRatioTTM" csv:"cashRatioTTM"`
+	DaysOfSalesOutstandingTTM             float64 `json:"daysOfSalesOutstandingTTM" csv:"daysOfSalesOutstandingTTM"`
+	DaysOfInventoryOutstandingTTM         float64 `json:"daysOfInventoryOutstandingTTM" csv:"daysOfInventoryOutstandingTTM"`
+	OperatingCycleTTM                     float64 `json:"operatingCycleTTM" csv:"operatingCycleTTM"`
+	DaysOfPayablesOutstandingTTM          float64 `json:"daysOfPayablesOutstandingTTM" csv:"daysOfPayablesOutstandingTTM"`
+	CashConversionCycleTTM                float64 `json:"cashConversionCycleTTM" csv:"cashConversionCycleTTM"`
+	GrossProfitMarginTTM                  float64 `json:"grossProfitMarginTTM" csv:"grossProfitMarginTTM"`
+	OperatingProfitMarginTTM              float64 `json:"operatingProfitMarginTTM" csv:"operatingProfitMarginTTM"`
+	PretaxProfitMarginTTM                 float64 `json:"pretaxProfitMarginTTM" csv:"pretaxProfitMarginTTM"`
+	NetProfitMarginTTM                    float64 `json:"netProfitMarginTTM" csv:"netProfitMarginTTM"`
+	EffectiveTaxRateTTM                   float64 `json:"effectiveTaxRateTTM" csv:"effectiveTaxRateTTM"`
+	ReturnOnAssetsTTM                     float64 `json:"returnOnAssetsTTM" csv:"returnOnAssetsTTM"`
+	ReturnOnEquityTTM                     float64 `json:"returnOnEquityTTM" csv:"returnOnEquityTTM"`
+	ReturnOnCapitalEmployedTTM            float64 `json:"returnOnCapitalEmployedTTM" csv:"returnOnCapitalEmployedTTM"`
+	NetIncomePerEBTTTM                    float64 `json:"netIncomePerEBTTTM" csv:"netIncomePerEBTTTM"`
+	EbtPerEbitTTM                         float64 `json:"ebtPerEbitTTM" csv:"ebtPerEbitTTM"`
+	EbitPerRevenueTTM                     float64 `json:"ebitPerRevenueTTM" csv:"ebitPerRevenueTTM"`
+	DebtRatioTTM                          float64 `json:"debtRatioTTM" csv:"debtRatioTTM"`
+	DebtEquityRatioTTM                    float64 `json:"debtEquityRatioTTM" csv:"debtEquityRatioTTM"`
+	LongTermDebtToCapitalizationTTM       float64 `json:"longTermDebtToCapitalizationTTM" csv:"longTermDebtToCapitalizationTTM"`
+	TotalDebtToCapitalizationTTM          float64 `json:"totalDebtToCapitalizationTTM" csv:"totalDebtToCapitalizationTTM"`
+	InterestCoverageTTM                   float64 `json:"interestCoverageTTM" csv:"interestCoverageTTM"`
+	CashFlowToDebtRatioTTM                float64 `json:"cashFlowToDebtRatioTTM" csv:"cashFlowToDebtRatioTTM"`
+	CompanyEquityMultiplierTTM            float64 `json:"companyEquityMultiplierTTM" csv:"companyEquityMultiplierTTM"`
+	ReceivablesTurnoverTTM                float64 `json:"receivablesTurnoverTTM" csv:"receivablesTurnoverTTM"`
+	PayablesTurnoverTTM                   float64 `json:"payablesTurnoverTTM" csv:"payablesTurnoverTTM"`
+	InventoryTurnoverTTM                  float64 `json:"inventoryTurnoverTTM" csv:"inventoryTurnoverTTM"`
+	FixedAssetTurnoverTTM                 float64 `json:"fixedAssetTurnoverTTM" csv:"fixedAssetTurnoverTTM"`
+	AssetTurnoverTTM                      float64 `json:"assetTurnoverTTM" csv:"assetTurnoverTTM"`
+	OperatingCashFlowPerShareTTM          float64 `json:"operatingCashFlowPerShareTTM" csv:"operatingCashFlowPerShareTTM"`
+	FreeCashFlowPerShareTTM               float64 `json:"freeCashFlowPerShareTTM" csv:"freeCashFlowPerShareTTM"`
+	CashPerShareTTM                       float64 `json:"cashPerShareTTM" csv:"cashPerShareTTM"`
+	OperatingCashFlowSalesRatioTTM        float64 `json:"operatingCashFlowSalesRatioTTM" csv:"operatingCashFlowSalesRatioTTM"`
+	FreeCashFlowOperatingCashFlowRatioTTM float64 `json:"freeCashFlowOperatingCashFlowRatioTTM" csv:"freeCashFlowOperatingCashFlowRatioTTM"`
+	CashFlowCoverageRatiosTTM             float64 `json:"cashFlowCoverageRatiosTTM" csv:"cashFlowCoverageRatiosTTM"`
+	ShortTermCoverageRatiosTTM            float64 `json:"shortTermCoverageRatiosTTM" csv:"shortTermCoverageRatiosTTM"`
+	CapitalExpenditureCoverageRatioTTM    float64 `json:"capitalExpenditureCoverageRatioTTM" csv:"capitalExpenditureCoverageRatioTTM"`
+	DividendPaidAndCapexCoverageRatioTTM  float64 `json:"dividendPaidAndCapexCoverageRatioTTM" csv:"dividendPaidAndCapexCoverageRatioTTM"`
+	PriceBookValueRatioTTM                float64 `json:"priceBookValueRatioTTM" csv:"priceBookValueRatioTTM"`
+	PriceToBookRatioTTM                   float64 `json:"priceToBookRatioTTM" csv:"priceToBookRatioTTM"`
+	PriceToSalesRatioTTM                  float64 `json:"priceToSalesRatioTTM" csv:"priceToSalesRatioTTM"`
+	PriceEarningsRatioTTM                 float64 `json:"priceEarningsRatioTTM" csv:"priceEarningsRatioTTM"`
+	PriceToFreeCashFlowsRatioTTM          float64 `json:"priceToFreeCashFlowsRatioTTM" csv:"priceToFreeCashFlowsRatioTTM"`
+	PriceToOperatingCashFlowsRatioTTM     float64 `json:"priceToOperatingCashFlowsRatioTTM" csv:"priceToOperatingCashFlowsRatioTTM"`
+	PriceCashFlowRatioTTM                 float64 `json:"priceCashFlowRatioTTM" csv:"priceCashFlowRatioTTM"`
+	PriceEarningsToGrowthRatioTTM         float64 `json:"priceEarningsToGrowthRatioTTM" csv:"priceEarningsToGrowthRatioTTM"`
+	PriceSalesRatioTTM                    float64 `json:"priceSalesRatioTTM" csv:"priceSalesRatioTTM"`
+	DividendYieldTTM                      float64 `json:"dividendYieldTTM" csv:"dividendYieldTTM"`
+	EnterpriseValueMultipleTTM            float64 `json:"enterpriseValueMultipleTTM" csv:"enterpriseValueMultipleTTM"`
+	PriceFairValueTTM                     float64 `json:"priceFairValueTTM" csv:"priceFairValueTTM"`
+	DividendPerShareTTM                   float64 `json:"dividendPerShareTTM" csv:"dividendPerShareTTM"`
 }
 
 // KeyMetricsTTM ...
@@ -1531,9 +1533,9 @@ type DiscountedCashFlow struct {
 
 // DailyDiscountedCashFlow ...
 type DailyDiscountedCashFlow struct {
-	Symbol string  `json:"symbol"`
-	Date   string  `json:"date"`
-	Dcf    float64 `json:"dcf"`
+	Symbol string  `json:"symbol" csv:"symbol"`
+	Date   string  `json:"date" csv:"date"`
+	Dcf    float64 `json:"dcf" csv:"DCF"`
 }
 
 // HistoryDiscountedCashFlow ...
@@ -2212,4 +2214,14 @@ type Score struct {
 	MarketCap        string  `json:"marketCap" csv:"marketCap"`
 	TotalLiabilities string  `json:"totalLiabilities" csv:"totalLiabilities"`
 	Revenue          string  `json:"revenue" csv:"revenue"`
+}
+
+// SharesFloat ...
+type SharesFloat struct {
+	Symbol            string  `json:"symbol"`
+	Date              string  `json:"date"`
+	FreeFloat         float64 `json:"freeFloat"`
+	FloatShares       int64   `json:"floatShares"`
+	OutstandingShares int64   `json:"outstandingShares"`
+	Source            string  `json:"source"`
 }
