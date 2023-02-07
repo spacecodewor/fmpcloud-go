@@ -340,6 +340,7 @@ type AvailableTraded struct {
 	Price             float64 `json:"price"`
 	Exchange          string  `json:"exchange"`
 	ExchangeShortName string  `json:"exchangeShortName"`
+	Type              string  `json:"type"`
 }
 
 // IPOCalendar ...
