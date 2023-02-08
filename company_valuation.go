@@ -80,8 +80,8 @@ const (
 	urlAPICompanyValuationSocialSentimentChange            = "/v4/social-sentiments/change"
 	urlAPICompanyValuationHistoricalSocialSentiment        = "/v4/historical/social-sentiment"
 	urlAPICompanyValuationScore                            = "/v4/score"
-	urlAPICompanyValuationSharesFloat                      = "/v4/shares_float/all"
-	urlAPICompanyValuationSharesFloatAll                   = "/v4/shares_float"
+	urlAPICompanyValuationSharesFloat                      = "/v4/shares_float"
+	urlAPICompanyValuationSharesFloatAll                   = "/v4/shares_float/all"
 	urlAPICompanyValuationRatiosTTMBulk                    = "/v4/ratios-ttm-bulk"
 	urlAPICompanyValuationDCFBulk                          = "/v4/dcf-bulk"
 )
