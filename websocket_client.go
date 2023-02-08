@@ -9,20 +9,20 @@ import (
 
 // Core params
 const (
-	WebsocketStock  WebsocketUrl = "wss://websockets.financialmodelingprep.com"
-	WebsocketCrypto WebsocketUrl = "wss://crypto.financialmodelingprep.com"
-	WebsocketForex  WebsocketUrl = "wss://forex.financialmodelingprep.com"
+	WebsocketStock  WebsocketURL = "wss://websockets.financialmodelingprep.com"
+	WebsocketCrypto WebsocketURL = "wss://crypto.financialmodelingprep.com"
+	WebsocketForex  WebsocketURL = "wss://forex.financialmodelingprep.com"
 )
 
-// WebsocketUrl type for websocket url
-type WebsocketUrl string
+// WebsocketURL type for websocket url
+type WebsocketURL string
 
 // WebsocketConfig for create new Websocket client
 type WebsocketConfig struct {
-	Logger       *zap.Logger
-	APIKey       string
-	WebsocketUrl WebsocketUrl
-	Debug        bool
+	Logger *zap.Logger
+	APIKey string
+	URL    WebsocketURL
+	Debug  bool
 }
 
 // WebsocketClient ...
@@ -38,10 +38,9 @@ type Event struct {
 	Event   string   `json:"event"`
 	Message string   `json:"message"`
 	Status  int      `json:"status"`
-	S       string   `json:"s"`
+	Symbol  string   `json:"s"`
 	Type    string   `json:"type"`
-	E       string   `json:"e"`
-	T       int64    `json:"t"`
+	Time    int64    `json:"t"`
 	Ap      *float64 `json:"ap"`
 	As      *float64 `json:"as"`
 	Bp      *float64 `json:"bp"`
@@ -62,7 +61,7 @@ func NewWebsocketClient(cfg WebsocketConfig) (*WebsocketClient, error) {
 		websocketClient.logger = logger
 	}
 
-	websocketClient.connect(cfg.WebsocketUrl)
+	websocketClient.connect(cfg.URL)
 
 	return websocketClient, nil
 }
@@ -71,12 +70,12 @@ func (w *WebsocketClient) Close() error {
 	return w.conn.Close()
 }
 
-func (w *WebsocketClient) connect(websocketUrl WebsocketUrl) {
+func (w *WebsocketClient) connect(url WebsocketURL) {
 	if w.conn != nil {
 		return
 	}
 
-	ws, _, err := websocket.DefaultDialer.Dial(string(websocketUrl), nil)
+	ws, _, err := websocket.DefaultDialer.Dial(url.String(), nil)
 	if err != nil {
 		return
 	}
@@ -85,7 +84,7 @@ func (w *WebsocketClient) connect(websocketUrl WebsocketUrl) {
 }
 
 func (w *WebsocketClient) Login() error {
-	sub := `{ "event": "login", "data": { "apiKey": "` + w.apiKey + `" } }`
+	sub := `{"event": "login", "data": {"apiKey": "` + w.apiKey + `" }}`
 
 	if err := w.conn.WriteMessage(websocket.TextMessage, []byte(sub)); err != nil {
 		return errors.Wrap(err, "can't login in websocket server")
@@ -95,7 +94,7 @@ func (w *WebsocketClient) Login() error {
 }
 
 func (w *WebsocketClient) Subscribe(tiker string) error {
-	sub := `{ "event": "subscribe", "data": { "ticker": "` + tiker + `" } }`
+	sub := `{"event": "subscribe", "data": {"ticker": "` + tiker + `" }}`
 
 	if err := w.conn.WriteMessage(websocket.TextMessage, []byte(sub)); err != nil {
 		return errors.Wrap(err, "can't subscribe to event")
@@ -105,7 +104,7 @@ func (w *WebsocketClient) Subscribe(tiker string) error {
 }
 
 func (w *WebsocketClient) Unsubscribe(tiker string) error {
-	sub := `{ "event": "unsubscribe", "data": { "ticker": "` + tiker + `" } }`
+	sub := `{"event": "unsubscribe", "data": {"ticker": "` + tiker + `" }}`
 
 	if err := w.conn.WriteMessage(websocket.TextMessage, []byte(sub)); err != nil {
 		return errors.Wrap(err, "can't unsubscribe from event")
@@ -114,7 +113,7 @@ func (w *WebsocketClient) Unsubscribe(tiker string) error {
 	return nil
 }
 
-func (w *WebsocketClient) RunReadLoop(fn func(event interface{}) error) error {
+func (w *WebsocketClient) RunReadLoop(fn func(event Event) error) error {
 	for {
 		_, msg, err := w.conn.ReadMessage()
 		if err != nil {
@@ -136,4 +135,9 @@ func (w *WebsocketClient) RunReadLoop(fn func(event interface{}) error) error {
 			return err
 		}
 	}
+}
+
+// String ...
+func (w WebsocketURL) String() string {
+	return string(w)
 }
