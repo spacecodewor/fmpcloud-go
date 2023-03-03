@@ -574,13 +574,13 @@ func (s *Stock) PriceChangeBatch(symbolList []string) (sList []objects.StockPric
 }
 
 // EODBatchPrices ...
-func (s *Stock) EODBatchPrices() (sList []objects.StockEODCandle, err error) {
-	data, err := s.Client.Get(urlAPIStockEODBatchPrices, nil)
+func (s *Stock) EODBatchPrices(date time.Time) (sList []objects.StockEODCandle, err error) {
+	data, err := s.Client.Get(urlAPIStockEODBatchPrices, map[string]string{"date": date.Format("2006-01-02")})
 	if err != nil {
 		return nil, err
 	}
 
-	err = jsoniter.Unmarshal(data.Body(), &sList)
+	err = gocsv.UnmarshalBytes(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
