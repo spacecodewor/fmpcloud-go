@@ -272,6 +272,18 @@ func TestAvalibleSymbolsByExchange(t *testing.T) {
 	}
 }
 
+func TestEODBatchPrices(t *testing.T) {
+	APIClient, err := NewAPIClient(testCaseAPIConfig)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	_, err = APIClient.Stock.EODBatchPrices(time.Now())
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+}
+
 func TestIndexConstituentList(t *testing.T) {
 	APIClient, err := NewAPIClient(testCaseAPIConfig)
 	if err != nil {
