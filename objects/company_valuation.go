@@ -459,11 +459,11 @@ type ETFCountryWeighting struct {
 type IncomeStatement struct {
 	Date                                    string  `json:"date" csv:"date"`
 	Symbol                                  string  `json:"symbol" csv:"symbol"`
-	FillingDate                             string  `json:"fillingDate" csv:"fillingDate"`
-	Cik                                     string  `json:"cik" csv:"cik"`
-	CalendarYear                            string  `json:"calendarYear" csv:"calendarYear"`
 	ReportedCurrency                        string  `json:"reportedCurrency" csv:"reportedCurrency"`
+	Cik                                     string  `json:"cik" csv:"cik"`
+	FillingDate                             string  `json:"fillingDate" csv:"fillingDate"`
 	AcceptedDate                            string  `json:"acceptedDate" csv:"acceptedDate"`
+	CalendarYear                            int     `json:"calendarYear,string" csv:"calendarYear"`
 	Period                                  string  `json:"period" csv:"period"`
 	Revenue                                 float64 `json:"revenue" csv:"revenue"`
 	CostOfRevenue                           float64 `json:"costOfRevenue" csv:"costOfRevenue"`
@@ -472,7 +472,7 @@ type IncomeStatement struct {
 	ResearchAndDevelopmentExpenses          float64 `json:"researchAndDevelopmentExpenses" csv:"ResearchAndDevelopmentExpenses"`
 	GeneralAndAdministrativeExpenses        float64 `json:"generalAndAdministrativeExpenses" csv:"GeneralAndAdministrativeExpenses"`
 	SellingAndMarketingExpenses             float64 `json:"sellingAndMarketingExpenses" csv:"SellingAndMarketingExpenses"`
-	SellingGeneralAndAdministrativeExpenses float64 `json:"sellingGeneralAndAdministrativeExpenses" csv:"sellingGeneralAndAdministrativeExpenses"`
+	SellingGeneralAndAdministrativeExpenses float64 `json:"sellingGeneralAndAdministrativeExpenses" csv:"SellingGeneralAndAdministrativeExpenses"`
 	OtherExpenses                           float64 `json:"otherExpenses" csv:"otherExpenses"`
 	OperatingExpenses                       float64 `json:"operatingExpenses" csv:"operatingExpenses"`
 	CostAndExpenses                         float64 `json:"costAndExpenses" csv:"costAndExpenses"`
@@ -494,6 +494,7 @@ type IncomeStatement struct {
 	WeightedAverageShsOutDil                float64 `json:"weightedAverageShsOutDil" csv:"weightedAverageShsOutDil"`
 	Link                                    string  `json:"link" csv:"link"`
 	FinalLink                               string  `json:"finalLink" csv:"finalLink"`
+	InterestIncome                          float64 `json:"interestIncome" csv:"interestIncome"`
 }
 
 // IncomeStatementGrowth ...
@@ -532,11 +533,13 @@ type IncomeStatementGrowth struct {
 
 // BalanceSheetStatement ...
 type BalanceSheetStatement struct {
-	Date                                    string  `json:"date" csv:"date"`
 	Symbol                                  string  `json:"symbol" csv:"symbol"`
+	Date                                    string  `json:"date" csv:"date"`
 	ReportedCurrency                        string  `json:"reportedCurrency" csv:"reportedCurrency"`
+	Cik                                     string  `json:"cik" csv:"cik"`
 	FillingDate                             string  `json:"fillingDate" csv:"fillingDate"`
 	AcceptedDate                            string  `json:"acceptedDate" csv:"acceptedDate"`
+	CalendarYear                            int     `json:"calendarYear,string" csv:"calendarYear"`
 	Period                                  string  `json:"period" csv:"period"`
 	CashAndCashEquivalents                  float64 `json:"cashAndCashEquivalents" csv:"cashAndCashEquivalents"`
 	ShortTermInvestments                    float64 `json:"shortTermInvestments" csv:"shortTermInvestments"`
@@ -568,6 +571,7 @@ type BalanceSheetStatement struct {
 	TotalNonCurrentLiabilities              float64 `json:"totalNonCurrentLiabilities" csv:"totalNonCurrentLiabilities"`
 	OtherLiabilities                        float64 `json:"otherLiabilities" csv:"otherLiabilities"`
 	TotalLiabilities                        float64 `json:"totalLiabilities" csv:"totalLiabilities"`
+	PreferredStock                          float64 `json:"preferredStock" csv:"preferredStock"`
 	CommonStock                             float64 `json:"commonStock" csv:"commonStock"`
 	RetainedEarnings                        float64 `json:"retainedEarnings" csv:"retainedEarnings"`
 	AccumulatedOtherComprehensiveIncomeLoss float64 `json:"accumulatedOtherComprehensiveIncomeLoss" csv:"accumulatedOtherComprehensiveIncomeLoss"`
@@ -579,6 +583,9 @@ type BalanceSheetStatement struct {
 	NetDebt                                 float64 `json:"netDebt" csv:"netDebt"`
 	Link                                    string  `json:"link" csv:"link"`
 	FinalLink                               string  `json:"finalLink" csv:"finalLink"`
+	MinorityInterest                        float64 `json:"minorityInterest" csv:"minorityInterest"`
+	CapitalLeaseObligations                 float64 `json:"capitalLeaseObligations" csv:"capitalLeaseObligations"`
+	TotalEquity                             float64 `json:"totalEquity" csv:"totalEquity"`
 }
 
 // BalanceSheetStatementGrowth ...
@@ -632,10 +639,12 @@ type BalanceSheetStatementGrowth struct {
 type CashFlowStatement struct {
 	Date                                     string  `json:"date" csv:"date"`
 	Symbol                                   string  `json:"symbol" csv:"symbol"`
+	ReportedCurrency                         string  `json:"reportedCurrency" csv:"reportedCurrency"`
+	Cik                                      string  `json:"cik" csv:"cik"`
 	FillingDate                              string  `json:"fillingDate" csv:"fillingDate"`
 	AcceptedDate                             string  `json:"acceptedDate" csv:"acceptedDate"`
+	CalendarYear                             int     `json:"calendarYear,string" csv:"calendarYear"`
 	Period                                   string  `json:"period" csv:"period"`
-	ReportedCurrency                         string  `json:"reportedCurrency" csv:"reportedCurrency"`
 	NetIncome                                float64 `json:"netIncome" csv:"netIncome"`
 	DepreciationAndAmortization              float64 `json:"depreciationAndAmortization" csv:"depreciationAndAmortization"`
 	DeferredIncomeTax                        float64 `json:"deferredIncomeTax" csv:"deferredIncomeTax"`
@@ -646,7 +655,7 @@ type CashFlowStatement struct {
 	AccountsPayables                         float64 `json:"accountsPayables" csv:"accountsPayables"`
 	OtherWorkingCapital                      float64 `json:"otherWorkingCapital" csv:"otherWorkingCapital"`
 	OtherNonCashItems                        float64 `json:"otherNonCashItems" csv:"otherNonCashItems"`
-	NetCashProvidedByOperatingActivities     float64 `json:"netCashProvidedByOperatingActivities" csv:"netCashProvidedByOperatingActivities"`
+	NetCashProvidedByOperatingActivities     float64 `json:"netCashProvidedByOperatingActivities" csv:"netCashProvidedByOperatingActivites"`
 	InvestmentsInPropertyPlantAndEquipment   float64 `json:"investmentsInPropertyPlantAndEquipment" csv:"investmentsInPropertyPlantAndEquipment"`
 	AcquisitionsNet                          float64 `json:"acquisitionsNet" csv:"acquisitionsNet"`
 	PurchasesOfInvestments                   float64 `json:"purchasesOfInvestments" csv:"purchasesOfInvestments"`

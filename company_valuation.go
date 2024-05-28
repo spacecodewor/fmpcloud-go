@@ -1309,7 +1309,7 @@ func (c *CompanyValuation) BulkBalanceSheetStatement(year int, period string) (s
 		return nil, err
 	}
 
-	err = jsoniter.Unmarshal(data.Body(), &sList)
+	err = gocsv.UnmarshalBytes(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
@@ -1329,7 +1329,7 @@ func (c *CompanyValuation) BulkCashFlowStatement(year int, period string) (sList
 		return nil, err
 	}
 
-	err = jsoniter.Unmarshal(data.Body(), &sList)
+	err = gocsv.UnmarshalBytes(data.Body(), &sList)
 	if err != nil {
 		return nil, err
 	}
